@@ -37,6 +37,12 @@
   border-radius: 10px;
   width: fit-content;
   z-index: 5;
+  -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
 }
 
 #btnUp, #btnLeft, #btnAuto, #btnRight, #btnDown, #btnUpLeft, #btnDownLeft, #btnUpRight, #btnDownRight {
@@ -502,17 +508,17 @@ body {
 </div> -->
 
 <div id="controls" style="z-index:5; -ms-user-select: none; -webkit-user-select: none; user-select: none;">
-  <button id="btnUpLeft" onclick="move('up-left')" onmousedown="startMove('up-left')" onmouseup="stopMove()"><img height="32" src="sol-üst.png"></button>
-  <button id="btnUp" onclick="move('up')" onmousedown="startMove('up')" onmouseup="stopMove()"><img height="32" src="Üst.png"></button>
-  <button id="btnUpRight" onclick="move('up-right')" onmousedown="startMove('up-right')" onmouseup="stopMove()"><img height="32" src="sağ-üst.png"></button>
+  <button id="btnUpLeft" onclick="move('up-left')" onmousedown="startMove('up-left')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="sol-üst.png"></button>
+  <button id="btnUp" onclick="move('up')" onmousedown="startMove('up')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="Üst.png"></button>
+  <button id="btnUpRight" onclick="move('up-right')" onmousedown="startMove('up-right')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="sağ-üst.png"></button>
   <!---->
-  <button id="btnLeft" onclick="move('left')" onmousedown="startMove('left')" onmouseup="stopMove()"><img height="32" src="Sol.png"></button>
+  <button id="btnLeft" onclick="move('left')" onmousedown="startMove('left')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="Sol.png"></button>
   <button id="btnAuto" onclick="move('auto')">WARP</button>
-  <button id="btnRight" onclick="move('right')" onmousedown="startMove('right')" onmouseup="stopMove()"><img height="32" src="Sağ.png"></button>
+  <button id="btnRight" onclick="move('right')" onmousedown="startMove('right')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="Sağ.png"></button>
   <!---->
-  <button id="btnDownLeft" onclick="move('down-left')" onmousedown="startMove('down-left')" onmouseup="stopMove()"><img height="32" src="sol-alt.png"></button>
-  <button id="btnDown" onclick="move('down')" onmousedown="startMove('down')" onmouseup="stopMove()"><img height="32" src="Alt.png"></button>
-  <button id="btnDownRight" onclick="move('down-right')" onmousedown="startMove('down-right')" onmouseup="stopMove()"><img height="32" src="sağ-alt.png"></button>
+  <button id="btnDownLeft" onclick="move('down-left')" onmousedown="startMove('down-left')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="sol-alt.png"></button>
+  <button id="btnDown" onclick="move('down')" onmousedown="startMove('down')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="Alt.png"></button>
+  <button id="btnDownRight" onclick="move('down-right')" onmousedown="startMove('down-right')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="sağ-alt.png"></button>
 </div>
 
 
@@ -559,8 +565,8 @@ function updateCamera() {
 let ball = document.getElementById("ball"); // Topun ID'si 'ball' olsun
 let laser1 = document.getElementById("laser1"); // Topun ID'si 'ball' olsun
 let laser2 = document.getElementById("laser2"); // Topun ID'si 'ball' olsun
-let characterX = 300;
-let characterY = 300;
+let characterX = 1000;
+let characterY = 1000;
 var lookDirection = 'up'; // Başlangıç bakış yönü
 // let characterWidth = 68; // Karakterin genişliği
 // let characterHeight = 277; // Karakterin yüksekliği
@@ -1115,9 +1121,12 @@ main.addEventListener('mousemove', (event) => {
   rotateBall(lastMousePosition.x,lastMousePosition.y);
 });
 
-
-move("up");
-updateCamera();
+window.onload = function() {
+  setTimeout(()=>{
+    move("up");
+  updateCamera();
+  },1000)
+};
 
     </script>
 </html>
