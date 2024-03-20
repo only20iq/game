@@ -24,6 +24,14 @@
         <noscript>Sorry, your browser does not support JavaScript!</noscript>
         <script src="start.js"></script>
         <style>
+          .unselectable {
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
           *{padding:0;margin:0;}
           #controls {
   display: grid;
@@ -37,12 +45,7 @@
   border-radius: 10px;
   width: fit-content;
   z-index: 5;
-  -webkit-touch-callout: none;
--webkit-user-select: none;
--khtml-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
+  user-drag: none;
 }
 
 #btnUp, #btnLeft, #btnAuto, #btnRight, #btnDown, #btnUpLeft, #btnDownLeft, #btnUpRight, #btnDownRight {
@@ -81,7 +84,7 @@ user-select: none;
   width: 100%; /* Viewport genişliği */
   height: 100%; /* Viewport yüksekliği */
   background-image: url('output-onlinepngtools.png'); /* Şeffaf resminizin yolu */
-  background-repeat: repeat-x; /* Yatay eksende tekrar etmesi için */
+  background-repeat: repeat; /* Yatay eksende tekrar etmesi için */
   background-size: contain; /* Resmin orijinal boyutu */
   z-index: 1;
   animation: yavasHareket 240s linear infinite; /* Animasyon süresini ayarlayın */
@@ -121,7 +124,7 @@ body {
 }
 
 #main {
-  background: url('qaevyh08hsx51.webp') no-repeat center center scroll;
+  background: url('qaevyh08hsx51.webp') repeat center center scroll;
   background-clip: padding-box;
   background-size: cover; /* Resmi kaplayacak şekilde ayarla */
   position: absolute; /* Pozisyonu sabitle */
@@ -138,19 +141,19 @@ body {
   -webkit-user-select: none;
   user-select: none;
   position: absolute;
-  width: 68px;
-  height: 277px;
-  background: url(abc.png);
+  width: 375px;
+  height: 666px;
+  background: url(ship1.png);
   background-repeat: no-repeat;
   background-size: contain;
   transform: translate(-50%, -50%);
   /* border:1px solid red; */
   transform-origin: center center; /* Dönüşlerin merkez noktasını ayarla */
-  z-index:3;
+  z-index:0;
 }
 #ball {
     position: absolute;
-    top:40%;left:30%;
+    top:40%;left:43%;
     background: url(turret.png);
   background-repeat: no-repeat;
   background-size: contain;
@@ -162,7 +165,7 @@ body {
 }
 #laser1 {
     position: absolute;
-    top:70%;left:30%;
+    top:70%;left:43%;
     background: url(turret.png);
   background-repeat: no-repeat;
   background-size: contain;
@@ -174,7 +177,7 @@ body {
 }
 #laser2 {
     position: absolute;
-    top:10%;left:30%;
+    top:10%;left:43%;
     background: url(turret.png);
   background-repeat: no-repeat;
   background-size: contain;
@@ -507,18 +510,18 @@ body {
   <button onmousedown="startMove('down')" onmouseup="stopMove()" onclick="move('down')">Aşağı</button>
 </div> -->
 
-<div id="controls" style="z-index:5; -ms-user-select: none; -webkit-user-select: none; user-select: none;">
-  <button id="btnUpLeft" onclick="move('up-left')" onmousedown="startMove('up-left')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="sol-üst.png"></button>
-  <button id="btnUp" onclick="move('up')" onmousedown="startMove('up')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="Üst.png"></button>
-  <button id="btnUpRight" onclick="move('up-right')" onmousedown="startMove('up-right')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="sağ-üst.png"></button>
-  <!---->
-  <button id="btnLeft" onclick="move('left')" onmousedown="startMove('left')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="Sol.png"></button>
-  <button id="btnAuto" onclick="move('auto')">WARP</button>
-  <button id="btnRight" onclick="move('right')" onmousedown="startMove('right')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="Sağ.png"></button>
-  <!---->
-  <button id="btnDownLeft" onclick="move('down-left')" onmousedown="startMove('down-left')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="sol-alt.png"></button>
-  <button id="btnDown" onclick="move('down')" onmousedown="startMove('down')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="Alt.png"></button>
-  <button id="btnDownRight" onclick="move('down-right')" onmousedown="startMove('down-right')" onmouseup="stopMove()"><img style="pointer-events:none;" height="32" src="sağ-alt.png"></button>
+<div id="controls" draggable="false" ondragstart="return false;" class="unselectable">
+  <button id="btnUpLeft" onclick="move('up-left')" onmousedown="startMove('up-left')" onmouseup="stopMove()"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sol-üst.png"></button>
+  <button id="btnUp" onclick="move('up')" onmousedown="startMove('up')" onmouseup="stopMove()"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Üst.png"></button>
+  <button id="btnUpRight" onclick="move('up-right')" onmousedown="startMove('up-right')" onmouseup="stopMove()"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sağ-üst.png"></button>
+  <!-- -->
+  <button id="btnLeft" onclick="move('left')" onmousedown="startMove('left')" onmouseup="stopMove()"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Sol.png"></button>
+  <button id="btnAuto" onclick="move('auto')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="rocket.png"></button>
+  <button id="btnRight" onclick="move('right')" onmousedown="startMove('right')" onmouseup="stopMove()"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Sağ.png"></button>
+  <!-- -->
+  <button id="btnDownLeft" onclick="move('down-left')" onmousedown="startMove('down-left')" onmouseup="stopMove()"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sol-alt.png"></button>
+  <button id="btnDown" onclick="move('down')" onmousedown="startMove('down')" onmouseup="stopMove()"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Alt.png"></button>
+  <button id="btnDownRight" onclick="move('down-right')" onmousedown="startMove('down-right')" onmouseup="stopMove()"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sağ-alt.png"></button>
 </div>
 
 
@@ -552,16 +555,17 @@ let character = document.getElementById("character");
 // document.body.style.position = "relative"; // Pozisyon referansını ayarla
 
 function updateCamera() {
-    // Karakterin mevcut konumunu al
-    const characterRect = character.getBoundingClientRect();
-    
-    // Sayfanın ortasına göre karakterin konumunu ayarla
-    window.scrollTo({
-        top: characterRect.top + window.scrollY - window.innerHeight / 2,
-        left: characterRect.left + window.scrollX - window.innerWidth / 2,
-        behavior: 'auto' // Kaydırma işlemini yumuşak yap
-    });
+  // Karakterin mevcut konumunu al
+  const characterRect = character.getBoundingClientRect();
+  
+  // Sayfanın ortasına göre karakterin konumunu ayarla
+  window.scrollTo({
+      top: characterRect.top + characterRect.height/2 + window.scrollY - window.innerHeight / 2,
+      left: characterRect.left + characterRect.width/2 + window.scrollX - window.innerWidth / 2,
+      behavior: 'auto' // Kaydırma işlemini yumuşak yap
+  });
 }
+
 let ball = document.getElementById("ball"); // Topun ID'si 'ball' olsun
 let laser1 = document.getElementById("laser1"); // Topun ID'si 'ball' olsun
 let laser2 = document.getElementById("laser2"); // Topun ID'si 'ball' olsun
@@ -617,7 +621,7 @@ let speed = 5.5;
 // Karakterin hızını güncelleyecek fonksiyon
 function updateSpeed() {
     // Zıt yön tuşlarına basıldığında karakterin hızını sıfırla
-    if ((keysPressed['ArrowLeft'] && keysPressed['ArrowRight']) || (keysPressed['ArrowUp'] && keysPressed['ArrowDown'])) {
+    if (((keysPressed['ArrowLeft'] || keysPressed['a']) && (keysPressed['ArrowRight'] || keysPressed['d'])) || ((keysPressed['ArrowUp'] || keysPressed['w']) && (keysPressed['ArrowDown'] || keysPressed['s']))) {
         speed = 0;
     } else {
         speed = 5.5;
@@ -633,13 +637,93 @@ function updateSpeed() {
             // Otomatik yürümeyi durdurmak için bir yol sağla
             setTimeout(() => { clearInterval(autoMove); }, 7000); // 5 saniye sonra durdur
         }else {
-            lookDirection = direction; // Bakış yönünü güncelle
             moveCharacter(direction);
             rotateCharacter(direction);
         }
 
     }
-    function rotateCharacter(direction) {
+//     function rotateCharacter(direction) {
+//     let rotationAngle = 0; // Dönüş açısı
+//     switch (direction) {
+//         case 'up':
+//             rotationAngle = 0;
+//             break;
+//         case 'down':
+//             rotationAngle = 180;
+//             break;
+//         case 'left':
+//             rotationAngle = -90;
+//             break;
+//         case 'right':
+//             rotationAngle = 90;
+//             break;
+//         // Çapraz hareketler için ek açılar
+//         case 'up-left':
+//             rotationAngle = -45;
+//             break;
+//         case 'down-left':
+//             rotationAngle = -135;
+//             break;
+//         case 'up-right':
+//             rotationAngle = 45;
+//             break;
+//         case 'down-right':
+//             rotationAngle = 135;
+//             break;
+//     }
+
+//     // if ((direction === 'left' || direction === 'right') && lookDirection != 'left' && lookDirection != 'right') {
+//     //   // Sağa veya sola dönüşte boyutları değiştir
+//     //   [characterWidth, characterHeight] = [characterHeight, characterWidth];
+//     // }
+//     // // Karakterin dönüş açısına göre boyutlarını güncelle
+//     // if ((direction === 'up' || direction === 'down') && lookDirection != 'up' && lookDirection != 'down') {
+//     // // Sağa veya sola dönüşte boyutları değiştir
+//     // [characterWidth, characterHeight] = [characterHeight, characterWidth];
+//     // }
+//     // lookDirection = direction; // Bakış yönünü güncelle
+    
+//     character.style.transform = `translate(${characterX}px, ${characterY}px) rotate(${rotationAngle}deg)`;
+//     // ball.style.transform = `rotate(${rotationAngle}deg)`; // Topun da dönmesi için
+// }
+function rotateCharacter(direction) {
+  if(speed==0){return;}
+  // Yeni yönü kontrol et ve eğer farklıysa güncelle
+  if (lookDirection !== direction) {
+    setTimeout(() => {
+      speed = 1;
+    }, "2000");
+    speed = 0;
+    lookDirection = direction; // Bakış yönünü güncelle
+
+    // Yumuşak dönüş için CSS transition ekleyin
+    character.style.transition = 'transform 0.5s ease-in-out';
+
+    // Mevcut açıyı al
+    const currentTransform = window.getComputedStyle(character).transform;
+    const matrixValues = currentTransform.match(/matrix.*\((.+)\)/);
+    const currentAngle = matrixValues ? rotationMatrixToDegrees(matrixValues[1].split(', ')) : 0;
+
+    // Yeni açıyı hesapla
+    const angles = {
+      'up': 0,
+      'down': 180,
+      'left': 270,
+      'right': 90,
+      'up-left': 315,
+      'down-left': 225,
+      'up-right': 45,
+      'down-right': 135
+    };
+    const targetAngle = angles[direction];
+
+    // En kısa yoldan dönmeyi hesapla
+    let angleDifference = (targetAngle - currentAngle + 360) % 360;
+    angleDifference = angleDifference > 180 ? angleDifference - 360 : angleDifference;
+
+    // Yeni dönüş açısını uygula
+    character.style.transform = `translate(${characterX}px, ${characterY}px) rotate(${currentAngle + angleDifference}deg)`;
+  }else{
     let rotationAngle = 0; // Dönüş açısı
     switch (direction) {
         case 'up':
@@ -668,21 +752,19 @@ function updateSpeed() {
             rotationAngle = 135;
             break;
     }
-
-    // if ((direction === 'left' || direction === 'right') && lookDirection != 'left' && lookDirection != 'right') {
-    //   // Sağa veya sola dönüşte boyutları değiştir
-    //   [characterWidth, characterHeight] = [characterHeight, characterWidth];
-    // }
-    // // Karakterin dönüş açısına göre boyutlarını güncelle
-    // if ((direction === 'up' || direction === 'down') && lookDirection != 'up' && lookDirection != 'down') {
-    // // Sağa veya sola dönüşte boyutları değiştir
-    // [characterWidth, characterHeight] = [characterHeight, characterWidth];
-    // }
-    // lookDirection = direction; // Bakış yönünü güncelle
-    
+    // Yumuşak dönüş için CSS transition ekleyin
+    character.style.transition = 'none';
     character.style.transform = `translate(${characterX}px, ${characterY}px) rotate(${rotationAngle}deg)`;
-    // ball.style.transform = `rotate(${rotationAngle}deg)`; // Topun da dönmesi için
+  }
 }
+
+// Matris değerlerinden açıyı hesaplayan fonksiyon
+function rotationMatrixToDegrees(matrix) {
+  const a = matrix[0];
+  const b = matrix[1];
+  return Math.round(Math.atan2(b, a) * (180 / Math.PI));
+}
+
 
 function rotateElement(elementId, eventX, eventY) {
   const element = document.getElementById(elementId); // Elementi ID'ye göre seç
@@ -1109,7 +1191,7 @@ main.addEventListener('mousedown', () => {
 });
 
 // Fare bırakma olayını dinleme ve sürekli saldırıyı durdurma
-main.addEventListener('mouseup', () => {
+window.addEventListener('mouseup', () => {
   isAutomaticMode = false;
   clearInterval(attackInterval); // Interval'i temizle
   attackInterval = null; // Interval değişkenini sıfırla
@@ -1127,6 +1209,13 @@ window.onload = function() {
   updateCamera();
   },1000)
 };
+// Tüm img etiketlerini seç
+var images = document.getElementsByTagName("*");
+
+// Her bir img etiketi için sürüklenmeyi engelle
+for (var i = 0; i < images.length; i++) {
+  images[i].ondragstart = function() { return false; };
+}
 
     </script>
 </html>
