@@ -24,6 +24,31 @@
         <noscript>Sorry, your browser does not support JavaScript!</noscript>
         <script src="start.js"></script>
         <style>
+                    #coordinates {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: black;
+            color: white;
+            padding: 5px;
+            z-index: 1000;
+            min-width:160px;
+          }
+                  .imagemodel0 {
+            -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            background-color: transparent;
+            background-size: cover;
+            z-index:1;
+        }
           .unselectable {
   user-drag: none; 
   user-select: none;
@@ -113,6 +138,12 @@
     height:10px;
     width:10px;
 }
+.trail2 {
+    position: absolute;
+    background-color: red;
+    height:10px;
+    width:10px;
+}
 body {
   margin: 0;
   overflow: hidden;
@@ -151,6 +182,53 @@ body {
   transform-origin: center center; /* Dönüşlerin merkez noktasını ayarla */
   z-index:0;
 }
+
+
+.smoke {
+  position: absolute;
+  background: rgba(0, 0, 0, 1);
+  backdrop-filter: blur(100px);
+  filter: blur(100px);
+  border-radius: 50%;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  /* transition: opacity 1s, width 1s, height 1s, background 1s; */
+}
+
+
+#ultimatecannon1 {
+    position: absolute;
+    top:60%;left:56%;
+    background: url(pturret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 111px;
+  width: 62.5px;
+  z-index:2;
+  transform-origin: center center;
+}
+#ultimatecannon2 {
+    position: absolute;
+    top:60%;left:21%;
+    background: url(pturret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 111px;
+  width: 62.5px;
+  z-index:2;
+  transform-origin: center center;
+}
+#railgun1 {
+    position: absolute;
+    top:50%;left:43%;
+    background: url(railgun1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 75px;
+  width: 37.5px;
+  z-index:2;
+  transform-origin: center center;
+}
 #ball {
     position: absolute;
     top:40%;left:43%;
@@ -161,7 +239,6 @@ body {
   width: 33.25px;
   z-index:2;
   transform-origin: center center;
-
 }
 #laser1 {
     position: absolute;
@@ -200,6 +277,30 @@ body {
             height: 20px;
             background-color: red;
         }
+        .fireball {
+            -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+            position: absolute;
+            width: 33.3px;
+            height: 10px;
+            background: url(fire.png);
+            border-radius: 50%;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .ballflash {
+            -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+            position: absolute;
+            width: 18px;
+            height: 16.2px;
+            background: url(hole.png);
+            border-radius: 50%;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
         .missile {
             -ms-user-select: none;
     -webkit-user-select: none;
@@ -207,7 +308,7 @@ body {
             position: absolute;
             width: 10px;
             height: 10px;
-            background: black;
+            background: whitesmoke;
             border-radius: 50%;
         }
         .laser {
@@ -283,8 +384,8 @@ body {
   background-color: white;
   background-color: transparent;
   transform: translate(-50%, -50%);
-  animation: shockwave1 0.60s forwards;
-  z-index:-1;
+  animation: shockwave1 0.2s forwards;
+  z-index:1;
 }
 @keyframes shockwave1 {
   0% {
@@ -330,6 +431,39 @@ body {
     opacity: 0;
   }
 }
+
+
+
+.explosion2 {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgb(242, 213, 158);
+  transform: translate(-50%, -50%);
+  animation: flash2 0.5s forwards;
+  z-index: 2;
+}
+
+@keyframes flash2 {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  50% {
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+  }
+  90% {
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
 
 /* Partikül temel stilini koru */
 .particle {
@@ -488,19 +622,73 @@ body {
   }
 } */
 
+.explosion3 {
+  position: absolute;
+  border-radius: 500%;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  animation: shockwave3 0.5s forwards, pulse3 1s forwards;
+  z-index: 1;
+}
+
+@keyframes shockwave3 {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+    backdrop-filter: blur(0px);
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.7),
+                0 0 0 15px rgba(255, 216, 0, 0.8),
+                0 0 0 30px rgba(255, 0, 0, 0.6),
+                0 0 0 45px rgba(255, 255, 255, 0.4),
+                0 0 0 60px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    width: 400px; /* Genişlik 400px olarak ayarlandı */
+    height: 400px; /* Yükseklik 400px olarak ayarlandı */
+    opacity: 0;
+    backdrop-filter: blur(20px); /* Bulanıklık efekti artırıldı */
+    box-shadow: 0 0 0 120px rgba(255, 255, 255, 0),
+                0 0 0 240px rgba(255, 216, 0, 0),
+                0 0 0 360px rgba(255, 0, 0, 0),
+                0 0 0 480px rgba(255, 255, 255, 0),
+                0 0 0 600px rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes pulse3 {
+  0% {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(0px);
+  }
+  70% {
+    box-shadow: 0 0 0 40px rgba(255, 255, 255, 0); /* Gölge boyutu artırıldı */
+    backdrop-filter: blur(10px); /* Bulanıklık efekti artırıldı */
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0);
+    backdrop-filter: blur(0px);
+  }
+}
+
 
         </style>
     </head>
-    <body>
-      <div id="main">
+    <body class="unselectable">
+      <div id="main" class="unselectable">
 <div id="benzersizID"></div>
-        <div id="character"><div id="ball"></div><div id="laser1"></div><div id="laser2"></div></div>
+        <div id="character"><div id="ball"></div><div id="laser1"></div><div id="laser2"></div><div id="ultimatecannon1"></div><div id="ultimatecannon2"></div><div id="railgun1"></div></div>
         <!-- <div id="explosion" class="explosion"></div> -->
         <div id="square1" class="square" style="top: 100px; left: 100px;"></div>
         <div id="square2" class="square" style="top: 200px; left: 300px;"></div>
         <div id="square3" class="square" style="top: 400px; left: 500px;"></div>
         <div id="square4" class="square" style="top: 300px; left: 700px;"></div>
+
+        <!-- <img src="img/GEOi6c3WQAAEumP.jpg" class="imagemodel0" style="top: 2300px; left: 2700px;">
+        <img src="img/GEOjhE3WAAEMFFm.jpg" class="imagemodel0" style="top: 2496px; left: 268px;">
+        <img src="img/GESbIl4XYAAWLwD.jpg" class="imagemodel0" style="top: 2786px; left: 868px;height:auto!important;"> -->
 </div>
+<div id="coordinates" class="unselectable">X: 1000 | Y: 1000</div>
 <!-- Yürüme tuşları -->
 <!-- <div id="controls">
   <button onmousedown="startMove('up')" onmouseup="stopMove()" onclick="move('up')">Yukarı</button>
@@ -569,6 +757,9 @@ function updateCamera() {
 let ball = document.getElementById("ball"); // Topun ID'si 'ball' olsun
 let laser1 = document.getElementById("laser1"); // Topun ID'si 'ball' olsun
 let laser2 = document.getElementById("laser2"); // Topun ID'si 'ball' olsun
+let ultimatecannon1 = document.getElementById("ultimatecannon1");
+let ultimatecannon2 = document.getElementById("ultimatecannon2");
+let railgun1 = document.getElementById("railgun1");
 let characterX = 1000;
 let characterY = 1000;
 var lookDirection = 'up'; // Başlangıç bakış yönü
@@ -616,7 +807,7 @@ window.addEventListener("keyup", (event) => {
 
 
     // Karakterin hızını tutacak değişken
-let speed = 5.5;
+let speed = 5;
 
 // Karakterin hızını güncelleyecek fonksiyon
 function updateSpeed() {
@@ -624,7 +815,7 @@ function updateSpeed() {
     if (((keysPressed['ArrowLeft'] || keysPressed['a']) && (keysPressed['ArrowRight'] || keysPressed['d'])) || ((keysPressed['ArrowUp'] || keysPressed['w']) && (keysPressed['ArrowDown'] || keysPressed['s']))) {
         speed = 0;
     } else {
-        speed = 5.5;
+        speed = 5;
     }
 }
 
@@ -795,7 +986,7 @@ function rotateElement(elementId, eventX, eventY) {
 }
 function rotateBall(eventX,eventY) {
   // 'ball', 'laser1', 'laser2' için döngü
-  ['ball', 'laser1', 'laser2'].forEach((id) => {
+  ['ball', 'laser1', 'laser2', 'ultimatecannon1', 'ultimatecannon2', 'railgun1'].forEach((id) => {
     rotateElement(id, event.clientX, event.clientY);
   });
 }
@@ -996,6 +1187,110 @@ function launchLaser(eventX,eventY,targetx) {
 //     shockwave.remove();
 //   });
 // }
+
+
+function launchflash(eventX, eventY) {
+
+    const ballflash = document.createElement('div');
+    ballflash.classList.add('ballflash');
+    document.body.appendChild(ballflash);
+
+    const cannonRect = railgun1.getBoundingClientRect();
+    const startX = (cannonRect.left + cannonRect.width / 2) + window.scrollX;
+    const startY = (cannonRect.top + cannonRect.height / 2) + window.scrollY;
+    ballflash.style.left = startX + 'px';
+    ballflash.style.top = startY + 'px';
+
+    const targetX = eventX + window.scrollX;
+    const targetY = eventY + window.scrollY;
+
+    const distance = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
+    const speed = distance / 2020;
+
+    // Füzenin başlangıç açısını ayarla ve sabitle
+    const angle = Math.atan2(targetY - startY, targetX - startX);
+    ballflash.style.transform = `rotate(${angle}rad)`;
+
+    ballflash.style.transition = `left ${speed}s linear, top ${speed}s linear`;
+
+    // Füzenin arkasında iz bırak
+    const trail = document.createElement('div');
+    trail.classList.add('trail1');
+    trail.style.transition = `width ${speed}s linear`;
+    trail.style.animation = `blink1 ${speed}s forwards`;
+    document.body.appendChild(trail);
+
+    // İzin başlangıç konumunu ayarla
+    trail.style.position = 'absolute';
+    trail.style.left = startX + 'px';
+    trail.style.top = startY + 'px';
+    trail.style.height = '2px';
+    trail.style.backgroundColor = '#FCEAFF';
+    trail.style.transformOrigin = '0 0';
+    trail.style.transform = `rotate(${Math.atan2(targetY - startY, targetX - startX)}rad)`;
+    trail.style.width = '0px';
+
+    // İzin genişliğini animasyonla artır
+    setTimeout(() => {
+        trail.style.width = distance + 'px';
+    }, 0);
+
+
+    setTimeout(() => {
+      ballflash.style.left = targetX - ballflash.offsetWidth / 2 + 'px';
+      ballflash.style.top = targetY - ballflash.offsetHeight / 2 + 'px';
+    }, 0);
+
+    setTimeout(() => {
+      ballflash.remove();
+      trail.remove(); // İzi kaldır
+        createExplosion3(targetX, targetY);
+    }, speed * 1000);
+}
+
+
+
+let currentCannon = 'u1'; // Hangi silahın ateşlemeye hazır olduğunu belirten değişken
+
+function launchultimateCannon(eventX, eventY) {
+    const cannon = (currentCannon === 'u1') ? ultimatecannon1 : ultimatecannon2;
+    currentCannon = (currentCannon === 'u1') ? 'u2' : 'u1';
+
+    const fireball = document.createElement('div');
+    fireball.classList.add('fireball');
+    document.body.appendChild(fireball);
+
+    const cannonRect = cannon.getBoundingClientRect();
+    const startX = (cannonRect.left + cannonRect.width / 2) + window.scrollX;
+    const startY = (cannonRect.top + cannonRect.height / 2) + window.scrollY;
+    fireball.style.left = startX + 'px';
+    fireball.style.top = startY + 'px';
+
+    const targetX = eventX + window.scrollX;
+    const targetY = eventY + window.scrollY;
+
+    const distance = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
+    const speed = distance / 1000;
+
+    // Füzenin başlangıç açısını ayarla ve sabitle
+    const angle = Math.atan2(targetY - startY, targetX - startX);
+    fireball.style.transform = `rotate(${angle}rad)`;
+
+    fireball.style.transition = `left ${speed}s linear, top ${speed}s linear`;
+
+    setTimeout(() => {
+        fireball.style.left = targetX - fireball.offsetWidth / 2 + 'px';
+        fireball.style.top = targetY - fireball.offsetHeight / 2 + 'px';
+    }, 0);
+
+    setTimeout(() => {
+        fireball.remove();
+        createExplosion2(targetX, targetY);
+    }, speed * 1000);
+}
+
+
+
 // Füze gönderme fonksiyonu
 function launchMissile(eventX,eventY) {
     const missile = document.createElement('div');
@@ -1087,7 +1382,7 @@ function createExplosion(x, y) {
   void explosion.offsetWidth;
 
   // Start the explosion animation
-  explosion.classList.add('expand');
+  explosion.classList.add('shockwave1');
 
   // Şok dalgalarını oluştur
   for (let i = 0; i < 3; i++) {
@@ -1127,6 +1422,45 @@ function createExplosion1(x, y) {
     explosion.remove();
   });
 }
+function createExplosion2(x, y) {
+  const explosion = document.createElement('div');
+  explosion.classList.add('explosion2');
+  document.body.appendChild(explosion);
+
+  explosion.style.left = x + 'px';
+  explosion.style.top = y + 'px';
+
+  // Trigger reflow to ensure the animation starts
+  void explosion.offsetWidth;
+
+  // Start the explosion animation with a bright flash
+  explosion.classList.add('flash2');
+
+  // Listen for the end of the flash animation to remove the explosion element
+  explosion.addEventListener('animationend', function() {
+    explosion.remove();
+  });
+}
+function createExplosion3(x, y) {
+  const explosion = document.createElement('div');
+  explosion.classList.add('explosion3');
+  document.body.appendChild(explosion);
+
+  explosion.style.left = x + 'px';
+  explosion.style.top = y + 'px';
+
+  // Trigger reflow to ensure the animation starts
+  void explosion.offsetWidth;
+
+  // Start the explosion animation with a bright flash
+  explosion.classList.add('shockwave3','pulse3');
+
+  // Listen for the end of the flash animation to remove the explosion element
+  explosion.addEventListener('animationend', function() {
+    explosion.remove();
+  });
+}
+
 
 function createParticle(x, y, direction) {
   const particle = document.createElement('div');
@@ -1162,15 +1496,30 @@ let lastExecutionTimeMissile = 0;
 let attackInterval; // Sürekli saldırı için interval tanımı
 let lastMousePosition = { x: 0, y: 0 }; // Son fare pozisyonunu saklamak için bir nesne
 
+
+let lastExecutionTimeFireball = 0;
+let FireballCooldown = 400; // Füze için bekleme süresi
+
+let lastExecutionTimeFlash = 0;
+let FlashCooldown = 2500; // Füze için bekleme süresi
 // Saldırı fonksiyonu
 function attack() {
   const currentTime = Date.now(); // Şu anki zamanı al
+  if (currentTime - lastExecutionTimeFlash > FlashCooldown) { // Eğer son çalışmadan 1200ms geçtiyse
+    launchflash(lastMousePosition.x,lastMousePosition.y);
+    lastExecutionTimeFlash = currentTime; // Son çalışma zamanını güncelle
+  }
   if (currentTime - lastExecutionTimeMissile > missileCooldown) { // Eğer son çalışmadan 1200ms geçtiyse
     launchMissile(lastMousePosition.x,lastMousePosition.y); // Füze
     lastExecutionTimeMissile = currentTime; // Son çalışma zamanını güncelle
   }
   launchLaser(lastMousePosition.x,lastMousePosition.y, laser1); // Lazer 1
   launchLaser(lastMousePosition.x,lastMousePosition.y, laser2); // Lazer 2
+  if (currentTime - lastExecutionTimeFireball > FireballCooldown) { // Eğer son çalışmadan 1200ms geçtiyse
+    launchultimateCannon(lastMousePosition.x,lastMousePosition.y);
+    lastExecutionTimeFireball = currentTime; // Son çalışma zamanını güncelle
+  }
+  createSmoke();
 }
 
 // Otomatik modu değiştirme fonksiyonu
@@ -1216,6 +1565,78 @@ var images = document.getElementsByTagName("*");
 for (var i = 0; i < images.length; i++) {
   images[i].ondragstart = function() { return false; };
 }
+  // Koordinatları güncelleme fonksiyonu
+  function updateCoordinates() {
+    // Div içindeki metni güncelle
+    document.getElementById('coordinates').textContent = 'X: ' + characterX + ' | Y: ' + characterY;
+  }
+
+  // Her 100ms'de koordinatları güncelle
+  setInterval(updateCoordinates, 100);
+
+// Duman parçacıklarını saklamak için bir dizi
+let smokeBubbles = [];
+
+// Karakterin son konumunu saklamak için değişkenler
+let lastX = characterX + (character.offsetWidth / 2);
+let lastY = characterY + (character.offsetHeight / 2);
+
+// Duman oluşturma fonksiyonu
+function createSmoke() {
+  // Yeni duman parçacığı oluştur
+  const smoke = document.createElement('div');
+  smoke.classList.add('smoke');
+  main.appendChild(smoke);
+
+  // Dumanın konumunu ayarla
+  smoke.style.left = lastX + 'px';
+  smoke.style.top = lastY + 'px';
+
+  smoke.style.height = 118 + 'px';
+  smoke.style.width = 118 + 'px';
+
+  smoke.style.opacity = 0.51;
+
+  // Eğer karakterin konumu değişmemişse ve duman parçacıkları varsa, son duman parçacığını büyüt
+  if (characterX + (character.offsetWidth / 2) === lastX && 
+      characterY + (character.offsetHeight / 2) === lastY && 
+      smokeBubbles.length > 0) {
+    let lastBubble = smokeBubbles[smokeBubbles.length - 1];
+    let newSize = parseInt(lastBubble.style.width) + 1.012;
+    let newSize1 = parseFloat(lastBubble.style.opacity) + 0.005;
+    if(newSize1<0.83){
+      lastBubble.style.opacity = newSize1;
+    }
+    if(newSize<1200){
+      if(newSize>160){
+        newSize=newSize+8;
+        if(newSize>390){
+          newSize=newSize+7;
+        }
+      }
+      lastBubble.style.width = newSize + 'px';
+      lastBubble.style.height = newSize + 'px';
+    }
+    smoke.remove();
+
+
+  } else {
+    // Karakterin konumu değiştiyse yeni duman parçacığını diziye ekle
+    smokeBubbles.push(smoke);
+  }
+
+  // Duman parçacıkları listesinin uzunluğunu kontrol et ve 30'dan fazla ise ilk parçacığı kaldır
+  if (smokeBubbles.length > 11) {
+    let removedBubble = smokeBubbles.shift();
+    removedBubble.remove(); // Listeden kaldırılan duman parçacığını DOM'dan kaldır
+  }
+
+  // Karakterin son konumunu güncelle
+  lastX = characterX + (character.offsetWidth / 2);
+  lastY = characterY + (character.offsetHeight / 2);
+}
+
+
 
     </script>
 </html>
