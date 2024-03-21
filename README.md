@@ -1,3 +1,3 @@
 # Space Game v1
 
-# [Play](https://only20iq.github.io/game/)
+# [Play Demo](https://only20iq.github.io/game/)
