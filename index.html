@@ -43,11 +43,12 @@
             -webkit-user-select: none;
             user-select: none;
             position: absolute;
-            width: 550px;
-            height: 550px;
+            /* width: 550px;
+            height: 550px; */
             background-color: transparent;
             background-size: cover;
-            z-index:1;
+            z-index:0;
+            transform: translate(-50%, -50%);
         }
           .unselectable {
   user-drag: none; 
@@ -56,6 +57,7 @@
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+  -webkit-touch-callout: none;
 }
           *{padding:0;margin:0;}
           #controls {
@@ -132,6 +134,66 @@
     opacity: 0;
   }
 }
+.explosion5 {
+  position: absolute;
+  border-radius: 500%;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  animation: shockwave5 0.5s forwards, pulse5 1s forwards;
+  z-index: 1;
+}
+
+@keyframes shockwave5 {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+    backdrop-filter: blur(0px);
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.7),
+                0 0 0 15px rgba(255, 216, 0, 0.8),
+                0 0 0 30px rgba(255, 0, 0, 0.6),
+                0 0 0 45px rgba(255, 255, 255, 0.4),
+                0 0 0 60px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    width: 200px; /* Genişlik 400px olarak ayarlandı */
+    height: 200px; /* Yükseklik 400px olarak ayarlandı */
+    opacity: 0;
+    backdrop-filter: blur(10px); /* Bulanıklık efekti artırıldı */
+    box-shadow: 0 0 0 60px rgba(255, 255, 255, 0),
+                0 0 0 90px rgba(255, 216, 0, 0),
+                0 0 0 120px rgba(255, 0, 0, 0),
+                0 0 0 150px rgba(255, 255, 255, 0),
+                0 0 0 180px rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes pulse5 {
+  0% {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(0px);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); /* Gölge boyutu artırıldı */
+    backdrop-filter: blur(10px); /* Bulanıklık efekti artırıldı */
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0);
+    backdrop-filter: blur(0px);
+  }
+}
+@keyframes blink2 {
+  0% {
+    opacity: 0.655;
+    height:6px;
+    border-radius: 5%;
+  }
+  100% {
+    opacity: 0.8;
+    height:1px;
+    border-radius: 1000%;
+  }
+}
 .trail1 {
     position: absolute;
     background-color: white;
@@ -149,8 +211,8 @@ body {
   overflow: hidden;
   background: black; /* Arka planı siyah yap */
   position: relative;
-  width: 4500px; /* Genişliği ekranın tamamını kaplayacak şekilde ayarla */
-  height: 4500px; /* Yüksekliği ekranın tamamını kaplayacak şekilde ayarla */
+  width: 8500px; /* Genişliği ekranın tamamını kaplayacak şekilde ayarla */
+  height: 8500px; /* Yüksekliği ekranın tamamını kaplayacak şekilde ayarla */
   z-index: -1;
 }
 
@@ -165,6 +227,7 @@ body {
   width: 4000px; /* Genişlik */
   height: 4000px; /* Yükseklik */
   z-index: 0; /* Z-index'i body'nin üzerine çıkar */
+  backdrop-filter: blur(50px);
 }
 
 #character {
@@ -194,8 +257,54 @@ body {
   transform: translate(-50%, -50%);
   /* transition: opacity 1s, width 1s, height 1s, background 1s; */
 }
-
-
+#core {
+    position: absolute;
+    top:65%;left:48%;
+    background: url(core.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 78px;
+  width: 78px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#core_gen {
+    position: absolute;
+    top:66%;left:48%;
+    background: url(hole.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 78px;
+  width: 78px;
+  z-index:3;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#lasercannon1 {
+    position: absolute;
+    top:71%;left:69%;
+    background: url(laser2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 98.25px;
+  width: 75px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#lasercannon2 {
+    position: absolute;
+    top:71%;left:6%;
+    background: url(laser2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 98.25px;
+  width: 75px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
 #ultimatecannon1 {
     position: absolute;
     top:60%;left:56%;
@@ -206,6 +315,7 @@ body {
   width: 62.5px;
   z-index:2;
   transform-origin: center center;
+  transform: translate(-50%, -50%);
 }
 #ultimatecannon2 {
     position: absolute;
@@ -217,6 +327,7 @@ body {
   width: 62.5px;
   z-index:2;
   transform-origin: center center;
+  transform: translate(-50%, -50%);
 }
 #railgun1 {
     position: absolute;
@@ -228,6 +339,7 @@ body {
   width: 37.5px;
   z-index:2;
   transform-origin: center center;
+  transform: translate(-50%, -50%);
 }
 #ball {
     position: absolute;
@@ -239,6 +351,7 @@ body {
   width: 33.25px;
   z-index:2;
   transform-origin: center center;
+  transform: translate(-50%, -50%);
 }
 #laser1 {
     position: absolute;
@@ -250,6 +363,7 @@ body {
   width: 33.25px;
   z-index:2;
   transform-origin: center center;
+  transform: translate(-50%, -50%);
 
 }
 #laser2 {
@@ -262,6 +376,7 @@ body {
   width: 33.25px;
   z-index:2;
   transform-origin: center center;
+  transform: translate(-50%, -50%);
 
 }
 
@@ -277,6 +392,20 @@ body {
             height: 20px;
             background-color: red;
         }
+        .laser2object {
+            -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+            position: absolute;
+            width: 118.4px;
+            height: 8.4px;
+            background: url(l2.png);
+            border-radius: 50%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: translate(-50%, -50%);
+            transform-origin: left center; /* Dönüşlerin merkez noktasını ayarla */
+        }
         .fireball {
             -ms-user-select: none;
     -webkit-user-select: none;
@@ -288,6 +417,7 @@ body {
             border-radius: 50%;
             background-size: contain;
             background-repeat: no-repeat;
+            transform: translate(-50%, -50%);
         }
         .ballflash {
             -ms-user-select: none;
@@ -300,6 +430,7 @@ body {
             border-radius: 50%;
             background-size: contain;
             background-repeat: no-repeat;
+            transform: translate(-50%, -50%);
         }
         .missile {
             -ms-user-select: none;
@@ -310,6 +441,7 @@ body {
             height: 10px;
             background: whitesmoke;
             border-radius: 50%;
+            transform: translate(-50%, -50%);
         }
         .laser {
             -ms-user-select: none;
@@ -322,6 +454,7 @@ body {
             border-radius: 50%;
             z-index:3;
             animation: flameTrail 0.60s infinite;
+            transform: translate(-50%, -50%);
         }
         /* .explosion {
             display: none;
@@ -457,6 +590,39 @@ body {
     width: 40px;
     height: 40px;
     opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.explosion4 {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #f34723;
+  transform: translate(-50%, -50%);
+  animation: flash4 0.4s forwards;
+  z-index: 2;
+}
+
+@keyframes flash4 {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  10% {
+    width: 2px;
+    height: 2px;
+  }
+  20% {
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+  }
+  30% {
+    width: 2px;
+    height: 2px;
   }
   100% {
     opacity: 0;
@@ -622,6 +788,54 @@ body {
   }
 } */
 
+.explosion5 {
+  position: absolute;
+  border-radius: 500%;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  animation: shockwave5 0.5s forwards, pulse5 1s forwards;
+  z-index: 1;
+}
+
+@keyframes shockwave5 {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+    backdrop-filter: blur(0px);
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.7),
+                0 0 0 15px rgba(255, 216, 0, 0.8),
+                0 0 0 30px rgba(255, 0, 0, 0.6),
+                0 0 0 45px rgba(255, 255, 255, 0.4),
+                0 0 0 60px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    width: 200px; /* Genişlik 400px olarak ayarlandı */
+    height: 200px; /* Yükseklik 400px olarak ayarlandı */
+    opacity: 0;
+    backdrop-filter: blur(10px); /* Bulanıklık efekti artırıldı */
+    box-shadow: 0 0 0 60px rgba(255, 255, 255, 0),
+                0 0 0 90px rgba(255, 216, 0, 0),
+                0 0 0 120px rgba(255, 0, 0, 0),
+                0 0 0 150px rgba(255, 255, 255, 0),
+                0 0 0 180px rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes pulse5 {
+  0% {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(0px);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); /* Gölge boyutu artırıldı */
+    backdrop-filter: blur(10px); /* Bulanıklık efekti artırıldı */
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0);
+    backdrop-filter: blur(0px);
+  }
+}
 .explosion3 {
   position: absolute;
   border-radius: 500%;
@@ -672,17 +886,169 @@ body {
 }
 
 
+
+
+
+.satellite {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: url('sg.png') no-repeat center center;
+    background-size: contain;
+    /* animation: rotate 4s linear infinite; */
+  }
+
+  /* @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  } */
+
+  @keyframes orbit {
+  0% { transform: rotate(0deg) translateX(10px); }
+  100% { transform: rotate(360deg) translateX(10px); }
+}
+/*   ---                                            ---                         */
+.explosion6 {
+  position: absolute;
+  border-radius: 500%;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  animation: shockwave6 2s cubic-bezier(0.19, 1, 0.22, 1) forwards, 
+             pulse6 0.25s ease-out infinite;
+  z-index: 1;
+}
+
+@keyframes shockwave6 {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+    backdrop-filter: blur(0px);
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.9),
+                0 0 0 25px rgba(255, 216, 0, 0.9),
+                0 0 0 50px rgba(255, 0, 0, 0.8),
+                0 0 0 75px rgba(255, 255, 255, 0.6),
+                0 0 0 100px rgba(255, 255, 255, 0.4),
+                0 0 0 125px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    width: 2400px;
+    height: 2400px;
+    opacity: 0;
+    backdrop-filter: blur(40px);
+    box-shadow: 0 0 0 150px rgba(255, 255, 255, 0),
+                0 0 0 300px rgba(255, 216, 0, 0),
+                0 0 0 450px rgba(255, 0, 0, 0),
+                0 0 0 600px rgba(255, 255, 255, 0),
+                0 0 0 750px rgba(255, 255, 255, 0),
+                0 0 0 900px rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes pulse6 {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 1);
+  }
+  50% {
+    box-shadow: 0 0 0 100px rgba(255, 255, 255, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 1);
+  }
+}
+/* @keyframes pulse6 {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9);
+  }
+  70% {
+    box-shadow: 0 0 0 30px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9);
+  }
+} */
+
+/* .explosion {
+  position: absolute;
+  border-radius: 500%;
+  background-color: white;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  animation: shockwave1 0.2s forwards;
+  z-index:1;
+}
+@keyframes shockwave1 {
+  0% {
+    width: 0;
+    height: 0;
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.5),
+                0 0 0 15px rgba(255, 255, 255, 0.3),
+                0 0 0 30px rgba(255, 255, 255, 0.2),
+                0 0 0 45px rgba(255, 255, 255, 0.1),
+                0 0 0 60px rgba(255, 255, 255, 0);
+  }
+  100% {
+    width: 200px;
+    height: 200px;
+    box-shadow: 0 0 0 60px rgba(255, 255, 255, 0),
+                0 0 0 120px rgba(255, 255, 255, 0),
+                0 0 0 180px rgba(255, 255, 255, 0),
+                0 0 0 240px rgba(255, 255, 255, 0),
+                0 0 0 300px rgba(255, 255, 255, 0);
+    opacity: 0;
+  }
+} */
+.explosion7 {
+  position: absolute;
+  border-radius: 500%;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  animation: red-shockwave 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  z-index: 2;
+}
+
+@keyframes red-shockwave {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+    box-shadow: 0 0 0 0px rgba(255, 0, 0, 1);
+  }
+  100% {
+    width: 800px;
+    height: 800px;
+    opacity: 0;
+    box-shadow: 0 0 0 100px rgba(255, 0, 0, 0);
+  }
+}
+
+
+
         </style>
     </head>
     <body class="unselectable">
       <div id="main" class="unselectable">
 <div id="benzersizID"></div>
-        <div id="character"><div id="ball"></div><div id="laser1"></div><div id="laser2"></div><div id="ultimatecannon1"></div><div id="ultimatecannon2"></div><div id="railgun1"></div></div>
+        <div id="character"><div id="ball"></div><div id="laser1"></div><div id="laser2"></div><div id="ultimatecannon1"></div><div id="ultimatecannon2"></div><div id="railgun1"></div><div id="lasercannon1"></div><div id="lasercannon2"></div><div id="core"></div><div id="core_gen"></div>
+          <!-- Uydular -->
+    <div class="satellite" style="top: 0; left: 50%;"></div>
+    <div class="satellite" style="top: 50%; right: 0;"></div>
+    <div class="satellite" style="bottom: 0; left: 50%;"></div>
+    <div class="satellite" style="top: 50%; left: 0;"></div>
+      </div>
         <!-- <div id="explosion" class="explosion"></div> -->
         <div id="square1" class="square" style="top: 100px; left: 100px;"></div>
         <div id="square2" class="square" style="top: 200px; left: 300px;"></div>
         <div id="square3" class="square" style="top: 400px; left: 500px;"></div>
         <div id="square4" class="square" style="top: 300px; left: 700px;"></div>
+
+
+        <img src="base1.png" class="imagemodel0" style="top: 1000px; left: 1000px;filter:brightness(70%)!important;">
+        <img src="base2.png" class="imagemodel0" style="top: 1000px; left: 1350px;">
+        <img src="base1.png" class="imagemodel0" style="top: 1100px; left: 1300px;filter:brightness(70%)!important;transform: rotate(180deg);">
+        <img src="base2.png" class="imagemodel0" style="top: 1400px; left: 1500px;">
+        <img src="base1.png" class="imagemodel0" style="top: 1232px; left: 1250px;filter:brightness(70%)!important;">
+        <img src="base2.png" class="imagemodel0" style="top: 1265px; left: 800px;transform: rotate(180deg);">
 
         <!-- <img src="img/GEOi6c3WQAAEumP.jpg" class="imagemodel0" style="top: 2300px; left: 2700px;">
         <img src="img/GEOjhE3WAAEMFFm.jpg" class="imagemodel0" style="top: 2496px; left: 268px;">
@@ -753,7 +1119,7 @@ function updateCamera() {
       behavior: 'auto' // Kaydırma işlemini yumuşak yap
   });
 }
-
+let core_gen = document.getElementById("core_gen"); // Topun ID'si 'ball' olsun
 let ball = document.getElementById("ball"); // Topun ID'si 'ball' olsun
 let laser1 = document.getElementById("laser1"); // Topun ID'si 'ball' olsun
 let laser2 = document.getElementById("laser2"); // Topun ID'si 'ball' olsun
@@ -986,7 +1352,7 @@ function rotateElement(elementId, eventX, eventY) {
 }
 function rotateBall(eventX,eventY) {
   // 'ball', 'laser1', 'laser2' için döngü
-  ['ball', 'laser1', 'laser2', 'ultimatecannon1', 'ultimatecannon2', 'railgun1'].forEach((id) => {
+  ['ball', 'laser1', 'laser2', 'ultimatecannon1', 'ultimatecannon2', 'railgun1', 'lasercannon1', 'lasercannon2'].forEach((id) => {
     rotateElement(id, event.clientX, event.clientY);
   });
 }
@@ -995,6 +1361,7 @@ function rotateBall(eventX,eventY) {
     // Karakteri hareket ettirme fonksiyonu
     function moveCharacter(direction) {
         updateSpeed(); // Hızı güncelle
+        if(speed==0){return;}
         const moveAmount = speed; // Hızı kullanarak hareket miktarını ayarla
         let newX = characterX;
   let newY = characterY;
@@ -1247,6 +1614,74 @@ function launchflash(eventX, eventY) {
         createExplosion3(targetX, targetY);
     }, speed * 1000);
 }
+let currentLaserCannon = 'u1'; // Hangi silahın ateşlemeye hazır olduğunu belirten değişken
+
+function launchULaserCannon(eventX, eventY) {
+    const cannon = (currentLaserCannon === 'u1') ? lasercannon1 : lasercannon2;
+    currentLaserCannon = (currentLaserCannon === 'u1') ? 'u2' : 'u1';
+
+    const l2 = document.createElement('div');
+    l2.classList.add('laser2object');
+    document.body.appendChild(l2);
+
+    const cannonRect = cannon.getBoundingClientRect();
+    const startX = (cannonRect.left + cannonRect.width / 2) + window.scrollX;
+    const startY = (cannonRect.top + cannonRect.height / 2) + window.scrollY;
+    l2.style.left = startX + 'px';
+    l2.style.top = startY + 'px';
+
+    const targetX = eventX + window.scrollX;
+    const targetY = eventY + window.scrollY;
+
+    const distance = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
+    const speed = distance / 5250;
+
+    // Füzenin başlangıç açısını ayarla ve sabitle
+    const angle = Math.atan2(targetY - startY, targetX - startX);
+    l2.style.transform = `rotate(${angle}rad)`;
+
+    l2.style.transition = `left ${speed}s linear, top ${speed}s linear`;
+
+    setTimeout(() => {
+        l2.style.left = targetX - l2.offsetWidth / 2 + 'px';
+        l2.style.top = targetY - l2.offsetHeight / 2 + 'px';
+    }, 0);
+
+    // Füzenin arkasında iz bırak
+    const trail = document.createElement('div');
+    trail.classList.add('trail1');
+    trail.style.transition = `width ${speed}s linear`;
+    trail.style.animation = `blink2 ${speed}s forwards`;
+    document.body.appendChild(trail);
+
+    // İzin başlangıç konumunu ayarla
+    trail.style.position = 'absolute';
+    trail.style.left = startX + 'px';
+    trail.style.top = startY + 'px';
+    trail.style.height = '4px';
+    trail.style.backgroundColor = '#f34723';
+    trail.style.borderRadius = '5%';
+    trail.style.transformOrigin = '0 0';
+    trail.style.transform = `rotate(${Math.atan2(targetY - startY, targetX - startX)}rad)`;
+    trail.style.width = '0px';
+    trail.style.backdropFilter = 'blur(5px)';
+    trail.style.filter = 'blur(5px)';
+
+    // İzin genişliğini animasyonla artır
+    setTimeout(() => {
+        trail.style.width = distance + 'px';
+        trail.style.opacity = '0.655';
+    }, 0);
+
+    setTimeout(() => {
+        l2.remove();
+        trail.remove(); // İzi kaldır
+        createExplosion4(targetX, targetY);
+        createExplosion5(targetX, targetY);
+    }, speed * 1000);
+}
+
+
 
 
 
@@ -1460,7 +1895,44 @@ function createExplosion3(x, y) {
     explosion.remove();
   });
 }
+function createExplosion4(x, y) {
+  const explosion = document.createElement('div');
+  explosion.classList.add('explosion4');
+  document.body.appendChild(explosion);
 
+  explosion.style.left = x + 'px';
+  explosion.style.top = y + 'px';
+
+  // Trigger reflow to ensure the animation starts
+  void explosion.offsetWidth;
+
+  // Start the explosion animation with a bright flash
+  explosion.classList.add('flash4');
+
+  // Listen for the end of the flash animation to remove the explosion element
+  explosion.addEventListener('animationend', function() {
+    explosion.remove();
+  });
+}
+function createExplosion5(x, y) {
+  const explosion = document.createElement('div');
+  explosion.classList.add('explosion5');
+  document.body.appendChild(explosion);
+
+  explosion.style.left = x + 'px';
+  explosion.style.top = y + 'px';
+
+  // Trigger reflow to ensure the animation starts
+  void explosion.offsetWidth;
+
+  // Start the explosion animation with a bright flash
+  explosion.classList.add('shockwave5','pulse5');
+
+  // Listen for the end of the flash animation to remove the explosion element
+  explosion.addEventListener('animationend', function() {
+    explosion.remove();
+  });
+}
 
 function createParticle(x, y, direction) {
   const particle = document.createElement('div');
@@ -1502,6 +1974,18 @@ let FireballCooldown = 400; // Füze için bekleme süresi
 
 let lastExecutionTimeFlash = 0;
 let FlashCooldown = 2500; // Füze için bekleme süresi
+
+let lastExecutionTimeULaserCannon = 0;
+let ULaserCannonCooldown = 275; // Füze için bekleme süresi
+
+
+let lastExecutionTimeFusion = 0;
+let FusionCooldown = 5900; // Füze için bekleme süresi
+var timeoutId;
+
+
+
+
 // Saldırı fonksiyonu
 function attack() {
   const currentTime = Date.now(); // Şu anki zamanı al
@@ -1519,6 +2003,22 @@ function attack() {
     launchultimateCannon(lastMousePosition.x,lastMousePosition.y);
     lastExecutionTimeFireball = currentTime; // Son çalışma zamanını güncelle
   }
+  if (currentTime - lastExecutionTimeULaserCannon > ULaserCannonCooldown) { // Eğer son çalışmadan 1200ms geçtiyse
+    launchULaserCannon(lastMousePosition.x,lastMousePosition.y);
+    lastExecutionTimeULaserCannon = currentTime; // Son çalışma zamanını güncelle
+  }
+  if (currentTime - lastExecutionTimeFusion > FusionCooldown) {
+  if (!timeoutId) { // Eğer timeoutId null veya undefined ise, yani daha önce bir setTimeout çağrısı yapılmamışsa
+    timeoutId = setTimeout(function() {
+      createShockwave6();
+      launchMissile6(lastMousePosition.x, lastMousePosition.y);
+      // setTimeout tamamlandığında timeoutId'yi sıfırla
+      timeoutId = null;
+    }, 1000);
+    regen_fusion_attack(lastMousePosition.x, lastMousePosition.y);
+    lastExecutionTimeFusion = currentTime;
+  }
+}
   createSmoke();
 }
 
@@ -1547,7 +2047,7 @@ window.addEventListener('mouseup', () => {
 });
 
 // Fare hareket olayını dinleme ve hedef pozisyonunu güncelleme
-main.addEventListener('mousemove', (event) => {
+window.addEventListener('mousemove', (event) => {
   lastMousePosition = { x: event.clientX, y: event.clientY }; // Son fare pozisyonunu güncelle
   rotateBall(lastMousePosition.x,lastMousePosition.y);
 });
@@ -1626,7 +2126,7 @@ function createSmoke() {
   }
 
   // Duman parçacıkları listesinin uzunluğunu kontrol et ve 30'dan fazla ise ilk parçacığı kaldır
-  if (smokeBubbles.length > 11) {
+  if (smokeBubbles.length > 10) {
     let removedBubble = smokeBubbles.shift();
     removedBubble.remove(); // Listeden kaldırılan duman parçacığını DOM'dan kaldır
   }
@@ -1638,5 +2138,224 @@ function createSmoke() {
 
 
 
+
+///////////////////////////////////////
+
+// Füze gönderme fonksiyonu
+function launchMissile6(eventX,eventY) {
+    const missile = document.createElement('div');
+    missile.classList.add('missile');
+    document.body.appendChild(missile);
+
+    // Füzenin başlangıç konumunu ayarla
+    const ballRect = core_gen.getBoundingClientRect();
+    const startX = (ballRect.left + ballRect.width / 2) + window.scrollX;
+    const startY = (ballRect.top + ballRect.height / 2) + window.scrollY;
+    missile.style.height = '50px';
+    missile.style.width = '50px';
+    missile.style.backdropFilter = 'blur(1.5rem)';
+    missile.style.filter = 'blur(1.5rem)';
+    missile.style.left = startX + 'px';
+    missile.style.top = startY + 'px';
+
+    // Füzenin hedefe doğru hareketini ayarla
+    const targetX = eventX + window.scrollX;
+    const targetY = eventY + window.scrollY;
+    
+    // Hedefin uzaklığına göre füzenin hızını hesapla
+    const distance = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
+    const speed = distance / 350; // Hedefe ulaşması için gereken süre (milisaniye cinsinden)
+    missile.style.transition = `all ${speed}s linear`;
+
+    // Füzenin arkasında iz bırak
+    const trail = document.createElement('div');
+    trail.classList.add('trail1');
+    trail.style.transition = `width ${speed}s linear`;
+    trail.style.animation = `blink1 ${speed}s forwards`;
+    document.body.appendChild(trail);
+
+    // İzin başlangıç konumunu ayarla
+    trail.style.position = 'absolute';
+    trail.style.left = startX + 'px';
+    trail.style.top = startY + 'px';
+    trail.style.height = '2px';
+    trail.style.backgroundColor = '#FCEAFF';
+    trail.style.transformOrigin = '0 0';
+    trail.style.transform = `rotate(${Math.atan2(targetY - startY, targetX - startX)}rad)`;
+    trail.style.width = '0px';
+
+    // İzin genişliğini animasyonla artır
+    setTimeout(() => {
+        trail.style.width = distance + 'px';
+    }, 0);
+
+    // Füzenin hedefe doğru hareketini başlat
+    setTimeout(() => {
+        missile.style.left = targetX - missile.offsetWidth / 2 + 'px'; // Füzenin merkezini hedefin merkezine getir
+        missile.style.top = targetY - missile.offsetHeight / 2 + 'px'; // Füzenin merkezini hedefin merkezine getir
+    }, 0);
+
+    // Hedefe ulaştığında patlama gerçekleşsin
+    setTimeout(() => {
+        missile.remove(); // Füzeyi kaldır
+        trail.remove(); // İzi kaldır
+        createExplosion6(targetX, targetY); // Patlama efekti fonksiyonunu çağır
+    }, speed * 1000); // Hızı milisaniyeye çevir
+}
+
+function createShockwave6(type) {
+  // Füzenin başlangıç konumunu ayarla
+  const ballRect = core_gen.getBoundingClientRect();
+  const startX = (ballRect.left + ballRect.width / 2) + window.scrollX;
+  const startY = (ballRect.top + ballRect.height / 2) + window.scrollY;
+  const shockwave = document.createElement('div');
+  shockwave.classList.add('explosion7');
+  document.body.appendChild(shockwave);
+
+  shockwave.style.left = startX + 'px';
+  shockwave.style.top = startY + 'px';
+
+  // Trigger reflow to ensure the animation starts
+  void shockwave.offsetWidth;
+
+  // Start the explosion animation
+  shockwave.classList.add('red-shockwave');
+
+  // Animasyon bitiminde elementi kaldır
+  shockwave.addEventListener('animationend', () => {
+    shockwave.remove();
+  });
+}
+
+function createExplosion6(x, y) {
+  const explosion = document.createElement('div');
+  explosion.classList.add('explosion6');
+  document.body.appendChild(explosion);
+
+  explosion.style.left = x + 'px';
+  explosion.style.top = y + 'px';
+
+  // Trigger reflow to ensure the animation starts
+  void explosion.offsetWidth;
+
+  // Start the explosion animation
+  explosion.classList.add('shockwave6','pulse6');
+
+  // Şok dalgalarını oluştur
+  // for (let i = 0; i < 3; i++) {
+  //   createShockwave6("long",x,y);
+  // }
+  // for (let i = 0; i < 6; i++) {
+  //   createShockwave6("short",x,y);
+  // }
+  // Listen for the end of the animation to remove the explosion element
+  explosion.addEventListener('animationend', function() {
+    explosion.remove();
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Uyduların core_gen etrafında dönmesi ve açılarını kaydetmesi
+const satellites = document.querySelectorAll('.satellite');
+let sat_def_angle = [];
+
+function recordSatelliteAngles() {
+  const hole = core_gen.getBoundingClientRect();
+  const targetX = (hole.left + hole.width / 2) + window.scrollX;
+  const targetY = (hole.top + hole.height / 2) + window.scrollY;
+
+  satellites.forEach((sat, index) => {
+    const rectSat = sat.getBoundingClientRect();
+    const startX = (rectSat.left + rectSat.width / 2) + window.scrollX;
+    const startY = (rectSat.top + rectSat.height / 2) + window.scrollY;
+
+    const angle = Math.atan2(targetY - startY, targetX - startX);
+    // Açıyı diziye kaydet
+    sat_def_angle[index] = angle;
+    // Uyduyu döndür
+    sat.style.transform = `rotate(${angle}rad)`;
+  });
+}
+
+// Daha önce kaydedilen açıları uygulayan fonksiyon
+function applyRecordedAngles() {
+  satellites.forEach((sat, index) => {
+    // Kaydedilen açıyı al ve uygula
+    const recordedAngle = sat_def_angle[index];
+    sat.style.transform = `rotate(${recordedAngle}rad)`;
+  });
+}
+
+// Açıları kaydet
+recordSatelliteAngles();
+
+
+
+    // Ateş etme fonksiyonu
+    function regen_fusion_attack(eventX,eventY) {
+        // Çizgi sonu
+        const hole = core_gen.getBoundingClientRect();
+        const targetX = (hole.left + hole.width / 2) + window.scrollX;
+        const targetY = (hole.top + hole.height / 2) + window.scrollY;
+        // Kaydedilen açıları uygula
+        applyRecordedAngles();
+      satellites.forEach(sat => {
+        // Çizgi başlangıcı
+        var satRect = sat.getBoundingClientRect();
+        var startX = (satRect.left + satRect.width / 2) + window.scrollX;
+        var startY = (satRect.top + satRect.height / 2) + window.scrollY;
+
+        var distance = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
+        var speed = distance / 1000;
+        // const angle = Math.atan2(targetY - startY, targetX - startX);
+        sat.style.animation = ``;
+        // sat.style.transform = `rotate(${angle}rad)`;
+        // Füzenin arkasında iz bırak
+        const trail = document.createElement('div');
+        trail.classList.add('trail1');
+        trail.style.transition = `width ${speed}s linear`;
+        trail.style.animation = `blink1 ${speed}s forwards`;
+        document.body.appendChild(trail);
+
+        // İzin başlangıç konumunu ayarla
+        trail.style.position = 'absolute';
+        trail.style.left = startX + 'px';
+        trail.style.top = startY + 'px';
+        trail.style.height = '12px';
+        trail.style.backgroundColor = '#f34723';
+        trail.style.borderRadius = '5%';
+        trail.style.transformOrigin = '0 0';
+        trail.style.transform = `rotate(${Math.atan2(targetY - startY, targetX - startX)}rad)`;
+        trail.style.width = '0px';
+        // trail.style.backdropFilter = 'blur(5px)';
+        // trail.style.filter = 'blur(5px)';
+
+        // İzin genişliğini animasyonla artır
+        setTimeout(() => {
+            trail.style.width = distance + 'px';
+            trail.style.opacity = '0.655';
+        }, 0);
+
+        setTimeout(() => {
+            trail.remove(); // İzi kaldır
+            setTimeout(() => {
+              sat.style.animation = `orbit 10s infinite linear`;
+            }, 3500);
+        }, speed * 1000);
+      });
+  }
     </script>
 </html>
