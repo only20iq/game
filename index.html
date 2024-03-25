@@ -22,7 +22,7 @@
         <meta http-equiv="Expires" content="0" />
         <link rel="shortcut icon" href="ico.ico">
         <noscript>Sorry, your browser does not support JavaScript!</noscript>
-        <script src="start.js"></script>
+        <!-- <script src="start.js"></script> -->
         <style>
                     #coordinates {
             position: fixed;
@@ -216,16 +216,16 @@ body {
   z-index: -1;
 }
 
-#main {
-  background: url('qaevyh08hsx51.webp') repeat center center scroll;
+#main /* Map Size 4000x4000 */ {
+  background: url('045dc3e5d3756e7758930ff7a1441ab2.jpg') repeat center center scroll;
   background-clip: padding-box;
   background-size: cover; /* Resmi kaplayacak şekilde ayarla */
   position: absolute; /* Pozisyonu sabitle */
   top:50%;
   left:50%;
   transform: translate(-50%, -50%); /* #main'i tam ortaya al */
-  width: 4000px; /* Genişlik */
-  height: 4000px; /* Yükseklik */
+  width: 7680px; /* Genişlik */
+  height: 4320px; /* Yükseklik */
   z-index: 0; /* Z-index'i body'nin üzerine çıkar */
   backdrop-filter: blur(50px);
 }
@@ -234,7 +234,10 @@ body {
   -ms-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+  /* position: absolute; */
+  position: -webkit-sticky; /* Safari */
   position: absolute;
+
   width: 375px;
   height: 666px;
   background: url(ship1.png);
@@ -265,22 +268,27 @@ body {
   background-size: contain;
   height: 78px;
   width: 78px;
-  z-index:2;
+  z-index:3;
   transform-origin: center center;
   transform: translate(-50%, -50%);
 }
 #core_gen {
     position: absolute;
-    top:66%;left:48%;
+    top:59.5%;left:37.5%;
     background: url(hole.png);
   background-repeat: no-repeat;
   background-size: contain;
   height: 78px;
   width: 78px;
-  z-index:3;
+  z-index:2;
   transform-origin: center center;
   transform: translate(-50%, -50%);
+  animation: rotate 4s linear infinite;
 }
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
 #lasercannon1 {
     position: absolute;
     top:71%;left:69%;
@@ -895,13 +903,7 @@ body {
     height: 50px;
     background: url('sg.png') no-repeat center center;
     background-size: contain;
-    /* animation: rotate 4s linear infinite; */
   }
-
-  /* @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  } */
 
   @keyframes orbit {
   0% { transform: rotate(0deg) translateX(10px); }
@@ -1023,19 +1025,296 @@ body {
 }
 
 
+/*--------------------------------------------------*/
+#nemesis {
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* position: absolute; */
+  position: -webkit-sticky; /* Safari */
+  position: absolute;
+  width: 1006px;
+  height: 1788.5px;
+  background: url(Dreadnoughtv1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: translate(-50%, -50%);
+  /* border:1px solid red; */
+  transform-origin: center center; /* Dönüşlerin merkez noktasını ayarla */
+  z-index:0;
+}
 
+/*-----------*/
+#ball1 {
+    position: absolute;
+    top:20%;left:48%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball2 {
+    position: absolute;
+    top:20%;left:56%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball3 {
+    position: absolute;
+    top:25%;left:43%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball4 {
+    position: absolute;
+    top:25%;left:61%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball5 {
+    position: absolute;
+    top:30%;left:43%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball6 {
+    position: absolute;
+    top:30%;left:61%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball7 {
+    position: absolute;
+    top:40%;left:43%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball8 {
+    position: absolute;
+    top:40%;left:61%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball9 {
+    position: absolute;
+    top:45%;left:61%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball10 {
+    position: absolute;
+    top:45%;left:43%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball11 {
+    position: absolute;
+    top:50%;left:61%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball12 {
+    position: absolute;
+    top:50%;left:43%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball13 {
+    position: absolute;
+    top:55%;left:61%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball14 {
+    position: absolute;
+    top:55%;left:43%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball15 {
+    position: absolute;
+    top:25%;left:48%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#ball16 {
+    position: absolute;
+    top:25%;left:56%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+/*--------------------------------------------------*/
+#liberator {
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* position: absolute; */
+  position: absolute;
+  width: 302px;
+  height: 1308px;
+  background: url(Liberator.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: translate(-50%, -50%);
+  /* border:1px solid red; */
+  transform-origin: center center; /* Dönüşlerin merkez noktasını ayarla */
+  z-index:0;
+}
+#lball1 {
+    position: absolute;
+    top:5%;left:50%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#lball2 {
+    position: absolute;
+    top:15%;left:50%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#lball3 {
+    position: absolute;
+    top:55%;left:50%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
+#lball4 {
+    position: absolute;
+    top:65%;left:50%;
+    background: url(turret.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 74px;
+  width: 33.25px;
+  z-index:2;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+}
         </style>
     </head>
     <body class="unselectable">
       <div id="main" class="unselectable">
 <div id="benzersizID"></div>
         <div id="character"><div id="ball"></div><div id="laser1"></div><div id="laser2"></div><div id="ultimatecannon1"></div><div id="ultimatecannon2"></div><div id="railgun1"></div><div id="lasercannon1"></div><div id="lasercannon2"></div><div id="core"></div><div id="core_gen"></div>
-          <!-- Uydular -->
+                <!-- Uydular -->
     <div class="satellite" style="top: 0; left: 50%;"></div>
     <div class="satellite" style="top: 50%; right: 0;"></div>
     <div class="satellite" style="bottom: 0; left: 50%;"></div>
-    <div class="satellite" style="top: 50%; left: 0;"></div>
-      </div>
+    <div class="satellite" style="top: 50%; left: 0;"></div></div>
+        <div id="nemesis"><div id="ball1"></div><div id="ball2"></div><div id="ball3"></div><div id="ball4"></div><div id="ball5"></div><div id="ball6"></div><div id="ball7"></div><div id="ball8"></div><div id="ball9"></div><div id="ball10"></div><div id="ball11"></div><div id="ball12"></div><div id="ball13"></div><div id="ball14"></div><div id="ball15"></div><div id="ball16"></div></div>
+        <div id="liberator"><div id="lball1"></div><div id="lball2"></div><div id="lball3"></div><div id="lball4"></div></div>
         <!-- <div id="explosion" class="explosion"></div> -->
         <div id="square1" class="square" style="top: 100px; left: 100px;"></div>
         <div id="square2" class="square" style="top: 200px; left: 300px;"></div>
@@ -1043,12 +1322,13 @@ body {
         <div id="square4" class="square" style="top: 300px; left: 700px;"></div>
 
 
-        <img src="base1.png" class="imagemodel0" style="top: 1000px; left: 1000px;filter:brightness(70%)!important;">
-        <img src="base2.png" class="imagemodel0" style="top: 1000px; left: 1350px;">
-        <img src="base1.png" class="imagemodel0" style="top: 1100px; left: 1300px;filter:brightness(70%)!important;transform: rotate(180deg);">
-        <img src="base2.png" class="imagemodel0" style="top: 1400px; left: 1500px;">
-        <img src="base1.png" class="imagemodel0" style="top: 1232px; left: 1250px;filter:brightness(70%)!important;">
-        <img src="base2.png" class="imagemodel0" style="top: 1265px; left: 800px;transform: rotate(180deg);">
+        <img id="base1_1" src="base1.png" class="imagemodel0" style="top: 1000px; left: 1000px;filter:brightness(70%)!important;">
+        <img id="base1_2" src="base2.png" class="imagemodel0" style="top: 1000px; left: 1350px;">
+        <img id="base1_3" src="base1.png" class="imagemodel0" style="top: 1100px; left: 1300px;filter:brightness(70%)!important;transform: rotate(180deg);">
+        <img id="base1_4" src="base2.png" class="imagemodel0" style="top: 1400px; left: 1500px;">
+        <img id="base1_5" src="base1.png" class="imagemodel0" style="top: 1232px; left: 1250px;filter:brightness(70%)!important;">
+        <img id="base1_6" src="base2.png" class="imagemodel0" style="top: 1265px; left: 800px;transform: rotate(180deg);">
+
 
         <!-- <img src="img/GEOi6c3WQAAEumP.jpg" class="imagemodel0" style="top: 2300px; left: 2700px;">
         <img src="img/GEOjhE3WAAEMFFm.jpg" class="imagemodel0" style="top: 2496px; left: 268px;">
@@ -1080,6 +1360,39 @@ body {
 
 
 
+
+
+<div id="controls" draggable="false" ondragstart="return false;" class="unselectable" style="left:0!important;">
+  <button id="btnUpLeft" onclick="ship_move('nemesis','up-left')" onmousedown="ship_move_AUTO_v1('nemesis','up-left')" onmouseup="ship_move_AUTO_v1_KILL('nemesis')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sol-üst.png"></button>
+  <button id="btnUp" onclick="ship_move('nemesis','up')" onmousedown="ship_move_AUTO_v1('nemesis','up')" onmouseup="ship_move_AUTO_v1_KILL('nemesis')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Üst.png"></button>
+  <button id="btnUpRight" onclick="ship_move('nemesis','up-right')" onmousedown="ship_move_AUTO_v1('nemesis','up-right')" onmouseup="ship_move_AUTO_v1_KILL('nemesis')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sağ-üst.png"></button>
+  <!-- -->
+  <button id="btnLeft" onclick="ship_move('nemesis','left')" onmousedown="ship_move_AUTO_v1('nemesis','left')" onmouseup="ship_move_AUTO_v1_KILL('nemesis')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Sol.png"></button>
+  <button id="btnAuto" onclick="ship_move('nemesis','auto')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="rocket.png"></button>
+  <button id="btnRight" onclick="ship_move('nemesis','right')" onmousedown="ship_move_AUTO_v1('nemesis','right')" onmouseup="ship_move_AUTO_v1_KILL('nemesis')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Sağ.png"></button>
+  <!-- -->
+  <button id="btnDownLeft" onclick="ship_move('nemesis','down-left')" onmousedown="ship_move_AUTO_v1('nemesis','down-left')" onmouseup="ship_move_AUTO_v1_KILL('nemesis')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sol-alt.png"></button>
+  <button id="btnDown" onclick="ship_move('nemesis','down')" onmousedown="ship_move_AUTO_v1('nemesis','down')" onmouseup="ship_move_AUTO_v1_KILL('nemesis')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Alt.png"></button>
+  <button id="btnDownRight" onclick="ship_move('nemesis','down-right')" onmousedown="ship_move_AUTO_v1('nemesis','down-right')" onmouseup="ship_move_AUTO_v1_KILL('nemesis')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sağ-alt.png"></button>
+</div>
+
+
+
+<div id="controls" draggable="false" ondragstart="return false;" class="unselectable" style="left:50%!important;right:50%!important;">
+  <button id="btnUpLeft" onclick="ship_move('liberator','up-left')" onmousedown="ship_move_AUTO_v1('liberator','up-left')" onmouseup="ship_move_AUTO_v1_KILL('liberator')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sol-üst.png"></button>
+  <button id="btnUp" onclick="ship_move('liberator','up')" onmousedown="ship_move_AUTO_v1('liberator','up')" onmouseup="ship_move_AUTO_v1_KILL('liberator')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Üst.png"></button>
+  <button id="btnUpRight" onclick="ship_move('liberator','up-right')" onmousedown="ship_move_AUTO_v1('liberator','up-right')" onmouseup="ship_move_AUTO_v1_KILL('liberator')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sağ-üst.png"></button>
+  <!-- -->
+  <button id="btnLeft" onclick="ship_move('liberator','left')" onmousedown="ship_move_AUTO_v1('liberator','left')" onmouseup="ship_move_AUTO_v1_KILL('liberator')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Sol.png"></button>
+  <button id="btnAuto" onclick="ship_move('liberator','auto')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="rocket.png"></button>
+  <button id="btnRight" onclick="ship_move('liberator','right')" onmousedown="ship_move_AUTO_v1('liberator','right')" onmouseup="ship_move_AUTO_v1_KILL('liberator')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Sağ.png"></button>
+  <!-- -->
+  <button id="btnDownLeft" onclick="ship_move('liberator','down-left')" onmousedown="ship_move_AUTO_v1('liberator','down-left')" onmouseup="ship_move_AUTO_v1_KILL('liberator')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sol-alt.png"></button>
+  <button id="btnDown" onclick="ship_move('liberator','down')" onmousedown="ship_move_AUTO_v1('liberator','down')" onmouseup="ship_move_AUTO_v1_KILL('liberator')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="Alt.png"></button>
+  <button id="btnDownRight" onclick="ship_move('liberator','down-right')" onmousedown="ship_move_AUTO_v1('liberator','down-right')" onmouseup="ship_move_AUTO_v1_KILL('liberator')"><img draggable="false" ondragstart="return false;" class="unselectable" height="32" src="sağ-alt.png"></button>
+</div>
+
+
 </body>
     <script>
 
@@ -1104,6 +1417,12 @@ function stopMove() {
 
 let main = document.getElementById("main");
 let character = document.getElementById("character");
+let nemesis = document.getElementById("nemesis");
+let nemesisX = 1500;
+let nemesisY = 1000;
+let liberator = document.getElementById("liberator");
+let liberatorX = 2500;
+let liberatorY = 2000;
 // document.body.style.width = "4000px"; // Haritanın genişliğini ayarla
 // document.body.style.height = "4000px"; // Haritanın yüksekliğini ayarla
 // document.body.style.position = "relative"; // Pozisyon referansını ayarla
@@ -1126,8 +1445,8 @@ let laser2 = document.getElementById("laser2"); // Topun ID'si 'ball' olsun
 let ultimatecannon1 = document.getElementById("ultimatecannon1");
 let ultimatecannon2 = document.getElementById("ultimatecannon2");
 let railgun1 = document.getElementById("railgun1");
-let characterX = 1000;
-let characterY = 1000;
+let characterX = 4500;
+let characterY = 1100;
 var lookDirection = 'up'; // Başlangıç bakış yönü
 // let characterWidth = 68; // Karakterin genişliği
 // let characterHeight = 277; // Karakterin yüksekliği
@@ -2051,13 +2370,270 @@ window.addEventListener('mousemove', (event) => {
   lastMousePosition = { x: event.clientX, y: event.clientY }; // Son fare pozisyonunu güncelle
   rotateBall(lastMousePosition.x,lastMousePosition.y);
 });
+function ship_move(ship,direction,extratime=-1,extraloc=-1) {
+        if (direction === 'auto') {
+            // Otomatik yürüme için bir interval başlat
+            const autoMove = setInterval(() => {
+              if(ship=="liberator"){
+                ship_move(ship,lookDirectionL);
+              }else if(ship=="nemesis"){
+                ship_move(ship,lookDirectionN);
+              }
+            }, 30);
+            // Otomatik yürümeyi durdurmak için bir yol sağla
+            setTimeout(() => { clearInterval(autoMove); }, 7000); // 5 saniye sonra durdur
+        }else {
+          ship_moveN(ship,direction,extratime,extraloc);
+          ship_rotate(ship,direction,extratime,extraloc);
+        }
 
-window.onload = function() {
-  setTimeout(()=>{
-    move("up");
-  updateCamera();
-  },1000)
-};
+    }
+let lookDirectionN = 'up';
+let lookDirectionL = 'up';
+let speedN = 1;
+let speedL = 1;
+// liberator,speedL,liberatorX,liberatorY,lookDirectionL
+function ship_rotate(ship,direction, extratime = -1, extraloc = -1) {
+    return new Promise((resolve) => {
+        let cache_speed_0;
+        let cache_look_direction;
+        if(ship=="liberator"){
+          cache_speed_0 = speedL;
+          cache_look_direction = lookDirectionL;
+        }else if(ship=="nemesis"){
+          cache_speed_0 = speedN;
+          cache_look_direction = lookDirectionN;
+        }
+        if (cache_speed_0 !== 0) {
+            if (cache_look_direction !== direction) {
+                // Dönüş başlatılıyor, 1 saniye bekletiliyor
+                if(ship=="liberator"){
+                  speedL = 0;
+                  lookDirectionL = direction;
+                  liberator.style.transition = extratime !== -1 || extraloc !== -1 ? `transform ${extratime}s ease-in-out` : "transform 3.5s ease-in-out";
+                }else if(ship=="nemesis"){
+                  speedN = 0;
+                  lookDirectionN = direction;
+                  nemesis.style.transition = extratime !== -1 || extraloc !== -1 ? `transform ${extratime}s ease-in-out` : "transform 3.5s ease-in-out";
+                }
+                let currentTransform;
+                if(ship=="liberator"){
+                  currentTransform = window.getComputedStyle(liberator).transform;
+                }else if(ship=="nemesis"){
+                  currentTransform = window.getComputedStyle(nemesis).transform;
+                }
+                const matrixMatch = currentTransform.match(/matrix.*\((.+)\)/);
+                const currentAngle = matrixMatch ? rotationMatrixToDegrees(matrixMatch[1].split(", ")) : 0;
+                const targetAngles = {
+                    up: 0, down: 180, left: 270, right: 90,
+                    "up-left": 315, "down-left": 225,
+                    "up-right": 45, "down-right": 135
+                };
+                const targetAngle = targetAngles[direction];
+                let angleDifference = (targetAngle - currentAngle + 360) % 360;
+                angleDifference = angleDifference > 180 ? angleDifference - 360 : angleDifference;
+                
+                if(ship=="liberator"){
+                  liberator.style.transform = `translate(${liberatorX}px, ${liberatorY}px) rotate(${targetAngle}deg)`;
+                }else if(ship=="nemesis"){
+                  nemesis.style.transform = `translate(${nemesisX}px, ${nemesisY}px) rotate(${targetAngle}deg)`;
+                }
+                
+                // 1 saniye sonra hızı tekrar 1 yap
+                setTimeout(() => {
+                    if(ship=="liberator"){
+                      speedL = 1;
+                    }else if(ship=="nemesis"){
+                      speedN = 1;
+                    }
+                    resolve(); // Promise tamamlandı
+                }, 3500);
+            } else {
+                const targetAngles = {
+                    up: 0, down: 180, left: 270, right: 90,
+                    "up-left": 315, "down-left": 225,
+                    "up-right": 45, "down-right": 135
+                };
+                const targetAngle = targetAngles[direction];
+                if(ship=="liberator"){
+                  liberator.style.transition = 'none';
+                  liberator.style.transform = `translate(${liberatorX}px, ${liberatorY}px) rotate(${targetAngle}deg)`;
+                }else if(ship=="nemesis"){
+                  nemesis.style.transition = 'none';
+                  nemesis.style.transform = `translate(${nemesisX}px, ${nemesisY}px) rotate(${targetAngle}deg)`;
+                }
+                // Yön aynı, dönüş yok, hemen resolve et
+                resolve();
+            }
+        } else {
+            // Hız 0, hareket yok, hemen resolve et
+            resolve();
+        }
+    });
+}
+
+// Diğer fonksiyonlarınızı ve `nemesis_move_AUTO_v2` fonksiyonunuzu burada uygun şekilde güncelleyebilirsiniz.
+
+
+
+    // Karakteri hareket ettirme fonksiyonu  ship_move("liberator","up");
+  function ship_moveN(ship,direction,extratime=-1,extraloc=-1) {
+    let moveAmount;
+    let newX,newY;
+    if(ship=="liberator"){
+      if(speedL==0){return;}
+      moveAmount = speedL;
+      newX = liberatorX;
+      newY = liberatorY;
+    }else if(ship=="nemesis"){
+      if(speedN==0){return;}
+      moveAmount = speedN;
+      newX = nemesisX;
+      newY = nemesisY;
+    }
+      if(extratime!=-1||extraloc!=-1){
+        moveAmount = extraloc;
+      }
+  switch (direction) {
+    case 'up':
+      newY -= moveAmount;
+      break;
+    case 'down':
+      newY += moveAmount;
+      break;
+    case 'left':
+      newX -= moveAmount;
+      break;
+    case 'right':
+      newX += moveAmount;
+      break;
+    // Çapraz hareketler
+    case 'up-left':
+      newY -= moveAmount;
+      newX -= moveAmount;
+      break;
+    case 'down-left':
+      newY += moveAmount;
+      newX -= moveAmount;
+      break;
+    case 'up-right':
+      newY -= moveAmount;
+      newX += moveAmount;
+      break;
+    case 'down-right':
+      newY += moveAmount;
+      newX += moveAmount;
+      break;
+  }
+  // Harita sınırlarını kontrol et
+  let character_ship_000;
+  if(ship=="liberator"){
+    character_ship_000 = liberator;
+  }else if(ship=="nemesis"){
+    character_ship_000 = nemesis;
+  }
+  const mainRect = main.getBoundingClientRect();
+  if (newX >= 0 && newX <= mainRect.width-character_ship_000.offsetWidth) {
+    if(ship=="liberator"){
+      liberatorX = newX;
+    }else if(ship=="nemesis"){
+      nemesisX = newX;
+    }
+  }
+  if (newY >= 0 && newY <= mainRect.height-character_ship_000.offsetHeight) {
+    if(ship=="liberator"){
+      liberatorY = newY;
+      // console.log(liberatorY,newY);
+    }else if(ship=="nemesis"){
+      nemesisY = newY;
+    }
+  }
+        // nemesis.style.transform = `translate(${nemesisX}px, ${nemesisY}px)`;
+        // checkCollision();
+    }
+
+
+let nemesis_moveIntervalAX;
+let liberator_moveIntervalAX;
+function ship_move_AUTO_v1(ship,direction, extratime = -1, extraloc = -1) {
+    if(ship=="liberator"){
+      clearInterval(liberator_moveIntervalAX);
+    }else if(ship=="nemesis"){
+      clearInterval(nemesis_moveIntervalAX);
+    }
+    // Yeni hareketi başlat
+    return new Promise((resolve) => {
+      if(ship=="liberator"){
+        liberator_moveIntervalAX = setInterval(() => {
+            ship_moveN(ship, direction, extratime, extraloc);
+            ship_rotate(ship, direction, extratime, extraloc);
+            resolve(); // Hareket tamamlandığında resolve çağrılır
+        }, 30);
+      }else if(ship=="nemesis"){
+        nemesis_moveIntervalAX = setInterval(() => {
+            ship_moveN(ship, direction, extratime, extraloc);
+            ship_rotate(ship, direction, extratime, extraloc);
+            resolve(); // Hareket tamamlandığında resolve çağrılır
+        }, 30);
+      }
+    });
+}
+
+function ship_move_AUTO_v1_KILL(ship) {
+    if(ship=="liberator"){
+      clearInterval(liberator_moveIntervalAX);
+    }else if(ship=="nemesis"){
+      clearInterval(nemesis_moveIntervalAX);
+    }
+}
+
+function ship_move_AUTO_v2(ship,movementArray, extratime = -1, extraloc = -1) {
+    if(ship=="liberator"){
+      console.log("Liberator Start Coordinates [X:" + liberatorX + " Y:" + liberatorY + "]");
+    }else if(ship=="nemesis"){
+      console.log("Nemesis Start Coordinates [X:" + nemesisX + " Y:" + nemesisY + "]");
+    }
+    let promiseChain = Promise.resolve();
+
+    movementArray.forEach((movement) => {
+        let [direction, time] = movement.split("/");
+        time = parseInt(time, 10) * 1000; // Saniyeyi milisaniyeye çevir
+
+        promiseChain = promiseChain.then(() => {
+            if (direction === 'stop') {
+                ship_move_AUTO_v1_KILL(ship);
+                return Promise.resolve(); // Hemen resolve eder
+            } else {
+                // Eğer süre 0 ise, sadece dönüş yap
+                if (time === 0) {
+                    return ship_rotate(ship, direction, extratime, extraloc);
+                } else {
+                    // Hareketi başlat ve belirtilen süre kadar bekle
+                    return ship_move_AUTO_v1(ship, direction, extratime, extraloc).then(() => {
+                        return new Promise((resolve) => {
+                            setTimeout(resolve, time);
+                        });
+                    });
+                }
+            }
+        });
+    });
+
+    return promiseChain.then(() => {
+        ship_move_AUTO_v1_KILL(ship);
+        if(ship=="liberator"){
+          console.log("Liberator End Coordinates [X:" + liberatorX + " Y:" + liberatorY + "]");
+        }else if(ship=="nemesis"){
+          console.log("Nemesis End Coordinates [X:" + nemesisX + " Y:" + nemesisY + "]");
+        }
+    });
+}
+
+
+
+// Fonksiyonu test etmek için örnek bir hareket dizisi
+// nemesis_move_AUTO_v2(["up/10", "stop/2", "left/5"]);
+
 // Tüm img etiketlerini seç
 var images = document.getElementsByTagName("*");
 
@@ -2357,5 +2933,379 @@ recordSatelliteAngles();
         }, speed * 1000);
       });
   }
+
+
+
+function ship_launch_laser_cannon(ship,id,event,mode=0) {
+  let cannonRect;
+  cannonRect = document.getElementById(id).getBoundingClientRect();
+  const startX = (cannonRect.left + cannonRect.width / 2) + window.scrollX;
+  const startY = (cannonRect.top + cannonRect.height / 2) + window.scrollY;
+  let targetX,targetY,TargetCannonRect,xTargetX,yTargetY;
+  if (Array.isArray(event)) {
+    if (event.length === 2) {
+      // console.log(id + ' has launched a laser cannon at coordinates ' + event);
+      targetX = event[0];
+      targetY = event[1];
+    } else if (event.length === 1) {
+      // console.log(id + ' has targeted ID ' + event[0] + ' with a laser cannon');
+      TargetCannonRect = document.getElementById(event[0]).getBoundingClientRect();
+      xTargetX = (TargetCannonRect.left + TargetCannonRect.width / 2);
+      yTargetY = (TargetCannonRect.top + TargetCannonRect.height / 2);
+      targetX = xTargetX + window.scrollX;
+      targetY = yTargetY + window.scrollY;
+    }
+  } else {
+    // console.log(id + ' has targeted ID ' + event + ' with a laser cannon');
+    TargetCannonRect = document.getElementById(event).getBoundingClientRect();
+    xTargetX = (TargetCannonRect.left + TargetCannonRect.width / 2);
+    yTargetY = (TargetCannonRect.top + TargetCannonRect.height / 2);
+    targetX = xTargetX + window.scrollX;
+    targetY = yTargetY + window.scrollY;
+  }
+  let lookDirection;
+  if(ship=="liberator"){
+    lookDirection=lookDirectionL;
+  }else if(ship=="nemesis"){
+    lookDirection=lookDirectionN;
+  }
+  ship_rotateBall([id],[xTargetX,yTargetY],lookDirection);
+  if(mode==0){ // ULaserCannon
+    const l2 = document.createElement('div');
+    l2.classList.add('laser2object');
+    document.body.appendChild(l2);
+
+    l2.style.left = startX + 'px';
+    l2.style.top = startY + 'px';
+    const distance = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
+    const speed = distance / 5250;
+
+    // Füzenin başlangıç açısını ayarla ve sabitle
+    const angle = Math.atan2(targetY - startY, targetX - startX);
+    l2.style.transform = `rotate(${angle}rad)`;
+
+    l2.style.transition = `left ${speed}s linear, top ${speed}s linear`;
+
+    setTimeout(() => {
+        l2.style.left = targetX - l2.offsetWidth / 2 + 'px';
+        l2.style.top = targetY - l2.offsetHeight / 2 + 'px';
+    }, 0);
+
+    // Füzenin arkasında iz bırak
+    const trail = document.createElement('div');
+    trail.classList.add('trail1');
+    trail.style.transition = `width ${speed}s linear`;
+    trail.style.animation = `blink2 ${speed}s forwards`;
+    document.body.appendChild(trail);
+
+    // İzin başlangıç konumunu ayarla
+    trail.style.position = 'absolute';
+    trail.style.left = startX + 'px';
+    trail.style.top = startY + 'px';
+    trail.style.height = '4px';
+    trail.style.backgroundColor = '#f34723';
+    trail.style.borderRadius = '5%';
+    trail.style.transformOrigin = '0 0';
+    trail.style.transform = `rotate(${Math.atan2(targetY - startY, targetX - startX)}rad)`;
+    trail.style.width = '0px';
+    trail.style.backdropFilter = 'blur(5px)';
+    trail.style.filter = 'blur(5px)';
+
+    // İzin genişliğini animasyonla artır
+    setTimeout(() => {
+        trail.style.width = distance + 'px';
+        trail.style.opacity = '0.655';
+    }, 0);
+
+    setTimeout(() => {
+        l2.remove();
+        trail.remove(); // İzi kaldır
+        createExplosion4(targetX, targetY);
+        createExplosion5(targetX, targetY);
+    }, speed * 1000);
+  }else if(mode==1){
+    const missile = document.createElement('div');
+    missile.classList.add('missile');
+    document.body.appendChild(missile);
+    missile.style.left = startX + 'px';
+    missile.style.top = startY + 'px';
+    // Hedefin uzaklığına göre füzenin hızını hesapla
+    const distance = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
+    const speed = distance / 500; // Hedefe ulaşması için gereken süre (milisaniye cinsinden)
+    missile.style.transition = `all ${speed}s linear`;
+
+    // Füzenin arkasında iz bırak
+    const trail = document.createElement('div');
+    trail.classList.add('trail1');
+    trail.style.transition = `width ${speed}s linear`;
+    trail.style.animation = `blink1 ${speed}s forwards`;
+    document.body.appendChild(trail);
+
+    // İzin başlangıç konumunu ayarla
+    trail.style.position = 'absolute';
+    trail.style.left = startX + 'px';
+    trail.style.top = startY + 'px';
+    trail.style.height = '2px';
+    trail.style.backgroundColor = '#FCEAFF';
+    trail.style.transformOrigin = '0 0';
+    trail.style.transform = `rotate(${Math.atan2(targetY - startY, targetX - startX)}rad)`;
+    trail.style.width = '0px';
+
+    // İzin genişliğini animasyonla artır
+    setTimeout(() => {
+        trail.style.width = distance + 'px';
+    }, 0);
+
+    // Füzenin hedefe doğru hareketini başlat
+    setTimeout(() => {
+        missile.style.left = targetX - missile.offsetWidth / 2 + 'px'; // Füzenin merkezini hedefin merkezine getir
+        missile.style.top = targetY - missile.offsetHeight / 2 + 'px'; // Füzenin merkezini hedefin merkezine getir
+    }, 0);
+
+    // Hedefe ulaştığında patlama gerçekleşsin
+    setTimeout(() => {
+        missile.remove(); // Füzeyi kaldır
+        trail.remove(); // İzi kaldır
+        createExplosion(targetX, targetY); // Patlama efekti fonksiyonunu çağır
+    }, speed * 1000); // Hızı milisaniyeye çevir
+  }else if(mode==2){
+    const ballflash = document.createElement('div');
+    ballflash.classList.add('ballflash');
+    document.body.appendChild(ballflash);
+    ballflash.style.left = startX + 'px';
+    ballflash.style.top = startY + 'px';
+    const distance = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
+    const speed = distance / 2020;
+
+    // Füzenin başlangıç açısını ayarla ve sabitle
+    const angle = Math.atan2(targetY - startY, targetX - startX);
+    ballflash.style.transform = `rotate(${angle}rad)`;
+
+    ballflash.style.transition = `left ${speed}s linear, top ${speed}s linear`;
+
+    // Füzenin arkasında iz bırak
+    const trail = document.createElement('div');
+    trail.classList.add('trail1');
+    trail.style.transition = `width ${speed}s linear`;
+    trail.style.animation = `blink1 ${speed}s forwards`;
+    document.body.appendChild(trail);
+
+    // İzin başlangıç konumunu ayarla
+    trail.style.position = 'absolute';
+    trail.style.left = startX + 'px';
+    trail.style.top = startY + 'px';
+    trail.style.height = '2px';
+    trail.style.backgroundColor = '#FCEAFF';
+    trail.style.transformOrigin = '0 0';
+    trail.style.transform = `rotate(${Math.atan2(targetY - startY, targetX - startX)}rad)`;
+    trail.style.width = '0px';
+
+    // İzin genişliğini animasyonla artır
+    setTimeout(() => {
+        trail.style.width = distance + 'px';
+    }, 0);
+
+
+    setTimeout(() => {
+      ballflash.style.left = targetX - ballflash.offsetWidth / 2 + 'px';
+      ballflash.style.top = targetY - ballflash.offsetHeight / 2 + 'px';
+    }, 0);
+
+    setTimeout(() => {
+      ballflash.remove();
+      trail.remove(); // İzi kaldır
+        createExplosion3(targetX, targetY);
+    }, speed * 1000);
+  }else if(mode==3){
+    const missile = document.createElement('div');
+    missile.classList.add('missile');
+    document.body.appendChild(missile);
+
+    missile.style.height = '50px';
+    missile.style.width = '50px';
+    missile.style.backdropFilter = 'blur(1.5rem)';
+    missile.style.filter = 'blur(1.5rem)';
+    missile.style.left = startX + 'px';
+    missile.style.top = startY + 'px';
+    
+    // Hedefin uzaklığına göre füzenin hızını hesapla
+    const distance = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
+    const speed = distance / 350; // Hedefe ulaşması için gereken süre (milisaniye cinsinden)
+    missile.style.transition = `all ${speed}s linear`;
+
+    // Füzenin arkasında iz bırak
+    const trail = document.createElement('div');
+    trail.classList.add('trail1');
+    trail.style.transition = `width ${speed}s linear`;
+    trail.style.animation = `blink1 ${speed}s forwards`;
+    document.body.appendChild(trail);
+
+    // İzin başlangıç konumunu ayarla
+    trail.style.position = 'absolute';
+    trail.style.left = startX + 'px';
+    trail.style.top = startY + 'px';
+    trail.style.height = '2px';
+    trail.style.backgroundColor = '#FCEAFF';
+    trail.style.transformOrigin = '0 0';
+    trail.style.transform = `rotate(${Math.atan2(targetY - startY, targetX - startX)}rad)`;
+    trail.style.width = '0px';
+
+    // İzin genişliğini animasyonla artır
+    setTimeout(() => {
+        trail.style.width = distance + 'px';
+    }, 0);
+
+    // Füzenin hedefe doğru hareketini başlat
+    setTimeout(() => {
+        missile.style.left = targetX - missile.offsetWidth / 2 + 'px'; // Füzenin merkezini hedefin merkezine getir
+        missile.style.top = targetY - missile.offsetHeight / 2 + 'px'; // Füzenin merkezini hedefin merkezine getir
+    }, 0);
+
+    // Hedefe ulaştığında patlama gerçekleşsin
+    setTimeout(() => {
+        missile.remove(); // Füzeyi kaldır
+        trail.remove(); // İzi kaldır
+        createExplosion6(targetX, targetY); // Patlama efekti fonksiyonunu çağır
+    }, speed * 1000); // Hızı milisaniyeye çevir
+  }
+}
+function ship_rotateElement(elementId, eventX, eventY, lookDirection) {
+  const element = document.getElementById(elementId); // Elementi ID'ye göre seç
+  const elementPosition = element.getBoundingClientRect(); // Elementin pozisyonunu al
+
+  // Farenin element'e göre pozisyonunu hesapla
+  const mouseX = eventX;
+  const mouseY = eventY;
+  const centerX = elementPosition.left + elementPosition.width / 2;
+  const centerY = elementPosition.top + elementPosition.height / 2;
+
+  // Açıyı hesapla
+  const deltaX = mouseX - centerX;
+  const deltaY = mouseY - centerY;
+  var eklenecek = 0;
+  if (lookDirection == "up") { eklenecek = 82; }
+  if (lookDirection == "down") { eklenecek = -82; }
+  if (lookDirection == "left") { eklenecek = -175; }
+  if (lookDirection == "right") { eklenecek = 0; }
+  if (lookDirection == "up-left") { eklenecek = 125; }
+  if (lookDirection == "down-left") { eklenecek = -140; }
+  if (lookDirection == "up-right") { eklenecek = 55; }
+  if (lookDirection == "down-right") { eklenecek = -50; }
+  const rotationAngle = (Math.atan2(deltaY, deltaX) * (180 / Math.PI)) + eklenecek;
+
+  // Elementi döndür
+  element.style.transform = `rotate(${rotationAngle}deg)`;
+}
+function ship_rotateBall(id,event,lookDirection) {
+  if (Array.isArray(event)) {
+    if (event.length === 2) {
+      // console.log(id + ' has launched a laser cannon at coordinates ' + event);
+      targetX = event[0];
+      targetY = event[1];
+    } else if (event.length === 1) {
+      TargetCannonRect = document.getElementById(event[0]).getBoundingClientRect();
+      targetX = (TargetCannonRect.left + TargetCannonRect.width / 2) + window.scrollX;
+      targetY = (TargetCannonRect.top + TargetCannonRect.height / 2) + window.scrollY;
+    }
+  } else {
+    TargetCannonRect = document.getElementById(event).getBoundingClientRect();
+    targetX = (TargetCannonRect.left + TargetCannonRect.width / 2) + window.scrollX;
+    targetY = (TargetCannonRect.top + TargetCannonRect.height / 2) + window.scrollY;
+  }
+  // 'ball', 'laser1', 'laser2' için döngü
+  id.forEach((id) => {
+    ship_rotateElement(id, targetX, targetY,lookDirection);
+  });
+}
+
+
+
+
+
+
+
+
+
+
+  window.onload = function() {
+  setTimeout(()=>{
+    move("up");
+    ship_move("nemesis","right");
+    ship_move("liberator","right");
+    setTimeout(() => {
+          // ship_move_AUTO_v2("nemesis",["up/10","down/0","down/10","up/0"]);
+          // ship_move_AUTO_v2("liberator",["up/10","down/0","down/10","up/0"]);
+      // function continuouslyMove() {
+      //   return new Promise(resolve => {
+      //     function moveNext() {
+      //       ship_move_AUTO_v2("nemesis", ["up/10", "down/0", "down/10", "up/0"]);
+      //       ship_move_AUTO_v2("liberator", ["up/10", "down/0", "down/10", "up/0"]);
+      //       setTimeout(moveNext, 1000); // 1 saniye bekleme süresi.
+      //     }
+      //     moveNext();
+      //   });
+      // }
+// continuouslyMove();
+
+function continuouslyMove() {
+  ship_move_AUTO_v2("nemesis", ["right/110", "left/0", "left/110", "right/0"])
+    // .then(() => ship_move_AUTO_v2("liberator", ["up/10", "down/0", "down/10", "up/0"]))
+    .then(continuouslyMove); // Döngüyü yeniden başlat
+  ship_move_AUTO_v2("liberator", ["right/110", "left/0", "left/110", "right/0"])
+    // .then(() => ship_move_AUTO_v2("liberator", ["up/10", "down/0", "down/10", "up/0"]))
+    .then(continuouslyMove); // Döngüyü yeniden başlat
+}
+
+continuouslyMove(); // Fonksiyonu çağırarak döngüyü başlat
+
+
+setInterval(()=>{
+  //Nemesis
+  ship_launch_laser_cannon("nemesis","ball1","liberator",1);
+  ship_launch_laser_cannon("nemesis","ball2","liberator",1);
+  ship_launch_laser_cannon("nemesis","ball3","lball2",2);
+  ship_launch_laser_cannon("nemesis","ball4","lball4",2);
+  ship_launch_laser_cannon("nemesis","ball5","lball3",0);
+  ship_launch_laser_cannon("nemesis","ball6","lball4",0);
+  ship_launch_laser_cannon("nemesis","ball6","lball1",0);
+  ship_launch_laser_cannon("nemesis","ball8","lball2",0);
+  ship_launch_laser_cannon("nemesis","ball9","lball3",0);
+  ship_launch_laser_cannon("nemesis","ball11","base1_1",0);
+  ship_launch_laser_cannon("nemesis","ball12","base1_2",0);
+  ship_launch_laser_cannon("nemesis","ball13","base1_3",2);
+  ship_launch_laser_cannon("nemesis","ball14","base1_4",1);
+  ship_launch_laser_cannon("nemesis","ball15","base1_5",2);
+  ship_launch_laser_cannon("nemesis","ball16","base1_6",0);
+  //Liberator
+  ship_launch_laser_cannon("liberator","lball1","ball2",2);
+  ship_launch_laser_cannon("liberator","lball2","ball5",1);
+  ship_launch_laser_cannon("liberator","lball3","ball2",0);
+},500);
+
+setInterval(() => {
+    //Nemesis
+  ship_launch_laser_cannon("nemesis","ball7","liberator",3);
+  ship_launch_laser_cannon("nemesis","ball10","base1_3",3);
+    //Liberator
+  ship_launch_laser_cannon("liberator","lball4","nemesis",3);
+}, 3000);
+    }, 2000);
+    // nemesis_move_AUTO_v1('up');
+    // setTimeout(() => {
+    //   nemesis_move_AUTO_v1_KILL();
+    // }, 10000);
+// setTimeout(() => {
+//   setTimeout(() => {
+//     nemesis_move('up',10,1890);
+//     setTimeout(() => {
+//       nemesis_move('down',40,1890);
+//     }, 11000);
+//   }, 1000);
+// }, 1000);
+
+  updateCamera();
+  },1000);
+
+};
     </script>
 </html>
