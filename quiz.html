@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="icon.jpg">
+        <meta charset="utf-8">
+        <title>Lobby</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <base target="_blank">
+        <meta name="subject" content="">
+        <meta name="description" content="JS Based Chatbot">
+        <Meta name="Classification" content="">
+        <Meta name="rating" content="">
+        <meta name="category" content="">
+        <meta name="keywords" content="js,chatbot,basic,chat,bot,ai">
+        <meta name="author" content="">
+        <meta name="robots" content="index, follow">
+        <meta http-equiv="content-type" content="text/html;UTF-8">
+        <meta http-equiv="content-language" content="en">
+        <meta http-equiv="revisit-after" content="">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <link rel="shortcut icon" href="ico.ico">
+        <noscript>Sorry, your browser does not support JavaScript!</noscript>
+    </head>
+    <body style="background-color: white">
+        <style>
+            *{margin:0;padding:0;}
+@font-face{
+  font-family:'Michroma';
+  src:url(Michroma-Regular.ttf) format('truetype');
+}
+#survey{
+    /* background-color: rgba(34, 34, 69, 0.31);box-shadow:rgba(0, 0, 0, 0.2) -1px 3px 8px -1px; */
+}
+  #survey button {
+    border: none;
+    display:block;
+    margin:5px auto;
+    background-color: transparent;
+    font-size: 28.8px;
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    color:0f0f0f;
+    font-family: 'Michroma', sans-serif;
+    max-width:100%;
+    width:auto;
+  }
+  #survey button:hover {
+    /* background-color: grey; */
+    /* color:rgb(196, 63, 34); */
+    /* box-shadow: 0px 1px 2px whitesmoke, 0px -1px 2px whitesmoke; */
+    background-color: rgba(34, 34, 69, 0.31);box-shadow:rgba(0, 0, 0, 0.2) -1px 3px 8px -1px;
+
+  }
+  #survey button .prefix {
+    padding-right: 8px; /* Karakter ile metin arasında boşluk bırak */
+  }
+
+  #score {
+    margin-top: 20px;
+    text-align: center;
+    font-size:24px;
+    color:#838383;
+    font-family: 'Michroma', sans-serif;
+  }
+  #question {
+    font-family: 'Michroma', sans-serif;
+    color:rgb(196, 63, 34);
+  }
+        </style>
+        <br><br><br>
+        <div id="survey" style="margin:0 auto;text-align:center;padding:0;width:100%;height:100%;font-size:32px;">
+            <p id="question"></p>
+            <div id="options">
+              <!-- Seçenek butonları burada oluşturulacak -->
+            </div>
+          </div>
+          <br><br>
+          
+          <div id="score">
+            Puan: <span id="points">100</span>
+          </div>
+
+          <script>
+          var currentQuestionIndex = 0;
+          var points = 100;
+          var questions = [
+            { text: "Atatürk hakkında düşüncen?", options: [{text: "Severim", value: 0}, {text: "Eleştirilebilir", value: 0}, {text: "5816", value: 1}] },
+            { text: "Reis hakkında düşüncen?", options: [{text: "Dış politika iyi, İç kötü", value: 0}, {text: "Severim / Sevmem", value: 0}, {text: "Çok kötü", value: 1}] },
+            { text: "LGBT Hakları?", options: [{text: "Saygım var", value: 0}, {text: "Var olma hakkı yok", value: 2}, {text: "Abartmadan", value: 0}] },
+            { text: "Kadınlar hakkında?", options: [{text: "Nafaka kalksın", value: 0}, {text: "Mizojinistim", value: 1}, {text: "Normal", value: 0}] },
+            { text: "Devlet kurumları", options: [{text: "Anarşizm/TRT dahil her şeyi satıcaz", value: 1}, {text: "Minarşizm", value: 0}, {text: "Normal", value: 0}] },
+            { text: "Türk mü? Türkiyeli mi?", options: [{text: "Irk tanımının önemi yok", value: 1}, {text: "Türk", value: 0}, {text: "Türkiyeli", value: 0}] },
+            { text: "Abazanlar hakkında?", options: [{text: "Based", value: 0}, {text: "Low IQ", value: 1}, {text: "Nötr", value: 0}] },
+            { text: "Parti seç", options: [{text: "CHP", value: 0}, {text: "AKP", value: 0}, {text: "YRP", value: 5}] },
+            { text: "Başörtüsü?", options: [{text: "Özgürlük", value: 0}, {text: "Devlet kurumlarında yasaklanmalı", value: 1}, {text: "Siyasi olmamalı", value: 2}] },
+            { text: "Nasyonel Sosyalizm?", options: [{text: "En sevdiğim ideoloji", value: 1}, {text: "Özenirim", value: 0}, {text: "Yok", value: 0}] },
+            { text: "Atsızcılık", options: [{text: "Normal", value: 0}, {text: "Aşırıcıyım", value: 2}, {text: "Boş", value: 0}] },
+            { text: "Kürt Sorunu var mı?", options: [{text: "Yok", value: 0}, {text: "Var", value: 0}, {text: "Bu nasıl soru?", value: 1}] },
+            { text: "Türkçülük", options: [{text: "Saygı duyacaksın!", value: 0}, {text: "Var olma hakkı yok", value: 2}, {text: "Abartmadan", value: 0}] },
+            { text: "İdeoloji Seç", options: [{text: "Sol Liberal", value: 2}, {text: "Sağ Liberteryen", value: 0}, {text: "Ulusalcılık", value: 7}] },
+            { text: "Birini seç", options: [{text: "Kahve", value: 0}, {text: "Çay", value: 1}, {text: "Enerji İçeceği", value: 0}] },
+            { text: "Komunizm?", options: [{text: "TR'de var", value: 1}, {text: "TR'de var ama yeşil renkli", value: 0}, {text: "TR'de yok burası ayrı", value: 0}] },
+            { text: "Solperestler hakkında?", options: [{text: "Low IQ", value: 0}, {text: "Kültürlü", value: 1}, {text: "Rezil", value: 0}] },
+            { text: "İslami değerler?", options: [{text: "Saygım var", value: 0}, {text: "Tercih etmem", value: 0}, {text: "Hiç sevmem", value: 2}] },
+            { text: "Erkek hakları?", options: [{text: "Kes", value: 0}, {text: "Erkekler ölsün", value: 1}, {text: "Kadınlar > Erkekler", value: 0}] },
+            { text: "Libidon nasıl?", options: [{text: "Ahlaklı soru lütfen", value: 0}, {text: "İyi", value: 0}, {text: "Kötü", value: 1}] },
+            { text: "Futbol sever misin?", options: [{text: "Çok", value: 5}, {text: "Normal", value: 0}, {text: "Yok", value: 0}] },
+            { text: "Akıl yaşın ile karakterin uyumlu mudur?", options: [{text: "Evet", value: 0}, {text: "Hayır", value: 0}, {text: "Yaşlı hissediyorum", value: 2}] },
+            { text: "Andımız?", options: [{text: "Geri gelmeli", value: 0}, {text: "Şu anda okey", value: 0}, {text: "Asla", value: 1}] },
+            { text: "Demirtaş'a özgürlük?", options: [{text: "Evet", value: 0}, {text: "Hayır", value: 0}, {text: "Kesinlikle Evet!", value: 1}] },
+            { text: "Asya ülkeleri hakkında?", options: [{text: "Tiksinirim", value: 1}, {text: "Okey", value: 0}, {text: "Severim", value: 0}] },
+            { text: "Mülteciler gitmeli mi?", options: [{text: "Uluslararası hukuka göre evet", value: 0}, {text: "Kesinlikle Evet", value: 1}, {text: "Hayır", value: 0}] },
+            { text: "Deva mı? LDP mi?", options: [{text: "Deva", value: 0}, {text: "LDP", value: 1}, {text: "İkisi de hayır", value: 0}] },
+            { text: "Y-CHP mi? Eski CHP mi?", options: [{text: "Eskisi", value: 0}, {text: "Y-CHP", value: 0}, {text: "İkisi de", value: 1}] },
+            { text: "Hangi Türkçülük kötünün iyisi veya daha iyi?", options: [{text: "Seküler Türkçü", value: 5}, {text: "Atsız Türkçü", value: 0}, {text: "Bilimsel Türkçülük", value: 0}] },
+            { text: "Ne Mutlu Türküm Diyene", options: [{text: "Güzel Söz", value: 0}, {text: "Yasaklanmalı", value: 1}, {text: "Nötr", value: 0}] },
+            { text: "Tarikatlar kapatılmalı mı?", options: [{text: "Evet", value: 0}, {text: "Denetlenmeli", value: 0}, {text: "Hayır", value: 1}] },
+            { text: "Rusya'yı sevmeme sebebin ne?", options: [{text: "Ukrayna", value: 0}, {text: "Irak/Suriye", value: 5}, {text: "Yok", value: 0}] },
+            { text: "Hangi ülkeye kimlik ile giriş isterdin?", options: [{text: "Amerika", value: 10}, {text: "Asya/Avrupa", value: 0}, {text: "Doğu ülkeleri", value: 0}] },
+            { text: "Türk'ten sevgili olur mu?", options: [{text: "Evet", value: 0}, {text: "Hayır", value: 1}, {text: "Aseksüeli/LGBT bireyim", value: 0}] },
+            { text: "Irkçılık hastalık mıdır?", options: [{text: "Evet", value: 0}, {text: "Hayır", value: 1}, {text: "Gerekiğinde Hayır", value: 3}] },
+            { text: "Hangi Irk ile sevgili olursun?", options: [{text: "Sadece Türk", value: 1}, {text: "Slav", value: 0}, {text: "Diğer", value: 0}] },
+            { text: "Hangi Asyalı Irkı üstün?", options: [{text: "Japon", value: 0}, {text: "Kore", value: 0}, {text: "Diğer", value: 1}] }
+          ];
+          
+// Puan aralıkları ve karşılık gelen mesajlar için JSON yapısı
+var scoreMessages = {
+  "ranges": [
+    {"min": 0, "max": 73, "message": "Benimle alakan yok."},
+    {"min": 74, "max": 77, "message": "Nerelisin sen neyse okey ya"},
+    {"min": 78, "max": 79, "message": "Yine de anlaşılır, okey"},
+    {"min": 80, "max": 84, "message": "Okey gibi ya"},
+    {"min": 85, "max": 89, "message": "Herkesle iyi anlaşıyoz Allah'a şükür."},
+    {"min": 90, "max": 100, "message": "Benimle çok iyi anlaşırsın aynı ben."}
+  ]
+};
+
+// Puan aralığına göre mesajı bulan fonksiyon
+function findMessageForScore(score) {
+  for(var i = 0; i < scoreMessages.ranges.length; i++) {
+    var range = scoreMessages.ranges[i];
+    if(score >= range.min && score <= range.max) {
+      return range.message;
+    }
+  }
+  return "Skor aralığı bulunamadı.";
+}
+
+// selectOption fonksiyonunu güncelle
+function selectOption(optionIndex) {
+  var question = questions[currentQuestionIndex];
+  if(question && optionIndex >= 0 && optionIndex < question.options.length) {
+    points -= question.options[optionIndex].value;
+    document.getElementById('points').textContent = points;
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length) {
+      displayQuestion();
+    } else {
+      document.getElementById('survey').style.display = 'none';
+      document.getElementById('score').style.fontSize = '32px';
+      var finalMessage = findMessageForScore(points); // Puan aralığına göre mesajı bul
+      document.getElementById('score').textContent = "Anket bitti! Puanınız: " + points + ". " + finalMessage;
+    }
+  }
+}
+
+
+function setButtonPrefixColor(prefix, points) {
+  // Prefix rengini puan değerine göre ayarla
+  switch(points) {
+    case 0:
+      prefix.style.color = 'green'; // 0 puan için yeşil
+      break;
+    case 1:
+      prefix.style.color = '#c59722'; // 1 puan için sarı
+      break;
+    case 2:
+      prefix.style.color = 'orange'; // 2 puan için turuncu
+      break;
+    case 3:
+      prefix.style.color = 'grey'; // 3 puan için turuncu
+      break;
+    default:
+      prefix.style.color = 'rgb(196, 63, 34)'; // 4 veya 5 puan için gri
+  }
+}
+
+function displayQuestion() {
+  var question = questions[currentQuestionIndex];
+  var optionsContainer = document.getElementById('options');
+  optionsContainer.innerHTML = ''; // Önceki seçenekleri temizle.
+  if(question) {
+    document.getElementById('question').textContent = question.text;
+    question.options.forEach(function(option, index) {
+      var button = document.createElement('button');
+      var prefix = document.createElement('span'); // Yeni prefix elementi
+      prefix.className = 'prefix';
+      prefix.textContent = '❯'; // Prefix olarak yıldız karakteri
+      prefix.style.display = 'none';
+      setButtonPrefixColor(prefix, option.value); // Prefix rengini ayarla
+
+      button.appendChild(prefix); // Prefix'i butona ekle
+      button.appendChild(document.createTextNode(option.text)); // Buton metnini ekle
+      button.onclick = function() { selectOption(index); };
+      optionsContainer.appendChild(button);
+    });
+  }
+}
+
+displayQuestion(); // İlk soruyu ekrana yazdır.
+          </script>
+    </body>
+</html>
