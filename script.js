@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  try to take over the world!
 // @author       You
-// @match        https://twitter.com/home*
+// @match        https://twitter.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=twitter.com
 // @grant        none
 // ==/UserScript==
@@ -92,8 +92,116 @@ alert("Seni "+_tespit0x+"kişi engelledi. Liste sayısı: "+otherArray.length);
 
 
     }
+    function engl_all_start() {
+        let string = document.getElementById("aJh777ZZZaaSS33").value;
+        let kullanicilar = string.split(",").map(kullanici => kullanici.trim());
+        let acikPencereler = [];
+      
+        function siradakiKullaniciyiEngelle(index) {
+          // 10 pencere açıldıysa ve hepsi kapandıysa, sonraki 10 kullanıcıya geç
+          if (acikPencereler.length === 10 || index >= kullanicilar.length) {
+            acikPencereler = acikPencereler.filter(pencere => !pencere.closed);
+            if (acikPencereler.length === 0 && index < kullanicilar.length) {
+              siradakiKullaniciyiEngelle(index); // Sonraki 10 kullanıcıya geç
+            }
+            return;
+          }
+      
+          const kullanici = kullanicilar[index];
+          if (kullanici) {
+            // Pencereyi aç
+            const pencere = window.open(`https://twitter.com/${kullanici}#block`, '_blank');
+            if (pencere) {
+              acikPencereler.push(pencere);
+            } else {
+              console.log(`${kullanici} için pencere açılamadı. Pop-up engelleyiciyi kontrol edin.`);
+            }
+          }
+      
+          // 100 ms sonra bir sonraki kullanıcıya geç
+          setTimeout(() => siradakiKullaniciyiEngelle(index + 1), 100);
+        }
+      
+        // İlk 10 kullanıcı ile başla
+        siradakiKullaniciyiEngelle(0);
+      }
+      
+
+    function engl000scrp2(){
+    // Belirtilen özelliklere sahip div'i bul
+const button = document.querySelector('div[aria-expanded="false"][aria-haspopup="menu"][aria-label="Daha fazla"][role="button"][tabindex="0"]');
+
+// Div'e tıklama fonksiyonu
+function clickButton() {
+  if (button) {
+    // Div'e tıkla
+    button.click();
+    // 0.5 saniye bekle
+    setTimeout(() => {
+      // Ekrana 'tıkladım' yaz
+      console.log('tıkladım');
+      const button1 = document.querySelector('div[role="menuitem"][data-testid="block"][tabindex="0"]');
+      button1.click();
+      setTimeout(() => {
+        // Ekrana 'tıkladım' yaz
+        console.log('tıkladım');
+        const button2 = document.querySelector('div[data-testid="confirmationSheetConfirm"][role="button"][tabindex="0"]');
+
+        if (button2) {
+          const spans = button2.querySelectorAll('span');
+          const blockButton = Array.from(spans).find(span => span.innerText === 'Engelle');
+          
+          if (blockButton) {
+            button2.click();
+            console.log('\'Engelle\' yazan butona tıklandı.');
+            setTimeout(function() {
+                
+// Butonu oluştur
+const closeButton = document.createElement('button');
+closeButton.innerText = 'Kapat';
+closeButton.style.zIndex = '999';
+closeButton.style.position = 'fixed';
+closeButton.style.margin = '0 auto';
+closeButton.style.top = '0';
+closeButton.style.left = '50%';
+closeButton.style.fontSize = '32px';
+
+document.body.appendChild(closeButton);
+
+closeButton.addEventListener("click", function() {
+ window.close();
+});
+// Butona otomatik tıkla
+closeButton.click();
 
 
+            }, 500);
+
+
+          } else {
+            try {window.close();}catch(err) {}
+            console.log('\'Engelle\' yazan bir span bulunamadı.');
+          }
+        } else {
+          console.log('button1 bulunamadı.');
+        }
+        
+  
+      }, 500);
+
+    }, 500);
+  } else {
+    setTimeout(engl000scrp2, 500);
+
+    console.log('Belirtilen özelliklere sahip bir div bulunamadı.');
+  }
+}
+
+// Fonksiyonu çağır
+clickButton();
+
+    }
+    
 
 function addData(data) {
     let textarea = document.getElementById("aJh777ZZZaaSS33");
@@ -169,6 +277,7 @@ return;
     // js sayfa yüklenince sayfanın üstünde navbar oluştur
 
 window.onload = function() {
+
         var main_xAAA = document.createElement("div");
 main_xAAA.style.left = "0";
 main_xAAA.style.right = "0";
@@ -203,6 +312,7 @@ main_xAAA.style.userSelect = "none"; // Standart sözdizimi için stil ayarlayı
     <a style="color:white;text-decoration: none;" id="aJ7GfVVV">🚫BlockView</a>
     <a style="color:white;text-decoration: none;" id="aBgXaX0A">⚠️UnfollowView</a>
     <a style="color:white;text-decoration: none;" id="aaaUU777xx">☑️Check</a>
+    <a style="color:white;text-decoration: none;" id="atoplauenxgelx">🪄Toplu Engel</a>
     <br>
     <textarea id="aJh777ZZZaaSS33" style="font-size:14px!important;color:black;width:90%;height:50px;background-color: transparent;color:white;"></textarea>
     <br>
@@ -254,7 +364,6 @@ navbar.style.display = "block";
   }
 }
 
-
   let body = document.querySelector("body");
 
   body.insertBefore(navbar, body.firstChild);
@@ -305,6 +414,21 @@ button2.addEventListener("click", function() {
 karsilastir0123010();
 });
 
+let button3 = document.querySelector("#atoplauenxgelx");
+button3.addEventListener("click", function() {
+engl_all_start();
+});
+
+// autoblck
+const pageUrl = window.location.href;
+
+// URL'de '#block' ifadesi var mı kontrol et
+if (pageUrl.includes('#block')) {
+    setTimeout(function() {engl000scrp2();}, 2000);
+
+} else {
+  console.log('#block ifadesi sayfa URL\'sinde bulunmuyor.');
+}
 
 
 };
