@@ -96,33 +96,41 @@ alert("Seni "+_tespit0x+"kişi engelledi. Liste sayısı: "+otherArray.length);
         let string = document.getElementById("aJh777ZZZaaSS33").value;
         let kullanicilar = string.split(",").map(kullanici => kullanici.trim());
         let acikPencereler = [];
+        let beklemeliIndex = 0; // Her 10 pencerede bir beklemek için kullanılacak index
       
         function siradakiKullaniciyiEngelle(index) {
-          // 10 pencere açıldıysa ve hepsi kapandıysa, sonraki 10 kullanıcıya geç
-          if (acikPencereler.length === 10 || index >= kullanicilar.length) {
-            acikPencereler = acikPencereler.filter(pencere => !pencere.closed);
-            if (acikPencereler.length === 0 && index < kullanicilar.length) {
-              siradakiKullaniciyiEngelle(index); // Sonraki 10 kullanıcıya geç
+          if (index < kullanicilar.length) {
+            const kullanici = kullanicilar[index];
+            if (kullanici) {
+              // Pencereyi aç
+              const pencere = window.open(`https://twitter.com/${kullanici}#block`, '_blank');
+              if (pencere) {
+                acikPencereler.push(pencere);
+              } else {
+                console.log(`${kullanici} için pencere açılamadı. Pop-up engelleyiciyi kontrol edin.`);
+              }
             }
-            return;
-          }
       
-          const kullanici = kullanicilar[index];
-          if (kullanici) {
-            // Pencereyi aç
-            const pencere = window.open(`https://twitter.com/${kullanici}#block`, '_blank');
-            if (pencere) {
-              acikPencereler.push(pencere);
+            // Her 10 pencerede bir 5 saniye beklet
+            beklemeliIndex++;
+            if (beklemeliIndex % 10 === 0) {
+              setTimeout(() => siradakiKullaniciyiEngelle(index + 1), 10000);
             } else {
-              console.log(`${kullanici} için pencere açılamadı. Pop-up engelleyiciyi kontrol edin.`);
+              setTimeout(() => siradakiKullaniciyiEngelle(index + 1), 3500);
             }
+          } else {
+            console.log('Tüm kullanıcılar için işlem tamamlandı.');
+            // Tüm pencerelerin kapanmasını kontrol et
+            let kontrolInterval = setInterval(() => {
+              acikPencereler = acikPencereler.filter(pencere => !pencere.closed);
+              if (acikPencereler.length === 0) {
+                clearInterval(kontrolInterval);
+                console.log('Tüm pencereler kapandı.');
+              }
+            }, 3500);
           }
-      
-          // 100 ms sonra bir sonraki kullanıcıya geç
-          setTimeout(() => siradakiKullaniciyiEngelle(index + 1), 100);
         }
       
-        // İlk 10 kullanıcı ile başla
         siradakiKullaniciyiEngelle(0);
       }
       
