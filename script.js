@@ -59,6 +59,39 @@ let value = textarea.value;
 textarea.value = value;
 }
 
+function kullaniciSilAAAHJK() {
+// Üst tablodaki kullanıcı adlarını al ve bir diziye dönüştür
+let newUsers = document.getElementById("aJh777ZZZaaSS33").value.split(',');
+
+// Alt tablodaki kullanıcı adlarını al ve bir diziye dönüştür
+let oldUsers = document.getElementById("oldtableAAAAxx123x").value.split(',');
+
+// Silinen kullanıcı sayısını tutacak bir değişken
+let deletedCount = 0;
+
+// Her eski kullanıcı için kontrol et ve sil
+oldUsers.forEach(function(user, index) {
+  if (newUsers.includes(user)) {
+    oldUsers.splice(index, 1); // Kullanıcıyı eski kullanıcılar listesinden çıkar
+    deletedCount++; // Silinen kullanıcı sayısını artır
+  }
+});
+
+// Güncellenmiş kullanıcı adlarını string'e dönüştür ve üst tabloya geri yaz
+// document.getElementById("aJh777ZZZaaSS33").value = newUsers.join(',');
+
+// Silinen kullanıcı adlarını alt tabloya yaz
+document.getElementById("oldtableAAAAxx123x").value = oldUsers.join(',');
+
+// Eğer kullanıcı silinmişse sayısını, silinmemişse uyarı mesajını göster
+if (deletedCount > 0) {
+  alert(deletedCount + ' kullanıcı silindi.');
+} else {
+  alert('Silinen kullanıcı yoktur.');
+}
+}
+
+
 function yenikullnaciciekle00A() {
 // Üst tablodaki kullanıcı adlarını al ve bir diziye dönüştür
 let newUsers = document.getElementById("aJh777ZZZaaSS33").value.split(',');
@@ -349,7 +382,8 @@ display:block;font-size:32px;position: fixed;z-index:999!important;border:2.5px 
   <a style="color:white;text-decoration: none;" id="aBgXaX0A">⚠️UnfollowView</a>
   <a style="color:white;text-decoration: none;" id="aaaUU777xx">☑️Check</a><br>
   <a style="color:white;text-decoration: none;" id="atoplauenxgelx">🪄BlockAll</a>
-  <a style="color:white;text-decoration: none;" id="nickaddAAAWWW">📒NickAdd</a>
+  <a style="color:white;text-decoration: none;" id="nickaddAAAWWW">📒AddUser</a>
+  <a style="color:white;text-decoration: none;" id="removenickAAAWWW">💣RemoveUser</a>
   <br>
   <textarea id="aJh777ZZZaaSS33" style="font-size:14px!important;color:black;width:90%;height:50px;background-color: transparent;color:white;"></textarea>
   <br>
@@ -459,6 +493,11 @@ engl_all_start();
 let button4 = document.querySelector("#nickaddAAAWWW");
 button4.addEventListener("click", function() {
 yenikullnaciciekle00A();
+});
+
+let button5 = document.querySelector("#removenickAAAWWW");
+button5.addEventListener("click", function() {
+kullaniciSilAAAHJK();
 });
 
 // autoblck
