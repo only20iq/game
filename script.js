@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  try to take over the world!
 // @author       You
-// @match        https://twitter.com/*
+// @match        https://x.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=twitter.com
 // @grant        none
 // ==/UserScript==
@@ -164,7 +164,7 @@ alert("Seni "+_tespit0x+"kişi engelledi. Liste sayısı: "+otherArray.length);
           const kullanici = kullanicilar[index];
           if (kullanici) {
             // Pencereyi aç
-            const pencere = window.open(`https://twitter.com/${kullanici}#block`, '_blank');
+            const pencere = window.open(`https://x.com/${kullanici}#block`, '_blank');
             if (pencere) {
               acikPencereler.push(pencere);
             } else {
@@ -198,7 +198,7 @@ alert("Seni "+_tespit0x+"kişi engelledi. Liste sayısı: "+otherArray.length);
 
   function engl000scrp2(){
   // Belirtilen özelliklere sahip div'i bul
-const button = document.querySelector('div[aria-expanded="false"][aria-haspopup="menu"][aria-label="Daha fazla"][role="button"][tabindex="0"]');
+const button = document.querySelector('button[aria-expanded="false"][aria-haspopup="menu"][aria-label="Daha fazla"][role="button"]');
 
 // Div'e tıklama fonksiyonu
 function clickButton() {
@@ -214,7 +214,7 @@ if (button) {
     setTimeout(() => {
       // Ekrana 'tıkladım' yaz
       console.log('tıkladım');
-      const button2 = document.querySelector('div[data-testid="confirmationSheetConfirm"][role="button"][tabindex="0"]');
+      const button2 = document.querySelector('button[data-testid="confirmationSheetConfirm"][role="button"]');
 
       if (button2) {
         const spans = button2.querySelectorAll('span');
