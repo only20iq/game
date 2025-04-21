@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)https://only20iq.github.io/game/quiz.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" href="https://only20iq.github.io/game/icon.jpg">
+        
+        <title>Lobby</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <!--<base target="_blank">--><base href="." target="_blank">
+        <meta name="subject" content="">
+        <meta name="description" content="JS Based Chatbot">
+        <meta name="Classification" content="">
+        <meta name="rating" content="">
+        <meta name="category" content="">
+        <meta name="keywords" content="js,chatbot,basic,chat,bot,ai">
+        <meta name="author" content="">
+        <meta name="robots" content="index, follow">
+        <meta http-equiv="content-type" content="text/html;UTF-8">
+        <meta http-equiv="content-language" content="en">
+        <meta http-equiv="revisit-after" content="">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <link rel="shortcut icon" href="https://only20iq.github.io/game/ico.ico">
+        <noscript>Sorry, your browser does not support JavaScript!</noscript>
+    </head>
+    <body style="background-color: white">
+        <style>
+            *{margin:0;padding:0;}
+@font-face{
+  font-family:'Michroma';
+  src:url(Michroma-Regular.ttf) format('truetype');
+}
+#survey{
+    /* background-color: rgba(34, 34, 69, 0.31);box-shadow:rgba(0, 0, 0, 0.2) -1px 3px 8px -1px; */
+}
+  #survey button {
+    border: none;
+    display:block;
+    margin:5px auto;
+    background-color: transparent;
+    font-size: 28.8px;
+    cursor: pointer;
+    padding: 10px;
+
+    max-width:100%;
+    width:auto;
+  }
+  #question-container, #options-container {
+
+  text-align: center; /* Ortala */
+  margin: 0 auto; /* Yatay merkezleme */
+  display: block; /* Blok olarak düzenle */
+  width: fit-content; /* İçeriğin genişliğini ayarla */
+}
+#question-container p {
+  font-size: 28.8px;
+transition: background-color 0.3s ease;
+    color:0f0f0f;
+    font-family: 'Michroma', sans-serif;
+}
+#survey img {
+  max-width: 200px;
+  height: auto;
+  display: block;
+  margin: 10px auto; /* Resimleri ortala */
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#survey button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+
+  border-radius: 5px;
+  cursor: pointer;
+
+
+  transition: background-color 0.3s ease;
+    color:0f0f0f;
+    font-family: 'Michroma', sans-serif;
+}
+
+
+
+  #survey button:hover {
+    /* background-color: grey; */
+    /* color:rgb(196, 63, 34); */
+    /* box-shadow: 0px 1px 2px whitesmoke, 0px -1px 2px whitesmoke; */
+    background-color: rgba(34, 34, 69, 0.31);box-shadow:rgba(0, 0, 0, 0.2) -1px 3px 8px -1px;
+
+  }
+  #survey button .prefix {
+    padding-right: 8px; /* Karakter ile metin arasında boşluk bırak */
+  }
+
+  #score {
+    margin-top: 20px;
+    text-align: center;
+    font-size:24px;
+    color:#838383;
+    font-family: 'Michroma', sans-serif;
+  }
+  .question {
+    font-family: 'Michroma', sans-serif;
+    color:rgb(196, 63, 34);
+  }
+        </style>
+        <br><br><br>
+        <div id="survey">
+          <div id="question-container"></div>
+          <div id="options-container"></div>
+        </div>
+        
+          <br><br>
+          
+          <div id="score">
+            Puan: <span id="points">100</span>
+          </div>
+
+          <script>
+          var currentQuestionIndex = 0;
+          var points = 100;
+          var questions = [
+            { text: "Birini seç", image: "", options: [{text: "Macau", image: "image/macau.webp", value: 0}, {text: "Hong Kong", image: "image/hongkong.jpg", value: 0}, {text: "Taipei", image: "image/taipei.webp", value: 1}] },
+            { text: "Duygularına göre bir bayrak seç", image: "", options: [{text: "", image: "image/siyahtr.avif", value: 1}, {text: "", image: "image/atatr.jpg", value: 10}, {text: "", image: "image/sirkiye.jpg", value: 0}] },
+            { text: "Birini seç", image: "image/tercih.jpg", options: [{text: "Kemalizm", image: "", value: 1}, {text: "Atsızcılık", image: "", value: 1}, {text: "Devletçilik", image: "", value: 0}] },
+            { text: "Birini seç", image: "", options: [{text: "Tayland", image: "image/thai.svg", value: 0}, {text: "Endonezya", image: "image/en.png", value: 2}, {text: "Filipinler", image: "image/ph.png", value: 0}] },
+            { text: "Birini seç", image: "", options: [{text: "NK", image: "image/nk.svg", value: 0}, {text: "Hindistan", image: "image/hin.png", value: 10}, {text: "Sudan", image: "image/sudan.webp", value: 0}] },
+            { text: "Birini seç", image: "", options: [{text: "", image: "image/spt.png", value: 0}, {text: "", image: "image/bbc.jpg", value: 1}, {text: "", image: "image/aki.png", value: 3}] },
+            { text: "AKP seçimi 2028'de kazanacak ama ben Kore'ye taşınacam", image: "image/tercih.jpg", options: [{text: "Olur", image: "", value: 0}, {text: "Olmaz", image: "", value: 10}, {text: "AKPlisin", image: "", value: 3}] },
+            { text: "Hangisini severim?", image: "", options: [{text: "", image: "image/meat.jpg", value: 50}, {text: "", image: "image/vpizza.jpg", value: 0}, {text: "", image: "image/pizza.jpg", value: 2}] },
+            { text: "Birini seç", image: "", options: [{text: "", image: "image/is.webp", value: 0}, {text: "", image: "image/arm.jpg", value: 10}, {text: "", image: "image/gre.jpg", value: 0}] },
+            { text: "Birini seç", image: "", options: [{text: "Kemal Kılıçdaroğlu", image: "image/kemal.jfif", value: 10}, {text: "Özgür Özel", image: "image/oo.jfif", value: 0}, {text: "Ümit Özdağ", image: "image/ozdag.webp", value: 3}] },
+            { text: "Hangi tarz müzikleri dinlerim?", image: "", options: [{text: "Lvbel C5", image: "image/lb5.jpg", value: 30}, {text: "Newjeans", image: "image/newjeans.webp", value: 0}, {text: "BTS", image: "image/bts.jfif", value: 5}] },
+            { text: "Hangisini sevmem?", image: "", options: [{text: "", image: "image/biden.jpg", value: 0}, {text: "", image: "image/trump.jpg", value: 1}, {text: "", image: "image/pt.jfif", value: 5}] },
+            { text: "Hangi ülkeye seyahat etmek isterdim?", image: "", options: [{text: "İtalya/Venedik", image: "image/venedik.jpg", value: 1}, {text: "Rusya/Kızıl Meydan", image: "image/km.jpg", value: 0}, {text: "Kore/Jeju", image: "image/jeju.jpeg", value: 0}] },
+            { text: "Birini seç", image: "image/speedtest.jpg", options: [{text: "40Gbps Download, 250mbps Upload", image: "", value: 1}, {text: "10Gbps Download, 1Gbps Upload", image: "", value: 1}, {text: "4Gbps Download, 2Gbps Upload", image: "", value: 0}] },
+            { text: "Birini seç", image: "", options: [{text: "Chrome", image: "image/chrome.png", value: 10}, {text: "Firefox", image: "image/firefox.png", value: 0}, {text: "Brave", image: "image/brave.png", value: 0}] },
+            { text: "Hangi zamanı severim?", image: "", options: [{text: "Gündüz", image: "image/gunduz.jpg", value: 5}, {text: "Gece", image: "image/gece.jfif", value: 3}, {text: "Şafak", image: "image/safak.jpg", value: 0}] },
+            { text: "İdeolojim ne?", image: "", options: [{text: "Liberteryen Sosyalist", image: "image/ls.png", value: 0}, {text: "Anarşizm", image: "image/anar.jpg", value: 1}, {text: "Emperyalizm", image: "image/emp.jpg", value: 10}] },
+            { text: "Hangisini seçerdim?", image: "", options: [{text: "Türkiye", image: "image/tr.webp", value: 10}, {text: "Rusya", image: "image/rus.jpg", value: 0}, {text: "Hindistan", image: "image/hin.png", value: 50}] },
+            { text: "Atatürk hakkında görüşlerim?", image: "image/atat.jpg", options: [{text: "Severim", image: "", value: 5}, {text: "Eleştirilebilir", image: "", value: 1}, {text: "5816", image: "", value: 0}] },
+            { text: "LGBT hakkında görüşlerim?", image: "image/lgbt.jpg", options: [{text: "Sevmem", image: "", value: 10}, {text: "Abartmadan", image: "", value: 0}, {text: "Saygı duyarım", image: "", value: 0}] },
+            { text: "Devlet ile hükümet ayrı mı?", image: "image/daha.png", options: [{text: "Evet", image: "", value: 0}, {text: "Hayır", image: "", value: 5}, {text: "Olabilir", image: "", value: 0}] },
+            { text: "Sence bizi en çok kim etkiliyor? (dolaylı değil doğrudan)", image: "image/td.jpg", options: [{text: "Sabetayistler vs.", image: "", value: 0}, {text: "AKP", image: "", value: 3}, {text: "Araplar", image: "", value: 1}] },
+            { text: "Telefonumun markası?", image: "", options: [{text: "m51", image: "image/m51.jpg", value: 1}, {text: "m31s", image: "image/m31s.png", value: 0}, {text: "s24ultra", image: "image/s24ultra.jpg", value: 3}] },
+            { text: "Hangisini severim?", image: "", options: [{text: "Starbucks", image: "image/stb.jfif", value: 3}, {text: "Kahve Dünyası", image: "image/kd.webp", value: 0}, {text: "Minecraft", image: "image/mc.avif", value: 1}] },
+            { text: "Hangi kız daha iyi?", image: "", options: [{text: "NMIXX/Sullyoon", image: "image/sullyoon1.jfif", value: 0}, {text: "TripleS/Seoyeon", image: "image/seoyeon1.jfif", value: 0}, {text: "Aespa/Winter", image: "image/winter1.jfif", value: 0}] },
+            { text: "Sence dini inancım ne?", image: "image/inanc.webp", options: [{text: "Nihilizm", image: "", value: 0}, {text: "Ateizm", image: "", value: 1}, {text: "İslam", image: "", value: 10}] },
+            { text: "Hangisi eliptik eğri kriptografisine verimli bir saldırı metodu değildir?", image: "image/ec.png", options: [{text: "Fault Injection Attacks", image: "image/lsfi.png", value: 1}, {text: "Brute Force", image: "image/brtf.png", value: 0}, {text: "Side-channel attack", image: "image/sc.png", value: 1}] },
+            { text: "Küçükken hangisini oynadım?", image: "", options: [{text: "Transformice", image: "image/tfm.webp", value: 0}, {text: "Commando 2", image: "image/com2.jpg", value: 0}, {text: "Metin 2", image: "image/mt2.webp", value: 2}] },
+            { text: "Hangi grubu dinlerim?", image: "", options: [{text: "ILLIT", image: "image/illit2.jfif", value: 1}, {text: "Twice", image: "image/tw2.jfif", value: 0}, {text: "April", image: "image/april2.jfif", value: 0}] },
+            { text: "Hangisinin müziğini sevdim?", image: "", options: [{text: "Hearts2Hearts", image: "image/h2h.avif", value: 0}, {text: "Ifeye", image: "image/ifeye.jpg", value: 1}, {text: "Unis", image: "image/unis.webp", value: 1}] },
+            { text: "Hangi kız daha iyi?", image: "", options: [{text: "LSFM/Chaewon", image: "image/ch2.jfif", value: 0}, {text: "LSFM/Sakura", image: "image/sk2.jfif", value: 0}, {text: "Aespa/Karina", image: "image/kr2.jfif", value: 0}] },
+            { text: "Hangisini oynamak isterim?", image: "", options: [{text: "LoL", image: "image/lol.jfif", value: 10}, {text: "Outlast 2", image: "image/outlast2.jpg", value: 0}, {text: "Escape The Backrooms", image: "image/etb.jfif", value: 0}] },
+            { text: "Hangisini tercih ederim?", image: "image/tercih.jpg", options: [{text: "Köle Olmak", image: "", value: 0}, {text: "Kölem olması", image: "", value: 10}, {text: "İkisi de", image: "", value: 3}] },
+            { text: "Hangisi beni üzer? (Türkiyelisin)", image: "", options: [{text: "Engellenmek", image: "", value: 10}, {text: "Görmezden gelinmek", image: "", value: 5}, {text: "Hiçbiri", image: "", value: 0}] },
+            { text: "Hangisi beni üzer? (Türkiyeli değilsin)", image: "", options: [{text: "Engellenmek", image: "", value: 0}, {text: "Görmezden gelinmek", image: "", value: 0}, {text: "Hiçbiri", image: "", value: 10}] },
+          ];
+          
+// Puan aralıkları ve karşılık gelen mesajlar için JSON yapısı
+var scoreMessages = {
+  "ranges": [
+    {"min": -300, "max": -276, "message": "Varlığın bile rahatsız edici."},
+    {"min": -275, "max": -251, "message": "Keşke hiç tanımasaydım seni."},
+    {"min": -250, "max": -226, "message": "Senden enerji alamıyorum."},
+    {"min": -225, "max": -201, "message": "Uzak dur benden."},
+    {"min": -200, "max": -176, "message": "Tahammül sınırlarımı zorluyorsun."},
+    {"min": -175, "max": -151, "message": "Hiç çekilmiyorsun."},
+    {"min": -150, "max": -126, "message": "Konuşmaların bile can sıkıcı."},
+    {"min": -125, "max": -101, "message": "Sinirlerimi bozuyorsun."},
+    {"min": -100, "max": -76, "message": "Tipin bile hoşuma gitmedi."},
+    {"min": -75, "max": -51, "message": "Seni gözüm tutmadı."},
+    {"min": -50, "max": -38, "message": "Muhabbetin sarmadı beni."},
+    {"min": -37, "max": -26, "message": "Pek aram yok seninle."},
+    {"min": -25, "max": -13, "message": "Farklı dünyaların insanıyız."},
+    {"min": -12, "max": -1, "message": "Normalde anlaşamayız."},
+    {"min": 0, "max": 12, "message": "Sanki biraz uzağız birbirimize."},
+    {"min": 13, "max": 25, "message": "Biraz mesafeli duralım."},
+    {"min": 26, "max": 38, "message": "Samimiyetimiz henüz oluşmadı."},
+    {"min": 39, "max": 50, "message": "Çok yakın değiliz."},
+    {"min": 51, "max": 62, "message": "Sanki farklı frekanslardayız."},
+    {"min": 63, "max": 73, "message": "Benimle alakan yok."},
+    {"min": 74, "max": 75, "message": "Memleketin neresi senin bak şimdi merak ettim."},
+    {"min": 76, "max": 77, "message": "Nerelisin sen neyse okey ya"},
+    {"min": 78, "max": 79, "message": "Yine de anlaşılır, okey"},
+    {"min": 80, "max": 82, "message": "İyi gibi sanki."},
+    {"min": 83, "max": 84, "message": "Okey gibi ya"},
+    {"min": 85, "max": 87, "message": "İyi anlaşıyoruz seninle."},
+    {"min": 88, "max": 89, "message": "Herkesle iyi anlaşıyoz Allah'a şükür."},
+    {"min": 90, "max": 95, "message": "Aynı ben ya resmen."},
+    {"min": 96, "max": 100, "message": "Aynı bensin"}
+  ]
+};
+
+// Puan aralığına göre mesajı bulan fonksiyon
+function findMessageForScore(score) {
+  for(var i = 0; i < scoreMessages.ranges.length; i++) {
+    var range = scoreMessages.ranges[i];
+    if(score >= range.min && score <= range.max) {
+      return range.message;
+    }
+  }
+  return "Skor aralığı bulunamadı.";
+}
+
+
+function setButtonPrefixColor(prefix, points) {
+  // Prefix rengini puan değerine göre ayarla
+  switch(points) {
+    case 0:
+      prefix.style.color = 'green'; // 0 puan için yeşil
+      break;
+    case 1:
+      prefix.style.color = '#c59722'; // 1 puan için sarı
+      break;
+    case 2:
+      prefix.style.color = 'orange'; // 2 puan için turuncu
+      break;
+    case 3:
+      prefix.style.color = 'grey'; // 3 puan için turuncu
+      break;
+    default:
+      prefix.style.color = 'rgb(196, 63, 34)'; // 4 veya 5 puan için gri
+  }
+}
+
+var currentQuestionIndex = 0; // Başlangıç için soru indeksini tanımlayın
+
+function displayQuestion(questionIndex) {
+  var question = questions[questionIndex];
+  
+  if (!question) {
+    console.error("Soru bulunamadı: " + questionIndex);
+    return;
+  }
+
+  var container = document.getElementById('question-container');
+  var optionsContainer = document.getElementById('options-container');
+  
+  // Konteynerleri temizle
+  container.innerHTML = '';
+  optionsContainer.innerHTML = '';
+
+  // Soru resmi (image boş veya undefined ise eklenmez)
+  if (question.image) {
+    var questionImage = document.createElement('img');
+    questionImage.src = question.image;
+    container.appendChild(questionImage);
+  }
+
+  // Soru metni
+  var questionText = document.createElement('p');
+  questionText.textContent = question.text;
+  questionText.className = 'question'; // Sınıfı ekle
+  container.appendChild(questionText);
+  
+  // Cevap seçenekleri
+  question.options.forEach(function(option, index) {
+    var button = document.createElement('button');
+    button.textContent = option.text;
+
+    // Cevap resmi (image boş veya undefined ise eklenmez)
+    if (option.image) {
+      var optionImage = document.createElement('img');
+      optionImage.src = option.image;
+      button.appendChild(optionImage); // Resmi butona ekle
+    }
+
+    // Tıklama ile sonraki soruya geçiş
+    button.onclick = function () {
+      selectOption(index);
+    };
+
+    optionsContainer.appendChild(button);
+  });
+}
+
+function selectOption(optionIndex) {
+  var question = questions[currentQuestionIndex];
+  
+  if (question && optionIndex >= 0 && optionIndex < question.options.length) {
+    points -= question.options[optionIndex].value; // Puanı güncelle
+    document.getElementById('points').textContent = points; // Puanı ekrana yaz
+    
+    currentQuestionIndex++; // Bir sonraki soruya geç
+    if (currentQuestionIndex < questions.length) {
+      displayQuestion(currentQuestionIndex); // Sonraki soruyu göster
+    } else {
+      // Anket tamamlandığında:
+      document.getElementById('survey').style.display = 'none'; // Anketi gizle
+      document.getElementById('score').style.fontSize = '32px'; // Mesaj stilini ayarla
+      
+      var finalMessage = findMessageForScore(points); // Puan aralığına göre mesajı bul
+      document.getElementById('score').innerHTML = "Anket bitti!<br>Puanınız: " + points + " <br><br> " + finalMessage;
+    }
+  }
+}
+
+
+// İlk soruyu göster
+displayQuestion(currentQuestionIndex);
+
+
+          </script>
+    
+</body></html>
