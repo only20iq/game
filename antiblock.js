@@ -236,6 +236,6 @@ setInterval(() => {
         baslatObserver();
         mevcutUrl = window.location.href;
     }
-}, 100); // Her 0.1 saniyede kontrol et (önceki 0.1 saniye)
+}, 300); // Her 0.3 saniyede kontrol et (önceki 0.1 saniye)
     // Your code here...
 })();
