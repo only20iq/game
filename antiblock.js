@@ -179,8 +179,8 @@ window.onload = () => {
 // });
 
 setInterval(() => {
-    if (window.location.href !== mevcutUrl || document.querySelector('[aria-label="Zaman Akışı: Sohbet"]') !== hedefElementReferansi) {
-        // console.log("URL veya hedef element değişti (periyodik kontrol), observer yeniden başlatılıyor.");
+    if (window.location.href !== mevcutUrl || document.querySelector('[aria-label^="Zaman Akışı:"]') !== hedefElementReferansi) {
+        console.log("URL veya hedef element değişti (periyodik kontrol), observer yeniden başlatılıyor.");
         if (mevcutObserver) {
             mevcutObserver.disconnect();
             mevcutObserver = null;
@@ -188,6 +188,6 @@ setInterval(() => {
         baslatObserver();
         mevcutUrl = window.location.href;
     }
-}, 100); // Her 0.1 saniyede kontrol et (önceki 0.1 saniye)
+}, 100);
     // Your code here...
 })();
