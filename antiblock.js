@@ -23,21 +23,21 @@ let hedefElementReferansi = null;
 let timeoutId;
 
 function baslatObserver() {
-    let hedefElement = document.querySelector('[aria-label="Zaman Akışı: Sohbet"]');
-    // console.log("Hedef Element (aria-label='Zaman Akışı: Sohbet'):", hedefElement);
+    let hedefElement = document.querySelector('[aria-label^="Zaman Akışı:"]');
+    // console.log("Hedef Element (aria-label ile başlayan 'Zaman Akışı:'):", hedefElement);
     hedefElementReferansi = hedefElement;
     if (hedefElement) {
         kurObserver(hedefElement);
         // Periyodik alt element kontrolü (eklendi)
-        setInterval(kontrolAltElementleri, 900); // Her 2 saniyede kontrol et
+        setInterval(kontrolAltElementleri, 900); // Her 0.9 saniyede kontrol et
     } else {
-        // console.warn("Hedef element (aria-label='Zaman Akışı: Sohbet') bulunamadı. Daha sık arama yapılacak.");
+        // console.warn("Aria-label'ı 'Zaman Akışı:' ile başlayan hedef element bulunamadı. Daha sık arama yapılacak.");
         const intervalId = setInterval(() => {
-            hedefElement = document.querySelector('[aria-label="Zaman Akışı: Sohbet"]');
-            // console.log("Hedef element aranıyor...", hedefElement);
+            hedefElement = document.querySelector('[aria-label^="Zaman Akışı:"]');
+            // console.log("Aria-label'ı 'Zaman Akışı:' ile başlayan hedef element aranıyor...", hedefElement);
             hedefElementReferansi = hedefElement;
             if (hedefElement) {
-                // console.log("Hedef element bulundu, observer başlatılıyor.");
+                // console.log("Aria-label'ı 'Zaman Akışı:' ile başlayan hedef element bulundu, observer başlatılıyor.");
                 clearInterval(intervalId);
                 kurObserver(hedefElement);
             }
@@ -46,7 +46,7 @@ function baslatObserver() {
 }
 
 function kontrolAltElementleri() {
-    const hedefElement = document.querySelector('[aria-label="Zaman Akışı: Sohbet"]');
+    const hedefElement = document.querySelector('[aria-label^="Zaman Akışı:"]');
     if (hedefElement) {
         const svgElementleri = hedefElement.querySelectorAll('svg');
         svgElementleri.forEach(svg => {
