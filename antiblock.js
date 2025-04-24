@@ -180,7 +180,7 @@ window.onload = () => {
 
 setInterval(() => {
     if (window.location.href !== mevcutUrl || document.querySelector('[aria-label^="Zaman Akışı:"]') !== hedefElementReferansi) {
-        console.log("URL veya hedef element değişti (periyodik kontrol), observer yeniden başlatılıyor.");
+        // console.log("URL veya hedef element değişti (periyodik kontrol), observer yeniden başlatılıyor.");
         if (mevcutObserver) {
             mevcutObserver.disconnect();
             mevcutObserver = null;
