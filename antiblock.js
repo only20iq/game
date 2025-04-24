@@ -260,15 +260,37 @@ window.addEventListener('wheel', (event) => {
     }
 });
 
-// Profil sayfası kontrolü için interval (engelleme mesajları)
-setInterval(() => {
-    if (isProfilePage()) {
-        baslatEngellemeKontrolObserver();
-    } else if (engellemeKontrolObserver) {
-        engellemeKontrolObserver.disconnect();
-        engellemeKontrolObserver = null;
-        // console.log("Profil sayfası dışına çıkıldı, engelleme kontrol observer durduruldu.");
+const NORMAL_KONTROL_ARALIGI = 600; // Normal kontrol aralığı (ms)
+const HIZLI_KONTROL_ARALIGI = 100; // Hızlı kontrol aralığı (ms)
+let engellemeKontrolIntervalId;
+
+function ayarlaEngellemeKontrolInterval(aralik) {
+    if (engellemeKontrolIntervalId) {
+        clearInterval(engellemeKontrolIntervalId);
     }
-}, 600);
+    engellemeKontrolIntervalId = setInterval(() => {
+        if (isProfilePage()) {
+            baslatEngellemeKontrolObserver();
+        } else if (engellemeKontrolObserver) {
+            engellemeKontrolObserver.disconnect();
+            engellemeKontrolObserver = null;
+            // console.log("Profil sayfası dışına çıkıldı, engelleme kontrol observer durduruldu.");
+        }
+    }, aralik);
+}
+
+// Sayfa yüklendiğinde normal aralığı ayarla
+ayarlaEngellemeKontrolInterval(HIZLI_KONTROL_ARALIGI);
+
+// Kaydırma olayını dinle
+window.addEventListener('scroll', () => {
+    if (window.scrollY <= 50) {
+        // console.log("Hızlı kontrol aralığı (ilk 50px içinde):", HIZLI_KONTROL_ARALIGI);
+        ayarlaEngellemeKontrolInterval(HIZLI_KONTROL_ARALIGI);
+    } else {
+        // console.log("Normal kontrol aralığı (50px dışı):", NORMAL_KONTROL_ARALIGI);
+        ayarlaEngellemeKontrolInterval(NORMAL_KONTROL_ARALIGI);
+    }
+});
 
 })();
