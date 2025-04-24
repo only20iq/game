@@ -284,7 +284,7 @@ ayarlaEngellemeKontrolInterval(HIZLI_KONTROL_ARALIGI);
 
 // Kaydırma olayını dinle
 window.addEventListener('scroll', () => {
-    if (window.scrollY <= 50) {
+    if (window.scrollY === 0) {
         // console.log("Hızlı kontrol aralığı (ilk 50px içinde):", HIZLI_KONTROL_ARALIGI);
         ayarlaEngellemeKontrolInterval(HIZLI_KONTROL_ARALIGI);
     } else {
