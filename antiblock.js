@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New Userscript
 // @namespace    http://tampermonkey.net/
-// @version      2025-04-22
+// @version      2025-04-24
 // @description  try to take over the world!
 // @author       You
 // @match        https://x.com/*
@@ -12,18 +12,77 @@
 (function() {
     'use strict';
 
+// Mevcut observer nesnesini tutacak bir değişken
 let mevcutObserver = null;
+// Mevcut URL'yi saklamak için bir değişken
 let mevcutUrl = window.location.href;
+// Hedef elementin son bilinen referansı
 let hedefElementReferansi = null;
-let hedefElement = null;
+
+        let hedefElement = null; // hedefElement'ı global scope'a taşıdık
 let timeoutId;
+let engellemeObserver = null;
+let engellemeKontrolObserver = null; // Yeni observer
+const TETIKLEME_ARALIGI = 12; // Her kaç kaydırmada bir tetiklenecek
+let kaydirmaSayaci = 0;
+
+function isProfilePage() {
+    const pathname = window.location.pathname;
+    return pathname.startsWith('/') && pathname.split('/').filter(segment => segment !== '').length === 1 && !pathname.includes('/status/') && pathname !== '/home';
+}
+
+function silEngellemeMesajlari(targetDiv) {
+    if (targetDiv) {
+        const engellemeMesajlari = Array.from(targetDiv.querySelectorAll('span')).filter(span => span.textContent.includes('has blocked you'));
+        engellemeMesajlari.forEach(spanElement => {
+            // console.log("Engelleme mesajı bulundu (silEngellemeMesajlari):", spanElement.textContent);
+            let parentElement = spanElement;
+            for (let i = 0; i < 5; i++) {
+                if (parentElement && parentElement.parentElement) {
+                    parentElement = parentElement.parentElement;
+                } else {
+                    console.warn("Silinecek elemente yeterince yukarı çıkılamadı (silEngellemeMesajlari).");
+                    return;
+                }
+            }
+            if (parentElement && parentElement.parentElement) {
+                parentElement.parentElement.removeChild(parentElement);
+                // console.log("Engelleme mesajının 5 üstündeki element silindi (silEngellemeMesajlari).");
+            } else {
+                // console.warn("Silinecek elementin üst elementi bulunamadı (silEngellemeMesajlari).");
+            }
+        });
+    }
+}
+
+function baslatEngellemeKontrolObserver() {
+    const targetDiv = document.querySelector('div[aria-label^="Anasayfa zaman akışı"]');
+    if (targetDiv) {
+        if (engellemeKontrolObserver) {
+            engellemeKontrolObserver.disconnect();
+        }
+
+        engellemeKontrolObserver = new MutationObserver((mutationsList, observer) => {
+            for (const mutation of mutationsList) {
+                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                    silEngellemeMesajlari(targetDiv);
+                }
+            }
+        });
+
+        engellemeKontrolObserver.observe(targetDiv, { childList: true, subtree: true });
+        // console.log("Engelleme kontrol observer başlatıldı.");
+    } else {
+        // console.warn("Engelleme kontrol observer için hedef div bulunamadı.");
+    }
+}
 
 function baslatObserver() {
     let hedefElement = document.querySelector('[aria-label^="Zaman Akışı:"]');
     hedefElementReferansi = hedefElement;
     if (hedefElement) {
         kurObserver(hedefElement);
-        setInterval(kontrolAltElementleri, 1500); // Aralık artırıldı (1.5 saniye)
+        setInterval(kontrolAltElementleri, 900); // Her 0.9 saniyede kontrol et
     } else {
         const intervalId = setInterval(() => {
             hedefElement = document.querySelector('[aria-label^="Zaman Akışı:"]');
@@ -32,9 +91,11 @@ function baslatObserver() {
                 clearInterval(intervalId);
                 kurObserver(hedefElement);
             }
-        }, 1000); // Aralık artırıldı (1 saniye)
+        }, 500);
     }
 }
+
+baslatObserver(); // Sayfa yüklenir yüklenmez observer'ı başlat
 
 function kontrolAltElementleri() {
     const hedefElement = document.querySelector('[aria-label^="Zaman Akışı:"]');
@@ -92,42 +153,53 @@ function handleMutations(mutationsList, observer) {
                 // console.error("Mutation işlenirken hata:", error);
             }
         });
-    }, 300); // Gecikme biraz artırıldı
+    }, 200);
 }
 
-function kurObserver(element) {
-    if (mevcutObserver) {
-        mevcutObserver.disconnect();
-        mevcutObserver = null;
+    function kurObserver(element) {
+        if (mevcutObserver) {
+            mevcutObserver.disconnect();
+            mevcutObserver = null;
+        }
+
+        const observer = new MutationObserver(handleMutations);
+
+        try {
+            observer.observe(element, { attributes: true, childList: true, subtree: true, attributeFilter: ['class', 'style'] });
+            // console.log("Observer aktif, 'Zaman Akışı:' içindeki değişiklikleri izliyor.");
+            mevcutObserver = observer;
+
+            const initialElements = element.querySelectorAll('svg, div[style*="color: rgb(113, 118, 123)"]');
+            initialElements.forEach(el => guncelleElementStilleri(el, 'başlangıç'));
+
+        } catch (error) {
+            // console.error("Observer başlatılırken hata:", error);
+        }
     }
 
-    const observer = new MutationObserver(handleMutations);
-
-    try {
-        observer.observe(element, { attributes: true, childList: true, subtree: true, attributeFilter: ['class', 'style'] });
-        // console.log("Observer aktif, 'Zaman Akışı: Sohbet' içindeki değişiklikleri izliyor.");
-        mevcutObserver = observer;
-
-        const initialElements = element.querySelectorAll('svg, div[style*="color: rgb(113, 118, 123)"]');
-        initialElements.forEach(el => guncelleElementStilleri(el, 'başlangıç'));
-
-    } catch (error) {
-        // console.error("Observer başlatılırken hata:", error);
-    }
-}
 
 function guncelleElementStilleri(element, kaynak = 'bilinmiyor') {
     const computedStyle = window.getComputedStyle(element);
 
     if (element instanceof SVGElement && computedStyle.opacity === '0.4') {
         element.style.opacity = '1';
-        const opacitySifirNoktaDortPrefix = 'opacity-0\\.4'; // Daha spesifik class arama
-        element.classList.forEach(className => {
-            if (className.includes(opacitySifirNoktaDortPrefix)) {
-                element.classList.remove(className);
-                // console.log(`Opaklığı 0.4 olan class silindi (${kaynak}):`, element, `Class Adı: ${className}`);
+        const classes = element.classList;
+        let opacitySifirNoktaDortClass = null;
+        for (let i = 0; i < classes.length; i++) {
+            const className = classes[i];
+            const tempElement = document.createElement('div');
+            tempElement.className = className;
+            document.body.appendChild(tempElement);
+            const tempComputedStyle = window.getComputedStyle(tempElement);
+            if (tempComputedStyle && tempComputedStyle.opacity === '0.4') {
+                opacitySifirNoktaDortClass = className;
+                break;
             }
-        });
+            document.body.removeChild(tempElement);
+        }
+        if (opacitySifirNoktaDortClass) {
+            element.classList.remove(opacitySifirNoktaDortClass);
+        }
     } else if (element instanceof SVGElement && computedStyle && computedStyle.opacity !== '1') {
         element.style.opacity = '1';
     }
@@ -135,59 +207,68 @@ function guncelleElementStilleri(element, kaynak = 'bilinmiyor') {
     let currentElement = element;
     while (currentElement && currentElement.nodeName.toLowerCase() !== 'button') {
         if (currentElement instanceof HTMLElement) {
-            const opacitySifirNoktaBesPrefix = 'opacity-0\\.5';
-            currentElement.classList.forEach(className => {
-                if (className.includes(opacitySifirNoktaBesPrefix)) {
+            const classes = currentElement.classList;
+            for (let i = 0; i < classes.length; i++) {
+                const className = classes[i];
+                const tempElement = document.createElement('div');
+                tempElement.className = className;
+                document.body.appendChild(tempElement);
+                const tempComputedStyle = window.getComputedStyle(tempElement);
+                if (tempComputedStyle && tempComputedStyle.opacity === '0.5') {
                     const parentButton = currentElement.closest('button[data-testid="retweet"]');
-                    if (parentButton && window.getComputedStyle(parentButton).opacity === '0.5') {
+                    if (parentButton) {
                         parentButton.style.opacity = '1';
-                        return;
-                    }
-                    const parentShareButton = currentElement.closest('button[aria-label="Gönderiyi paylaş"]');
-                    if (parentShareButton && window.getComputedStyle(parentShareButton).opacity === '0.5') {
-                        parentShareButton.style.opacity = '1';
+                        document.body.removeChild(tempElement);
                         return;
                     }
                 }
-            });
+                document.body.removeChild(tempElement);
+            }
         }
         currentElement = currentElement.parentNode;
     }
 
     const targetRetweetButton = element.closest('button[data-testid="retweet"]');
-    if (targetRetweetButton && window.getComputedStyle(targetRetweetButton).opacity === '0.5') {
-        targetRetweetButton.style.opacity = '1';
+    if (targetRetweetButton) {
+        const buttonComputedStyle = window.getComputedStyle(targetRetweetButton);
+        if (buttonComputedStyle.opacity === '0.5') {
+            targetRetweetButton.style.opacity = '1';
+        }
     }
 
     const targetShareButton = element.closest('button[aria-label="Gönderiyi paylaş"]');
-    if (targetShareButton && window.getComputedStyle(targetShareButton).opacity === '0.5') {
-        targetShareButton.style.opacity = '1';
+    if (targetShareButton) {
+        const buttonComputedStyle = window.getComputedStyle(targetShareButton);
+        if (buttonComputedStyle.opacity === '0.5') {
+            targetShareButton.style.opacity = '1';
+        }
     }
 }
-// Tüm kaynaklar (resimler, stil dosyaları vb.) yüklendikten 2 saniye sonra observer'ı başlat
-window.onload = () => {
-    setTimeout(baslatObserver, 2000); // 2000 milisaniye = 2 saniye
-};
 
-//     window.addEventListener('popstate', () => {
-//     console.log("popstate olayı tetiklendi!");
-//     if (mevcutObserver) {
-//         mevcutObserver.disconnect();
-//         mevcutObserver = null;
-//     }
-//     baslatObserver();
-// });
-
-setInterval(() => {
-    if (window.location.href !== mevcutUrl || document.querySelector('[aria-label^="Zaman Akışı:"]') !== hedefElementReferansi) {
-        // console.log("URL veya hedef element değişti (periyodik kontrol), observer yeniden başlatılıyor.");
+// Fare tekerleği hareketi (orta tuş yukarı/aşağı kaydırma) dinleyicisi
+window.addEventListener('wheel', (event) => {
+    kaydirmaSayaci++;
+    if (kaydirmaSayaci % TETIKLEME_ARALIGI === 0) {
+        // console.log(`Orta tuş ile kaydırma algılandı (${kaydirmaSayaci}. tetikleme), observer yeniden başlatılıyor.`);
         if (mevcutObserver) {
             mevcutObserver.disconnect();
             mevcutObserver = null;
         }
         baslatObserver();
-        mevcutUrl = window.location.href;
+        mevcutUrl = window.location.href; // URL'yi de güncelle
+        kaydirmaSayaci = 0; // Sayacı sıfırla
     }
-}, 100);
-    // Your code here...
+});
+
+// Profil sayfası kontrolü için interval (engelleme mesajları)
+setInterval(() => {
+    if (isProfilePage()) {
+        baslatEngellemeKontrolObserver();
+    } else if (engellemeKontrolObserver) {
+        engellemeKontrolObserver.disconnect();
+        engellemeKontrolObserver = null;
+        // console.log("Profil sayfası dışına çıkıldı, engelleme kontrol observer durduruldu.");
+    }
+}, 1000);
+
 })();
