@@ -269,6 +269,6 @@ setInterval(() => {
         engellemeKontrolObserver = null;
         // console.log("Profil sayfası dışına çıkıldı, engelleme kontrol observer durduruldu.");
     }
-}, 1000);
+}, 600);
 
 })();
