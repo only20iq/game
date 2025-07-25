@@ -1,0 +1,337 @@
+/* ========== RESET & LAYOUT ========== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    background-color: #2c3e50;
+    font-family: sans-serif;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Score Display */
+#score-display {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 1.2em;
+    z-index: 9999;
+}
+
+/* ========== CIWS TURRET ========== */
+#bottom-square {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    bottom: 50px;
+    left: calc(50% - 75px);
+    background: radial-gradient(circle at 30% 30%, #546e7a, #263238);
+    border: 4px solid #111a20;
+    border-radius: 50%;
+    box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, 0.4),
+        0 0 0 6px #37474f,
+        0 8px 24px rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: visible;
+    cursor: crosshair;
+    z-index: 10;
+}
+
+/* ========== BARREL ========== */
+.ciws-barrel {
+    width: 40px;
+    height: 80px;
+    background: linear-gradient(to top, #424242, #757575);
+    border: 2px solid #212121;
+    border-radius: 6px;
+    position: absolute;
+    top: -70px;
+    transform-origin: bottom center;
+    box-shadow:
+        inset 0 0 6px rgba(0, 0, 0, 0.5),
+        0 2px 8px rgba(0, 0, 0, 0.7);
+    z-index: 11;
+}
+
+/* Muzzle brake / tip */
+.ciws-barrel::before {
+    content: '';
+    position: absolute;
+    width: 44px;
+    height: 8px;
+    background: #212121;
+    border-radius: 50%;
+    top: -4px;
+    left: 50%;
+    margin-left: -22px;
+}
+
+/* Small detail rings */
+.ciws-barrel::after {
+    content: '';
+    position: absolute;
+    width: 36px;
+    height: 3px;
+    background: #212121;
+    top: 20px;
+    left: 50%;
+    margin-left: -18px;
+    border-radius: 2px;
+}
+
+/* ========== CIWS FIRE EFFECT (MUZZLE FLASH - KEEP AS IS) ========== */
+.ciws-fire-effect {
+    position: absolute;
+    background-color: #ffff00; /* Sarı renk */
+    border-radius: 50%; /* Yuvarlak şekil */
+    filter: blur(5px); /* Daha fazla parlaklık için bulanıklık artırıldı */
+    box-shadow: 0 0 25px 15px rgba(255, 255, 0, 0.9), /* Daha büyük ve parlak gölge */
+                inset 0 0 10px rgba(255, 255, 0, 0.7); /* İç parlaklık artırıldı */
+    opacity: 1;
+    z-index: 1002; /* Sarı ateş efekti üstte olacak */
+    transform-origin: center center;
+    width: 30px; /* Boyut büyütüldü */
+    height: 30px; /* Boyut büyütüldü */
+    will-change: transform, opacity; /* Performans iyileştirme */
+}
+
+/* ========== CIWS BULLET EFFECT (NEW - RED, THIN, FAST) ========== */
+.ciws-bullet-effect {
+    position: absolute;
+    background-color: #ff0000; /* Kırmızı renk */
+    border-radius: 50%; /* Yuvarlak şekil */
+    filter: blur(1px); /* Daha da az bulanıklık, daha keskin bir mermi için */
+    box-shadow: 0 0 10px 4px rgba(255, 0, 0, 0.9), /* Kırmızı parlaklık */
+                inset 0 0 4px rgba(255, 0, 0, 0.7), /* İç parlaklık */
+                0 0 15px 7px rgba(255, 50, 50, 0.6); /* Hafif dış parlaklık eklendi */
+    opacity: 1;
+    z-index: 1001; /* Sarı ateş efektinin altında olacak */
+    transform-origin: center center;
+    width: 6px; /* Mermi boyutu */
+    height: 6px; /* Mermi boyutu */
+    will-change: transform, opacity;
+}
+
+
+/* ========== LIGHT PARTICLES (NEW) ========== */
+.light-particle {
+    position: absolute;
+    background-color: rgba(255, 255, 200, 0.8); /* Açık sarı/beyaz renk */
+    border-radius: 50%;
+    filter: blur(2px); /* Hafif bulanıklık */
+    box-shadow: 0 0 8px 4px rgba(255, 255, 200, 0.6); /* Parlaklık */
+    opacity: 0; /* Başlangıçta görünmez */
+    z-index: 1003; /* Ateş efektinin üstünde */
+    transform-origin: center center;
+    pointer-events: none;
+    will-change: transform, opacity; /* Performans iyileştirme */
+}
+
+@keyframes light-particle-animation {
+    0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.0) translate(var(--dx), var(--dy));
+        opacity: 0;
+    }
+}
+
+/* ========== EXPLOSION PARTICLES ========== */
+.explosion-particle {
+    position: absolute;
+    background-color: #ffe082;
+    border-radius: 50%;
+    opacity: 0;
+    animation: fadeOutAndExpand 0.4s forwards ease-out;
+    will-change: transform, opacity; /* Performans iyileştirme */
+}
+
+@keyframes fadeOutAndExpand {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* ========== FAST SHOCK-WAVE (optional) ========== */
+.fast-shockwave {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    will-change: transform, opacity;
+    animation: fastShock 250ms ease-out forwards;
+    z-index: 1003;
+}
+
+@keyframes fastShock {
+    0%   { width: 0;   height: 0;   opacity: 0.9;
+           box-shadow: 0 0 0 2px rgba(255,255,255,.95); }
+    100% { width: 120px; height: 120px; opacity: 0;
+           box-shadow: 0 0 0 6px rgba(255,255,255,0); }
+}
+
+/* SU-57 Uçağı */
+.su57-plane { /* Changed from #su57 to .su57-plane */
+    position: fixed; /* SU-57'nin viewport'a göre konumlanmasını sağlar */
+    /* top ve left değerleri JavaScript tarafından transform ile yönetileceği için sıfırda bırakılır */
+    top: 0;
+    left: 0;
+    height:60px;
+    width: auto; /* Uçağın genişliği */
+    z-index: 10; /* CIWS'ten daha yüksek z-index */
+    pointer-events: none; /* Üzerine tıklamayı veya olayları engeller, böylece lazer tıklamaları geçer */
+    transition: opacity 0.3s ease-out; /* Yok oluş animasyonu için */
+    will-change: transform, opacity; /* Performans iyileştirme */
+}
+
+
+/* Shockwave Effect Styles (Güncellenmiş) */
+.shockwave-effect {
+    position: absolute;
+    border-radius: 50%; /* Elemanın kendisi yuvarlak olmalı */
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    /* Animasyon süresi 0.8s'den 1.0s'ye çıkarıldı, daha yavaş ve akıcı yayılım için */
+    animation: shockwave3 1.0s cubic-bezier(0.0, 0.0, 0.2, 1) forwards,
+               pulse3 0.5s ease-out infinite alternate; /* pulse3 süresi de ana animasyona uyumlu artırıldı */
+    z-index: 11;
+    pointer-events: none;
+    will-change: transform, opacity;    /* hint the compositor */
+    contain: layout paint style;        /* isolate stacking context */
+}
+
+@keyframes shockwave3 {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.9; /* Başlangıç opaklığı korunuyor */
+        backdrop-filter: blur(0px);
+        /* Daha fazla gri tonlamalı ve belirgin başlangıç gölgeleri */
+        /* İlk box-shadow'a daha fazla bulanıklık ve yayılma eklenerek kare görüntü engellendi */
+        box-shadow: 0 0 5px 5px rgba(220, 220, 220, 0.9),    /* En içteki parlak, bulanık ve yayılmış halka */
+                    0 0 0 10px rgba(190, 190, 190, 0.9),    /* İkinci halka */
+                    0 0 0 20px rgba(160, 160, 160, 0.8),    /* Üçüncü halka */
+                    0 0 0 30px rgba(130, 130, 130, 0.7),    /* Dördüncü halka */
+                    0 0 0 40px rgba(100, 100, 100, 0.6),    /* Beşinci halka */
+                    0 0 0 50px rgba(70, 70, 70, 0.5),      /* Altıncı halka */
+                    0 0 0 60px rgba(40, 40, 40, 0.4),      /* Yedinci halka */
+                    0 0 0 70px rgba(20, 20, 20, 0.3),      /* Sekizinci halka */
+                    0 0 0 80px rgba(10, 10, 10, 0.2);      /* Dokuzuncu halka */
+    }
+    100% {
+        width: 600px; /* Bitiş yarıçapı 400px'den 600px'e büyütüldü */
+        height: 600px; /* Bitiş yarıçapı 400px'den 600px'e büyütüldü */
+        opacity: 0;
+        backdrop-filter: blur(40px); /* Genişlemeye uygun olarak bulanıklık daha da artırıldı */
+        /* Şeffaflaşan ve daha fazla katman içeren gri tonlamalı bitiş gölgeleri */
+        box-shadow: 0 0 0 100px rgba(255, 255, 255, 0),
+                    0 0 0 200px rgba(220, 220, 220, 0),
+                    0 0 0 300px rgba(190, 190, 190, 0),
+                    0 0 0 400px rgba(160, 160, 160, 0),
+                    0 0 0 500px rgba(130, 130, 130, 0),
+                    0 0 0 600px rgba(100, 100, 100, 0),
+                    0 0 0 700px rgba(70, 70, 70, 0),
+                    0 0 0 800px rgba(40, 40, 40, 0),
+                    0 0 0 900px rgba(10, 10, 10, 0);
+    }
+}
+@keyframes pulse3 {
+    0% {
+        box-shadow: 0 0 0 0px rgba(180, 180, 180, 0.8);
+        backdrop-filter: blur(0px);
+    }
+    50% {
+        box-shadow: 0 0 0 35px rgba(100, 100, 100, 0); /* Titreşim yarıçapı biraz daha artırıldı */
+        backdrop-filter: blur(12px); /* Titreşim bulanıklığı biraz daha artırıldı */
+    }
+    100% {
+        box-shadow: 0 0 0 0px rgba(50, 50, 50, 0);
+        backdrop-filter: blur(0px);
+    }
+}
+
+/* SU-57 Fragment Styles for Disintegration Effect */
+.su57-fragment {
+    position: absolute;
+    background-color: #555; /* Default fragment color, will be overridden by sampled pixel color */
+    border-radius: 1px; /* Small, almost square fragments */
+    opacity: 1;
+    z-index: 9; /* Below the main explosion but above the background */
+    animation: fragment-fade-out 0.4s forwards ease-out; /* Fast fade out */
+    will-change: transform, opacity;
+}
+
+@keyframes fragment-fade-out {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0) rotateZ(360deg); /* Rotate as it disappears */
+        opacity: 0;
+    }
+}
+
+
+/* ========== CIWS SMOKE EFFECT (NEW) ========== */
+.ciws-smoke-effect {
+    position: absolute;
+    background-color: #a0a0a0; /* Koyu gri duman rengi */
+    border-radius: 50%; /* Yuvarlak duman parçacıkları */
+    filter: blur(5px); /* Daha yumuşak duman için bulanıklık */
+    opacity: 0; /* Başlangıçta görünmez */
+    z-index: 1001; /* Ateşin altında, lazerin üstünde */
+    transform-origin: center center;
+    pointer-events: none; /* Etkileşimi engelle */
+    will-change: transform, opacity, filter; /* Performans iyileştirme */
+}
+
+@keyframes smoke-puff {
+    0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0.8;
+        filter: blur(2px);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.5) translate(var(--dx), var(--dy)); /* Rastgele yayılma */
+        opacity: 0;
+        filter: blur(10px);
+    }
+}
+
+/* style.css */
+.ciws-fire-effect,
+.ciws-bullet-effect,
+.light-particle,
+.explosion-particle,
+.ciws-smoke-effect {
+    will-change: transform, opacity;
+    contain: layout paint style;
+}
