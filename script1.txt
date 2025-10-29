@@ -1,0 +1,514 @@
+// ==UserScript==
+// @name         Anti-Unf
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://x.com/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=twitter.com
+// @grant        none
+// ==/UserScript==
+
+(function() {
+  'use strict';
+
+
+
+// UNFOLLOW-VIEW
+var _asdasdCCCC = 0;
+function listSpans() {
+  _asdasdCCCC = _asdasdCCCC === 1 ? (alert("Kapatıldı"), 0) : (alert("Açıldı"), 1);
+  var refreshIntervalId = setInterval(() => {
+    if (_asdasdCCCC === 0) {clearInterval(refreshIntervalId);return;}
+    let spans = document.querySelectorAll("span");
+    for (let span of spans) {
+      // if (span.textContent == "Follows You") {
+      if (span.textContent == "Seni takip ediyor") {
+        console.log("Bulundu");
+        let parent = span;
+        for (let i = 0; i < 10; i++) {
+          if (parent) parent = parent.parentElement;
+        }
+        if (parent) parent.remove();
+      }
+    }
+  }, 300);
+  return;
+}
+
+
+
+
+
+function addDataOLDTABLE(data) {
+  let textarea = document.getElementById("oldtableAAAAxx123x");
+  let value = textarea.value;
+  value = value === "" ? data : value + "," + data;
+  textarea.value = value;
+}
+
+function kullaniciSilAAAHJK() {
+  let newUsers = document.getElementById("aJh777ZZZaaSS33").value.split(',');
+  let oldUsers = document.getElementById("oldtableAAAAxx123x").value.split(',');
+  let deletedCount = 0;
+
+  oldUsers.forEach((user, index) => {
+    if (newUsers.includes(user)) {
+      oldUsers.splice(index, 1);
+      deletedCount++;
+    }
+  });
+
+  document.getElementById("oldtableAAAAxx123x").value = oldUsers.join(',');
+  alert(deletedCount > 0 ? deletedCount + ' kullanıcı silindi.' : 'Silinen kullanıcı yoktur.');
+}
+
+function yenikullnaciciekle00A() {
+  let newUsers = document.getElementById("aJh777ZZZaaSS33").value.split(',');
+  let oldUsers = document.getElementById("oldtableAAAAxx123x").value.split(',');
+  let addedCount = 0;
+
+  newUsers.forEach(user => {
+    if (!oldUsers.includes(user)) {
+      oldUsers.push(user);
+      addedCount++;
+    }
+  });
+
+  document.getElementById("oldtableAAAAxx123x").value = oldUsers.join(',');
+  alert(addedCount > 0 ? addedCount + ' yeni kullanıcı eklendi.' : 'Yeni kullanıcı yoktur.');
+}
+
+
+  function karsilastir0123010(){
+      // @Mr_Cypriot,@SY_sullyoon_,@H1KEY_official bu şekilde bir string i al ve set yap daha sonra başka bir textarea dan çektiğin veri ile sette eksik olan değeri bul
+// string i al
+let string = document.getElementById("aJh777ZZZaaSS33").value;
+// string i virgüllere göre böl
+let array = string.split(",");
+// array den bir küme oluştur
+let set = new Set(array);
+// sayfadaki başka bir textarea elementini seç
+let data = document.getElementById("oldtableAAAAxx123x").value;
+document.getElementById("oldtableAAAAxx123x").value="";
+// veriyi virgüllere göre böl
+let otherArray = data.split(",");
+// diğer array in her elemanı için
+      var _tespit0x = 0;
+for (let item of otherArray) {
+// eğer kümede yoksa
+if (!set.has(item)) {
+  // konsola yazdır
+    _tespit0x++;;;
+    addDataOLDTABLE(item);
+}
+}
+      if(_tespit0x==0){
+          alert("Kimse Seni Engellememiş. Liste sayısı: "+otherArray.length);
+      }else{
+alert("Seni "+_tespit0x+"kişi engelledi. Liste sayısı: "+otherArray.length);
+
+      }
+
+
+  }
+  function engl_all_start() {
+      let string = document.getElementById("aJh777ZZZaaSS33").value;
+      let kullanicilar = string.split(",").map(kullanici => kullanici.trim());
+      let acikPencereler = [];
+      let beklemeliIndex = 0; // Her 10 pencerede bir beklemek için kullanılacak index
+
+      function siradakiKullaniciyiEngelle(index) {
+        if (index < kullanicilar.length) {
+          const kullanici = kullanicilar[index];
+          if (kullanici) {
+            // Pencereyi aç
+            const pencere = window.open(`https://x.com/${kullanici}#block`, '_blank');
+            if (pencere) {
+              acikPencereler.push(pencere);
+            } else {
+              console.log(`${kullanici} için pencere açılamadı. Pop-up engelleyiciyi kontrol edin.`);
+            }
+          }
+
+          // Her 10 pencerede bir 5 saniye beklet
+          beklemeliIndex++;
+          if (beklemeliIndex % 10 === 0) {
+            setTimeout(() => siradakiKullaniciyiEngelle(index + 1), 10000);
+          } else {
+            setTimeout(() => siradakiKullaniciyiEngelle(index + 1), 3500);
+          }
+        } else {
+          console.log('Tüm kullanıcılar için işlem tamamlandı.');
+          // Tüm pencerelerin kapanmasını kontrol et
+          let kontrolInterval = setInterval(() => {
+            acikPencereler = acikPencereler.filter(pencere => !pencere.closed);
+            if (acikPencereler.length === 0) {
+              clearInterval(kontrolInterval);
+              console.log('Tüm pencereler kapandı.');
+            }
+          }, 3500);
+        }
+      }
+
+      siradakiKullaniciyiEngelle(0);
+    }
+
+
+  function engl000scrp2(){
+  // Belirtilen özelliklere sahip div'i bul
+const button = document.querySelector('button[aria-expanded="false"][aria-haspopup="menu"][aria-label="Daha fazla"][role="button"]');
+
+// Div'e tıklama fonksiyonu
+function clickButton() {
+if (button) {
+  // Div'e tıkla
+  button.click();
+  // 0.5 saniye bekle
+  setTimeout(() => {
+    // Ekrana 'tıkladım' yaz
+    console.log('tıkladım');
+    const button1 = document.querySelector('div[role="menuitem"][data-testid="block"][tabindex="0"]');
+    button1.click();
+    setTimeout(() => {
+      // Ekrana 'tıkladım' yaz
+      console.log('tıkladım');
+      const button2 = document.querySelector('button[data-testid="confirmationSheetConfirm"][role="button"]');
+
+      if (button2) {
+        const spans = button2.querySelectorAll('span');
+        const blockButton = Array.from(spans).find(span => span.innerText === 'Engelle');
+
+        if (blockButton) {
+          button2.click();
+          console.log('\'Engelle\' yazan butona tıklandı.');
+          setTimeout(function() {
+
+// Butonu oluştur
+const closeButton = document.createElement('button');
+closeButton.innerText = 'Kapat';
+closeButton.style.zIndex = '999';
+closeButton.style.position = 'fixed';
+closeButton.style.margin = '0 auto';
+closeButton.style.top = '0';
+closeButton.style.left = '50%';
+closeButton.style.fontSize = '32px';
+
+document.body.appendChild(closeButton);
+
+closeButton.addEventListener("click", function() {
+window.close();
+});
+// Butona otomatik tıkla
+closeButton.click();
+
+
+          }, 500);
+
+
+        } else {
+          try {window.close();}catch(err) {}
+          console.log('\'Engelle\' yazan bir span bulunamadı.');
+        }
+      } else {
+        console.log('button1 bulunamadı.');
+      }
+
+
+    }, 500);
+
+  }, 500);
+} else {
+  setTimeout(engl000scrp2, 500);
+
+  console.log('Belirtilen özelliklere sahip bir div bulunamadı.');
+}
+}
+
+// Fonksiyonu çağır
+clickButton();
+
+  }
+
+
+function addData(data) {
+  let textarea = document.getElementById("aJh777ZZZaaSS33");
+// textarea nın mevcut değerini al
+let value = textarea.value;
+  if(value==""){value = data;}else{
+  value += (","+data);
+  }
+// textarea nın değerini güncelle
+textarea.value = value;
+}
+
+
+
+// BLOCK-VIEW
+var _askdaskdk = 0;
+function delx113(){
+  if(_askdaskdk == 1){alert("Kapatıldı");_askdaskdk = 0;return;} else {_askdaskdk = 1;alert("Açıldı");}
+  let elements = [];
+  let followersElement = document.querySelector("[aria-label='Zaman Akışı: Takipçiler']");
+  let followingElement = document.querySelector("[aria-label='Zaman Akışı: Takip ediliyor']");
+
+  if (followersElement) {
+    elements.push(followersElement);
+  }
+
+  if (followingElement) {
+    elements.push(followingElement);
+  }
+
+  if (elements.length === 0) {
+    console.error("Hiçbir element bulunamadı.");
+    return;
+  }
+
+  let parents = elements.map(element => element.parentElement);
+
+  if (parents.includes(null)) {
+    console.error("Parent element bulunamadı.");
+    return;
+  }
+
+  let set = new Set();
+  let interval = setInterval(function() {
+    if(_askdaskdk == 0){clearInterval(interval);}
+    parents.forEach(parent => {
+      let spans = parent.querySelectorAll("span");
+      for (let span of spans) {
+        let text = span.textContent;
+        if (text[0] == "@") {
+          if (!set.has(text)) {
+            set.add(text);
+            addData(text);
+          }
+        }
+      }
+    });
+  }, 100);
+}
+
+
+
+  // js sayfa yüklenince sayfanın üstünde navbar oluştur
+
+window.onload = function() {
+    var main_xAAA = document.createElement("div");
+    Object.assign(main_xAAA.style, {
+      left: "0",
+      right: "0",
+      bottom: "5",
+      padding: "0",
+      margin: "0",
+      color: "#fff",
+      position: "fixed",
+      zIndex: "9999",
+      fontSize: "24px",
+      textDecoration: "none",
+      userSelect: "none",
+      display: "fixed",
+      width: "0px"
+    });
+    var main_menu = document.createElement("div");
+    var data_x_loadAAxCVV = document.createElement("div");
+    let navbar = document.createElement("div");
+    navbar.style.display = "none";
+    navbar.className = "navbar";
+navbar.innerHTML = `
+<div id="mydiv" style="position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 546px;
+  height: 372px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #1e1e1e;
+  color: #fff;
+  z-index: 1000;
+  resize: both;
+  overflow: hidden;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;">
+  <div id="mydivheader" style="position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 30px;
+    background-color: #2c2c2c;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 10px;
+    cursor: move;">
+    <button style="background: none; border: none; color: white; font-size: 18px;">⋮</button>
+    <button id="gostergizlexxxxx" style="background: none; border: none; color: white; font-size: 18px;">-</button>
+    <button style="background: none; border: none; color: white; font-size: 18px;">+</button>
+    <button style="background: none; border: none; color: white; font-size: 18px;">x</button>
+  </div>
+  <div style="position: absolute;
+    top: 40px;
+    left: 20px;
+    right: 20px;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    background-color: #1e1e1e;">
+    <textarea id="aJh777ZZZaaSS33" style="font-size: 14px!important; color: #dcdcdc; width: 100%; height: 50px; background-color: #333; border: 1px solid #444; border-radius: 4px; padding: 10px; padding-right:0px; margin-bottom: 10px; font-family: 'Fira Code', monospace; resize: none;"></textarea>
+    <textarea id="oldtableAAAAxx123x" style="font-size: 14px!important; color: #dcdcdc; width: 100%; height: 50px; background-color: #333; border: 1px solid #444; border-radius: 4px; padding: 10px; padding-right:0px; margin-bottom: 10px; font-family: 'Fira Code', monospace; resize: none;"></textarea>
+    <div style="display: flex; flex-direction: column;">
+      <a style="color: #61dafb; text-decoration: none; font-size: 16px; padding: 5px 10px; margin-bottom: 5px; border-radius: 4px; background-color: #444; transition: background 0.3s; font-family: 'Fira Code', monospace; width: 100%;" id="aJ7GfVVV">🚫BlockView</a>
+      <a style="color: #61dafb; text-decoration: none; font-size: 16px; padding: 5px 10px; margin-bottom: 5px; border-radius: 4px; background-color: #444; transition: background 0.3s; font-family: 'Fira Code', monospace; width: 100%;" id="aBgXaX0A">⚠️UnfollowView</a>
+      <a style="color: #61dafb; text-decoration: none; font-size: 16px; padding: 5px 10px; margin-bottom: 5px; border-radius: 4px; background-color: #444; transition: background 0.3s; font-family: 'Fira Code', monospace; width: 100%;" id="aaaUU777xx">☑️Check</a>
+      <a style="color: #61dafb; text-decoration: none; font-size: 16px; padding: 5px 10px; margin-bottom: 5px; border-radius: 4px; background-color: #444; transition: background 0.3s; font-family: 'Fira Code', monospace; width: 100%;" id="atoplauenxgelx">🪄BlockAll</a>
+      <a style="color: #61dafb; text-decoration: none; font-size: 16px; padding: 5px 10px; margin-bottom: 5px; border-radius: 4px; background-color: #444; transition: background 0.3s; font-family: 'Fira Code', monospace; width: 100%;" id="nickaddAAAWWW">📒AddUser</a>
+      <a style="color: #61dafb; text-decoration: none; font-size: 16px; padding: 5px 10px; border-radius: 4px; background-color: #444; transition: background 0.3s; font-family: 'Fira Code', monospace; width: 100%;" id="removenickAAAWWW">💣RemoveUser</a>
+    </div>
+  </div>
+</div>
+`;
+function waitForDiv() {
+    var div = document.getElementById("mydiv");
+    if (div) {
+    makeDivDraggable(div);
+    } else {
+    setTimeout(waitForDiv, 100);
+    }
+}
+function makeDivDraggable(div) {
+    var header = document.getElementById("mydivheader");
+    header.onmousedown = dragMouseDown;
+    function dragMouseDown(e) {
+    e.preventDefault();
+    var mouseX = e.clientX - div.offsetLeft;
+    var mouseY = e.clientY - div.offsetTop;
+    document.onmousemove = function(e) {
+        div.style.left = (e.clientX - mouseX) + "px";
+        div.style.top = (e.clientY - mouseY) + "px";
+    }
+    document.onmouseup = function() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+    };
+    }
+}
+waitForDiv();
+function Jh678xCaLLLx() {
+    try {
+    if (navbar.style.display === "none") {
+        data_x_loadAAxCVV.style.display = "none";
+        navbar.style.display = "block";
+    } else {
+        data_x_loadAAxCVV.style.display = "block";
+        navbar.style.display = "none";
+    }
+    } catch (error) {}
+}
+let body = document.querySelector("body");
+body.insertBefore(navbar, body.firstChild);
+let asdsadas = document.querySelector("#gostergizlexxxxx");
+asdsadas.addEventListener("click", function() {
+    Jh678xCaLLLx();
+});
+data_x_loadAAxCVV.textContent = "╰┈➤Menu";
+Object.assign(data_x_loadAAxCVV.style, {
+    padding: "0",
+    paddingRight: "0",
+    margin: "0",
+    color: "#fff",
+    position: "flex",
+    float: "left",
+    fontSize: "24px",
+    textDecoration: "none",
+    userSelect: "none",
+    borderRadius: "8px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    transition: "background 0.3s ease, color 0.3s ease",
+    cursor: "pointer",
+    display: "contents"
+});
+data_x_loadAAxCVV.addEventListener("mouseover", function() {
+    data_x_loadAAxCVV.style.backgroundColor = "#444";
+    data_x_loadAAxCVV.style.color = "#61dafb";
+});
+data_x_loadAAxCVV.addEventListener("mouseout", function() {
+    data_x_loadAAxCVV.style.backgroundColor = "transparent";
+    data_x_loadAAxCVV.style.color = "#fff";
+});
+data_x_loadAAxCVV.addEventListener("click", ()=>{
+Jh678xCaLLLx();
+});
+main_xAAA.appendChild(data_x_loadAAxCVV);
+const viewQuotes = document.createElement("a");
+viewQuotes.textContent = "╰┈➤Quotes";
+Object.assign(viewQuotes.style, {
+  padding: "0",
+  paddingRight: "0",
+  margin: "0",
+  color: "#fff",
+  position: "flex",
+  float: "left",
+  fontSize: "24px",
+  textDecoration: "none",
+  userSelect: "none",
+  borderRadius: "8px",
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+  transition: "background 0.3s ease, color 0.3s ease",
+  cursor: "pointer",
+  display: "contents"
+});
+
+viewQuotes.addEventListener("mouseover", function() {
+  viewQuotes.style.backgroundColor = "#444";
+  viewQuotes.style.color = "#61dafb";
+});
+
+viewQuotes.addEventListener("mouseout", function() {
+  viewQuotes.style.backgroundColor = "transparent";
+  viewQuotes.style.color = "#fff";
+});
+
+viewQuotes.addEventListener("click", function() {
+  window.open(`${window.location.href}/quotes`, "_blank");
+});
+
+main_xAAA.appendChild(viewQuotes);
+
+main_menu.appendChild(main_xAAA);
+body.insertBefore(main_menu, body.firstChild);
+let button = document.querySelector("#aBgXaX0A");
+button.addEventListener("click", function() {
+listSpans();
+});
+let button1 = document.querySelector("#aJ7GfVVV");
+button1.addEventListener("click", function() {
+delx113();
+});
+let button2 = document.querySelector("#aaaUU777xx");
+button2.addEventListener("click", function() {
+karsilastir0123010();
+});
+let button3 = document.querySelector("#atoplauenxgelx");
+button3.addEventListener("click", function() {
+engl_all_start();
+});
+let button4 = document.querySelector("#nickaddAAAWWW");
+button4.addEventListener("click", function() {
+yenikullnaciciekle00A();
+});
+let button5 = document.querySelector("#removenickAAAWWW");
+button5.addEventListener("click", function() {
+kullaniciSilAAAHJK();
+});
+const pageUrl = window.location.href;
+pageUrl.includes('#block') ? setTimeout(engl000scrp2, 2000) : console.log("#block ifadesi sayfa URL'sinde bulunmuyor.");
+};
+// Process Complete
+})();
