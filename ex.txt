@@ -1,0 +1,470 @@
+// ==UserScript==
+// @name         X Delete + Undo Repost (Start/Stop + Slow Scroll + Username)
+// @namespace    http://tampermonkey.net/
+// @version      0.7
+// @description  Başlat/Durdur + kullanıcı inputu. Sadece hedef kullanıcının tweetlerini siler; repost ise geri alır. İşlem bitince kaydırır; hata olursa kaydırır.
+// @match        https://x.com/*
+// @grant        none
+// ==/UserScript==
+
+(function () {
+  "use strict";
+
+  let running = false;
+  let tickTimer = null;
+  let busy = false;
+  let noWorkCounter = 0;
+
+  const BTN_ID = "tm-start-stop-btn";
+  const INPUT_ID = "tm-user-input";
+  const WRAP_ID = "tm-start-stop-wrap";
+  const PROCESSED_ATTR = "data-tm-processed-delete";
+
+  // Scroll ayarları
+  const SCROLL_AFTER_SUCCESS = true;
+  const SCROLL_ON_ERROR = true;
+  const SCROLL_DISTANCE = 450;
+  const SCROLL_STEP = 12;
+  const SCROLL_STEP_DELAY = 60;
+
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  async function waitFor(getterFn, { timeout = 2000, interval = 50 } = {}) {
+    const start = Date.now();
+    while (Date.now() - start < timeout) {
+      const v = getterFn();
+      if (v) return v;
+      await sleep(interval);
+    }
+    return null;
+  }
+
+  // -------- USERNAME (URL -> INPUT) --------
+  const RESERVED = new Set([
+    "home","explore","notifications","messages","settings","i","search","compose","login","logout","signup"
+  ]);
+
+  function detectUsernameFromUrl(urlStr = window.location.href) {
+    try {
+      const url = new URL(urlStr);
+      const seg = (url.pathname.split("/").filter(Boolean)[0] || "").trim();
+      if (!seg) return "";
+      if (RESERVED.has(seg.toLowerCase())) return "";
+      if (!/^[A-Za-z0-9_]{1,15}$/.test(seg)) return "";
+      return seg;
+    } catch {
+      return "";
+    }
+  }
+
+  function normalizeUsername(s) {
+    s = (s || "").trim();
+    if (s.startsWith("@")) s = s.slice(1);
+    return s;
+  }
+
+  function setInputFromUrl() {
+    const inp = document.getElementById(INPUT_ID);
+    if (!inp) return;
+    const u = detectUsernameFromUrl();
+    if (u) inp.value = u;
+  }
+
+  function getTargetUsername() {
+    const inp = document.getElementById(INPUT_ID);
+    return normalizeUsername(inp ? inp.value : "");
+  }
+
+  function hookUrlChanges() {
+    const _pushState = history.pushState;
+    const _replaceState = history.replaceState;
+
+    function fire() { setTimeout(setInputFromUrl, 50); }
+
+    history.pushState = function () { _pushState.apply(this, arguments); fire(); };
+    history.replaceState = function () { _replaceState.apply(this, arguments); fire(); };
+    window.addEventListener("popstate", fire);
+  }
+
+  // -------- UI --------
+  function setButtonState(isRunning) {
+    const btn = document.getElementById(BTN_ID);
+    if (!btn) return;
+    btn.textContent = isRunning ? "Durdur" : "Başlat";
+  }
+
+  function stop() {
+    running = false;
+    busy = false;
+    noWorkCounter = 0;
+    if (tickTimer) {
+      clearInterval(tickTimer);
+      tickTimer = null;
+    }
+    setButtonState(false);
+  }
+
+  // -------- TIMELINE --------
+  function findTimeline() {
+    return (
+      document.querySelector('div[aria-label="Anasayfa zaman akışı"]') ||
+      document.querySelector('div[aria-label^="Zaman Akışı:"]')
+    );
+  }
+
+  // -------- SCROLL --------
+  function isScrollable(el) {
+    if (!el) return false;
+    const st = getComputedStyle(el);
+    const oy = st.overflowY;
+    const canScroll = oy === "auto" || oy === "scroll" || oy === "overlay";
+    return canScroll && el.scrollHeight > el.clientHeight + 10;
+  }
+
+  function findScrollableAncestor(el) {
+    let cur = el;
+    while (cur && cur !== document.body && cur !== document.documentElement) {
+      if (isScrollable(cur)) return cur;
+      cur = cur.parentElement;
+    }
+    return document.scrollingElement || document.documentElement;
+  }
+
+  function getScrollTarget() {
+    const home = document.querySelector('div[aria-label="Anasayfa zaman akışı"]');
+    if (home) return findScrollableAncestor(home);
+
+    const timeline = document.querySelector('div[aria-label^="Zaman Akışı:"]');
+    if (timeline) return findScrollableAncestor(timeline);
+
+    const primary = document.querySelector('div[data-testid="primaryColumn"]');
+    if (primary) return findScrollableAncestor(primary);
+
+    return document.scrollingElement || document.documentElement;
+  }
+
+  async function slowScrollDown(distance = SCROLL_DISTANCE) {
+    const scroller = getScrollTarget();
+    const steps = Math.max(1, Math.floor(distance / SCROLL_STEP));
+    for (let i = 0; i < steps; i++) {
+      if (!running) return;
+      scroller.scrollTop += SCROLL_STEP;
+      scroller.dispatchEvent(new Event("scroll", { bubbles: true }));
+      await sleep(SCROLL_STEP_DELAY);
+    }
+  }
+
+  // -------- AUTHOR DETECTION (asıl düzeltme burada) --------
+  function getTweetAuthorUsername(tweetEl) {
+    // 1) User-Name bloğundan @handle yakala
+    const nameBlock = tweetEl.querySelector('[data-testid="User-Name"]');
+    if (nameBlock) {
+      const spans = nameBlock.querySelectorAll("span");
+      for (const sp of spans) {
+        const t = (sp.textContent || "").trim();
+        if (t.startsWith("@")) return t.slice(1);
+      }
+      // bazen linkten çekmek daha stabil olabilir
+      const a = nameBlock.querySelector('a[href^="/"]');
+      const href = a?.getAttribute("href") || "";
+      const seg = href.split("/").filter(Boolean)[0];
+      if (seg && /^[A-Za-z0-9_]{1,15}$/.test(seg)) return seg;
+    }
+
+    // 2) Avatar container data-testid: UserAvatar-Container-<username>
+    const avatar = tweetEl.querySelector('[data-testid^="UserAvatar-Container-"]');
+    if (avatar) {
+      const dt = avatar.getAttribute("data-testid") || "";
+      const u = dt.replace("UserAvatar-Container-", "");
+      if (u && /^[A-Za-z0-9_]{1,15}$/.test(u)) return u;
+    }
+
+    return null;
+  }
+
+  function isMyRepost(tweetEl, targetUser) {
+    if (!targetUser) return false;
+    const sc = tweetEl.querySelector('[data-testid="socialContext"]');
+    if (!sc) return false;
+
+    const a = sc.closest('a[href]');
+    const href = a?.getAttribute("href") || "";
+    return href === `/${targetUser}` || href.startsWith(`/${targetUser}/`);
+  }
+
+  function belongsToTarget(tweetEl, targetUser) {
+    if (!targetUser) return false;
+
+    // repost ise: socialContext senin profil linkin olmalı
+    if (isMyRepost(tweetEl, targetUser)) return true;
+
+    // normal tweet/reply ise: author gerçekten sensin mi?
+    const author = getTweetAuthorUsername(tweetEl);
+    return author && author.toLowerCase() === targetUser.toLowerCase();
+  }
+
+  // -------- ACTION HELPERS --------
+  function isRepost(tweetEl) {
+    if (tweetEl.querySelector('button[data-testid="unretweet"]')) return true;
+
+    const sc = tweetEl.querySelector('[data-testid="socialContext"]');
+    const txt = (sc?.textContent || "").trim().toLowerCase();
+    if (txt.includes("yeniden gönderi yayınladın")) return true;
+    if (txt.includes("reposted")) return true;
+
+    return false;
+  }
+
+  function findTweetMoreButton(tweetEl) {
+    return (
+      tweetEl.querySelector('button[aria-label="Daha fazla"][aria-haspopup="menu"]') ||
+      tweetEl.querySelector('button[aria-label="More"][aria-haspopup="menu"]') ||
+      tweetEl.querySelector('button[data-testid="caret"][aria-haspopup="menu"]')
+    );
+  }
+
+  function findMenuItemByTexts(texts) {
+    const menus = document.querySelectorAll('div[role="menu"]');
+    for (const menu of menus) {
+      const spans = menu.querySelectorAll("span");
+      for (const sp of spans) {
+        const t = (sp.textContent || "").trim();
+        if (texts.includes(t)) return sp.closest('[role="menuitem"]') || sp;
+      }
+    }
+    return null;
+  }
+
+  const findDeleteMenuItem = () => findMenuItemByTexts(["Sil", "Delete"]);
+  const findUndoRepostMenuItem = () =>
+    findMenuItemByTexts([
+      "Yeniden gönderiyi geri al",
+      "Geri al",
+      "Undo repost",
+      "Undo Repost",
+      "Undo retweet",
+      "Undo Retweet",
+      "Retweet'i geri al",
+      "Retweeti geri al",
+    ]);
+
+  function findConfirmDeleteButton() {
+    const confirm =
+      document.querySelector('button[data-testid="confirmationSheetConfirm"]') ||
+      document.querySelector('button[data-testid="confirmationSheetConfirm"][role="button"]');
+
+    if (!confirm) return null;
+
+    const spans = confirm.querySelectorAll("span");
+    for (const sp of spans) {
+      const t = (sp.textContent || "").trim();
+      if (t === "Sil" || t === "Delete") return confirm;
+    }
+    return null;
+  }
+
+  async function waitMenusToClose(timeout = 2000) {
+    await waitFor(() => document.querySelectorAll('div[role="menu"]').length === 0, {
+      timeout,
+      interval: 50,
+    });
+  }
+
+  async function waitConfirmToClose(timeout = 3500) {
+    await waitFor(() => !findConfirmDeleteButton(), { timeout, interval: 50 });
+  }
+
+  async function processRepost(tweetEl) {
+    try {
+      const unretweetBtn =
+        tweetEl.querySelector('button[data-testid="unretweet"]') ||
+        tweetEl.querySelector('button[aria-label*="Yeniden gönderildi"]') ||
+        tweetEl.querySelector('button[aria-label*="Reposted"]');
+
+      if (!unretweetBtn) return { ok: false, reason: "unretweet_button_not_found" };
+
+      unretweetBtn.click();
+
+      const undoItem = await waitFor(() => findUndoRepostMenuItem(), { timeout: 2000, interval: 50 });
+      if (!undoItem) return { ok: false, reason: "undo_menuitem_not_found" };
+
+      undoItem.click();
+      await waitMenusToClose(2000);
+
+      tweetEl.setAttribute(PROCESSED_ATTR, "1");
+      return { ok: true };
+    } catch {
+      return { ok: false, reason: "exception_repost" };
+    }
+  }
+
+  async function processNormalTweetDelete(tweetEl) {
+    try {
+      const moreBtn = findTweetMoreButton(tweetEl);
+      if (!moreBtn) return { ok: false, reason: "more_button_not_found" };
+
+      moreBtn.click();
+
+      const delItem = await waitFor(() => findDeleteMenuItem(), { timeout: 2500, interval: 50 });
+      if (!delItem) return { ok: false, reason: "delete_menuitem_not_found" };
+
+      delItem.click();
+      await waitMenusToClose(2000);
+
+      await sleep(500);
+
+      const confirmBtn = findConfirmDeleteButton();
+      if (!confirmBtn) return { ok: false, reason: "confirm_not_found" };
+
+      confirmBtn.click();
+      await waitConfirmToClose(3500);
+
+      tweetEl.setAttribute(PROCESSED_ATTR, "1");
+      return { ok: true };
+    } catch {
+      return { ok: false, reason: "exception_delete" };
+    }
+  }
+
+  async function tick() {
+    if (!running || busy) return;
+    busy = true;
+
+    try {
+      const timeline = findTimeline();
+      if (!timeline) {
+        stop();
+        return;
+      }
+
+      const targetUser = getTargetUsername();
+      if (!targetUser) {
+        alert("Lütfen sağdaki inputa kullanıcı adını yaz (veya profil sayfasında ol).");
+        stop();
+        return;
+      }
+
+      const tweets = Array.from(timeline.querySelectorAll('article[data-testid="tweet"]')).filter(
+        (t) => !t.hasAttribute(PROCESSED_ATTR)
+      );
+
+      if (tweets.length === 0) {
+        noWorkCounter++;
+        if (noWorkCounter % 2 === 0) await slowScrollDown(650);
+        return;
+      }
+
+      // Ekrandaki tweetler içinde hedef kullanıcıya ait ilk tweeti bul
+      const candidate = tweets.find(t => belongsToTarget(t, targetUser));
+
+      if (!candidate) {
+        // Bu ekranda sadece başkalarının tweetleri/mentions var -> aşağı kaydır
+        await slowScrollDown(650);
+        return;
+      }
+
+      noWorkCounter = 0;
+
+      const result = isRepost(candidate)
+        ? await processRepost(candidate)
+        : await processNormalTweetDelete(candidate);
+
+      if (result?.ok) {
+        if (SCROLL_AFTER_SUCCESS) await slowScrollDown(SCROLL_DISTANCE);
+      } else {
+        if (SCROLL_ON_ERROR) await slowScrollDown(650);
+      }
+    } finally {
+      busy = false;
+    }
+  }
+
+  function start() {
+    const timeline = findTimeline();
+    if (!timeline) {
+      stop();
+      return;
+    }
+
+    const u = getTargetUsername();
+    if (!u) {
+      alert("URL'den kullanıcı adı bulunamadı. Lütfen inputa kullanıcı adını yaz.");
+      stop();
+      return;
+    }
+
+    running = true;
+    setButtonState(true);
+    tickTimer = setInterval(tick, 700);
+  }
+
+  function ensureButton() {
+    if (document.getElementById(WRAP_ID)) return;
+
+    const wrap = document.createElement("div");
+    wrap.id = WRAP_ID;
+    Object.assign(wrap.style, {
+      position: "fixed",
+      top: "10px",
+      left: "10px",
+      zIndex: "999999",
+      display: "flex",
+      gap: "8px",
+      alignItems: "center",
+    });
+
+    const btn = document.createElement("button");
+    btn.id = BTN_ID;
+    btn.type = "button";
+    btn.textContent = "Başlat";
+    Object.assign(btn.style, {
+      padding: "8px 12px",
+      borderRadius: "10px",
+      border: "1px solid rgba(255,255,255,0.2)",
+      background: "rgba(0,0,0,0.75)",
+      color: "#fff",
+      fontSize: "14px",
+      fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
+      cursor: "pointer",
+      userSelect: "none",
+    });
+
+    const inp = document.createElement("input");
+    inp.id = INPUT_ID;
+    inp.type = "text";
+    inp.placeholder = "kullaniciadi";
+    inp.autocomplete = "off";
+    inp.spellcheck = false;
+    Object.assign(inp.style, {
+      width: "160px",
+      padding: "8px 10px",
+      borderRadius: "10px",
+      border: "1px solid rgba(255,255,255,0.2)",
+      background: "rgba(0,0,0,0.55)",
+      color: "#fff",
+      fontSize: "14px",
+      outline: "none",
+    });
+
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (running) stop();
+      else start();
+    });
+
+    wrap.appendChild(btn);
+    wrap.appendChild(inp);
+    document.body.appendChild(wrap);
+
+    setInputFromUrl();
+    hookUrlChanges();
+  }
+
+  const boot = setInterval(() => {
+    if (document.body) {
+      clearInterval(boot);
+      ensureButton();
+    }
+  }, 100);
+})();
