@@ -285,11 +285,11 @@
 
       unretweetBtn.click();
 
-      const undoItem = await waitFor(() => findUndoRepostMenuItem(), { timeout: 2000, interval: 50 });
+      const undoItem = await waitFor(() => findUndoRepostMenuItem(), { timeout: 1000, interval: 50 });
       if (!undoItem) return { ok: false, reason: "undo_menuitem_not_found" };
 
       undoItem.click();
-      await waitMenusToClose(2000);
+      await waitMenusToClose(1000);
 
       tweetEl.setAttribute(PROCESSED_ATTR, "1");
       return { ok: true };
