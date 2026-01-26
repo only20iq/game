@@ -370,9 +370,9 @@
         : await processNormalTweetDelete(candidate);
 
       if (result?.ok) {
-        if (SCROLL_AFTER_SUCCESS) await slowScrollDown(SCROLL_DISTANCE);
+        if (SCROLL_AFTER_SUCCESS) await slowScrollDown(150); // önce 450 idi
       } else {
-        if (SCROLL_ON_ERROR) await slowScrollDown(650);
+        if (SCROLL_ON_ERROR) await slowScrollDown(250);      // önce 650 idi
       }
     } finally {
       busy = false;
